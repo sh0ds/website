@@ -136,7 +136,7 @@ main {
    display: flex;
    flex-direction: column;
    align-items: center;
-   
+   padding-inline: 1rem;
 }
 
 .pico-player h1 {
@@ -149,5 +149,6 @@ main {
     box-sizing: border-box;
     box-shadow:  0 4px 10px rgba(0, 0, 0, 0.35);
     aspect-ratio: 1/1;
-    height: clamp(30rem, 90vw, 40rem);
+    height: auto;
+    width: clamp(18rem, 95vw, 40rem);
 }
