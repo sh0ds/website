@@ -92,34 +92,39 @@ main {
     padding: 2rem;
 }
 
-.blog, .pico-player p {
+.base, .pico-player p {
     background: var(--acc1);
-    padding: 0.1rem 1.5rem 0.1rem 1.5rem;
+    padding: 0.1rem 1.5rem 1rem 1.5rem;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
     border: 1px solid var(--acc2);
 }
 
-.blog h1 {
+.base h1 {
     font-family: Maassslicer3D, sans-serif;
+    text-shadow: 0.1rem 0.1rem 0.5rem var(--acc2);
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.blog-article h2 {
+    font-family: Maassslicer, sans-serif;
     text-shadow: 0.05rem 0.05rem 0.4rem var(--acc2);
 }
 
 .game-grid {
-    background: var(--acc1);
-    padding: 0.3rem 1.5rem 1.2rem 1.5rem;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
-    border: 1px solid var(--acc2);
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
-    
+    gap: 2rem;  
 }
 
 .grid-item {
     text-align: center;
     text-shadow: 0.05rem 0.05rem 0.4rem var(--acc2);
+}
+
+.grid-item h2  {
+    margin-top: 0;
 }
 
 .grid-item img {
