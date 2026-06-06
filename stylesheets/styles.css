@@ -92,7 +92,7 @@ main {
     padding: 2rem;
 }
 
-.base, .pico-player p {
+.base {
     background: var(--acc1);
     padding: 0.1rem 1.5rem 1rem 1.5rem;
     border-radius: 5px;
@@ -156,4 +156,12 @@ main {
     aspect-ratio: 1/1;
     height: auto;
     width: clamp(18rem, 95vw, 40rem);
+}
+
+.player-flavor {
+    background: var(--acc1);
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--acc2);
 }
