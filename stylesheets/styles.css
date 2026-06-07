@@ -1,4 +1,5 @@
-/*color palette*/
+/* global variables */
+
 :root {
     --bg: #222831;
     --acc1: #2d4059;
@@ -6,7 +7,9 @@
     --text: #eeeeee;
     --header-height: 60px;
 }
-/*custom fonts*/
+
+/* custom fonts */
+
 @font-face {
     font-family: Maassslicer;
     src: url("fonts/maassSlicerItalic.ttf") format("truetype");
@@ -15,7 +18,9 @@
     font-family: Maassslicer3D;
     src: url("fonts/maassSlicerItalic3D.ttf") format("truetype");
 }
-/*base elements*/
+
+/* base elements */
+
 html,
 body {
     min-height: 100%;
@@ -23,6 +28,8 @@ body {
     color: var(--text);
     font-family: Maassslicer;
 }
+
+/* header and nav elements */
 
 .header {
     background: var(--acc2);
@@ -86,6 +93,8 @@ body {
     transform: translateY(4px);
 }
 
+/* basic page setup */
+
 main {
     max-width: 90%;
     margin: 0 auto;
@@ -112,15 +121,25 @@ main {
     color: var(--text);
 }
 
+/* blog-specific styles */
+
 .blog-article h2 {
     font-family: Maassslicer, sans-serif;
     text-shadow: 0.05rem 0.05rem 0.4rem var(--acc2);
+    margin-bottom: 0;
+}
+
+.blog-article h3 {
+    font-size: 0.85rem;
+    margin-top: 0;
 }
 
 .blog-article img {
     box-sizing: border-box;
     max-width: 65%;
 }
+
+/* games-specific styles */
 
 .game-grid {
     display: flex;
