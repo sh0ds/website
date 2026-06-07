@@ -107,9 +107,19 @@ main {
     font-size: 2.5rem;
 }
 
+.base hr {
+    box-shadow: 0 0 0.4rem var(--acc2);
+    color: var(--text);
+}
+
 .blog-article h2 {
     font-family: Maassslicer, sans-serif;
     text-shadow: 0.05rem 0.05rem 0.4rem var(--acc2);
+}
+
+.blog-article img {
+    box-sizing: border-box;
+    max-width: 65%;
 }
 
 .game-grid {
