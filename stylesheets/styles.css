@@ -139,6 +139,20 @@ main {
     max-width: 65%;
 }
 
+.blog-article a {
+    font-size: 1.2rem;
+    font-family: Maassslicer;
+    color: var(--acc2);
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.blog-article a:hover {
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
 /* games-specific styles */
 
 .game-grid {
@@ -193,4 +207,16 @@ main {
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
     border: 1px solid var(--acc2);
+}
+
+.player-flavor a {
+    color: var(--acc2);
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.player-flavor a:hover {
+    color: var(--text);
+    transform: translateY(-1px);
 }
