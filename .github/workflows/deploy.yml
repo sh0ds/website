@@ -20,3 +20,6 @@ jobs:
             cd /srv/repo
             git fetch origin main
             git reset --hard origin/main
+            
+            rsync -av --delete /srv/repo/ /srv/www/
+            
