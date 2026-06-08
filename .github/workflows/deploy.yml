@@ -16,5 +16,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: deploy
           key: ${{ secrets.SSH_KEY }}
-          script: /usr/local/bin/deploy-site.sh
-          fingerprint: SHA256:GaMXPcfF+EeNyrOnj5v1tUXcTk119L6+setLW2H4/AU
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          script: |
+            cd /srv/repo
+            git pull origin main
