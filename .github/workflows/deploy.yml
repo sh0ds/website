@@ -17,4 +17,4 @@ jobs:
           username: deploy
           key: ${{ secrets.SSH_KEY }}
           script: /usr/local/bin/deploy-site.sh
-          known_hosts: ""
+          fingerprint: SHA256:GaMXPcfF+EeNyrOnj5v1tUXcTk119L6+setLW2H4/AU
