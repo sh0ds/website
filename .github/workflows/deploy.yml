@@ -14,7 +14,9 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          username: deploy
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo -u www-data -H /usr/local/bin/deploy-site.sh
+            cd /srv/repo
+            git fetch origin main
+            git reset --hard origin/main
