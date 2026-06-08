@@ -1,0 +1,3 @@
+Contact: mailto:security@sh0ds.dev
+Expires: 2026-12-08T20:00:00.000Z
+Preferred-Languages: en, de
