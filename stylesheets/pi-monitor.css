@@ -1,0 +1,40 @@
+:root {
+    --bg: #222831;
+    --acc1: #2d4059;
+    --acc2: #ff5722;
+    --text: #ffffff;
+    --footer1: #787575;
+    --footer2: #605b5b;
+}
+
+.pi-monitor-card {
+    background: var(--acc1);
+    border-radius: 60px;
+    border: 1px solid var(--acc2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+    z-index: 4;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    top: auto;
+
+    transition: transform 0.1s ease-out, opacity 0.1s ease;
+}
+
+#pi-stats {
+    font-family: monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding-right: 25px;
+}
+
+.pi-monitor-card img {
+    max-width: 75px;
+    max-height: 75px;
+    padding-left: 25px;
+}

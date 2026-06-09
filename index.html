@@ -11,7 +11,9 @@
     <meta property="og:url" content="https://sh0ds.dev">
     <meta property="og:type" content="website">
     
-    <link rel="stylesheet" href="./stylesheets/styles.css"> <link href="images/favicon.ico" rel="icon" type="image/x-icon">
+    <link rel="stylesheet" href="./stylesheets/styles.css">
+    <link rel="stylesheet" href="./stylesheets/pi-monitor.css">
+    <link href="images/favicon.ico" rel="icon" type="image/x-icon">
     </head>
     <body>
         <header class="header">
@@ -40,7 +42,14 @@
                     tab, or play my games under the "Games" tab.
                 </p>
             </div>
+
+            <div class="pi-monitor-card">
+                <img src="images/pi-logo.png">
+                <p id="pi-stats">Loading Pi5 stats...</p>
+            </div>
         </main>
+
+        <script src="scripts/pi-monitor.js"></script>    
     </body>
     <footer class="site-footer">
         <div class="footer-content">

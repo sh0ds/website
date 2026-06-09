@@ -23,24 +23,29 @@
 
 /* base elements */
 
-html,
+html {
+    height: 100%;
+}
+
 body {
-    min-height: 100%;
+    min-height: 100vh;
+    margin: 0;
     background: var(--bg);
     color: var(--text);
     font-family: Maassslicer;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
 }
 
 /* header and nav elements */
 
 .header {
     background: var(--acc2);
-    max-width: 950px;
-    margin-left: auto;
-    margin-right: auto;
-    min-height: var(--header-height);
-    border-radius: 5px;
+    width: 100%;
 
+    min-height: var(--header-height);
     position: sticky;
     top: 0;
 
@@ -105,6 +110,7 @@ main {
     max-width: 850px;
     margin: 40px auto;
     padding: 0 20px;
+    flex-grow: 1;
 }
 
 .base {
