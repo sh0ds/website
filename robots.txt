@@ -1,18 +1,9 @@
-################################# ROBOTS.TXT ###################################
-#                                                                              #
-# Alphabetically ordered whitelisting of legitimate web robots, which obey the #
-# Robots Exclusion Standard (robots.txt). Each bot is shortly described in a   #
-# comment above the (list of) user-agent(s). Comment out or delete lines which #
-# contain User-agents you do not wish to allow on your website.                #
-# Important: Blank lines are not allowed in the final robots.txt file!         #
-# Updates can be retrieved from:                                               #
-# https://www.ditig.com/publications/robots-txt-template                       #
-#                                                                              #
-# This document is licensed with a CC BY-NC-SA 4.0 license.                    #
-#                                                                              #
-# Last update: 2020-12-17                                                      #
-#                                                                              #
-################################################################################
+############################# ROBOTS.TXT ###############################
+# Updates and informantion can be found at:                            #
+# https://www.ditig.com/publications/robots-txt-template               #
+# This document is licensed with a CC BY-NC-SA 4.0 license.            #
+# Last update: 2025-03-04                                              #
+########################################################################
 # so.com chinese search engine
 User-agent: 360Spider
 User-agent: 360Spider-Image
@@ -24,6 +15,8 @@ User-agent: AdsBot-Google-Mobile
 User-agent: AdsBot-Google-Mobile-Apps
 # bing ads bot
 User-agent: adidxbot
+# algolia.com search
+User-agent: Algolia Crawler
 # apple.com search engine
 User-agent: Applebot
 user-agent: AppleNewsBot
@@ -59,6 +52,8 @@ User-agent: EuripBot
 # exploratodo.com latin search engine
 User-agent: Exploratodo
 # facebook.com social network
+User-agent: facebookcatalog
+User-agent: facebookexternalhit
 User-agent: Facebot
 # feedly.com feed fetcher
 User-agent: Feedly
@@ -86,6 +81,8 @@ User-agent: Lycos
 User-agent: Mail.Ru
 # google.com adsense bot
 User-agent: Mediapartners-Google
+# Preview bot for Microsoft products
+User-agent: MicrosoftPreview
 # mojeek.com search engine
 User-agent: MojeekBot
 # bing.com international search engine
@@ -101,6 +98,8 @@ User-agent: Plukkie
 User-agent: Qwantify
 # rambler.ru russian search engine
 User-agent: Rambler
+# semanticscholar.org scientific search engine
+User-agent: SemanticScholarBot
 # seznam.cz czech search engine
 User-agent: SeznamBot
 # soso.com chinese search engine
@@ -114,19 +113,17 @@ User-agent: Sogou News Spider
 User-agent: Sogou Orion spider
 User-agent: Sogou spider2
 User-agent: Sogou web spider
-# sputnik.ru russian search engine
-User-agent: SputnikBot
-# ask.com international search engine
-User-agent: Teoma
-# twitter.com bot
+# twitter.com social media bot
 User-agent: Twitterbot
-# wotbox.com international search engine
-User-agent: wotbox
+# whatsapp.com preview bot
+User-agent: WhatsApp
 # yacy.net p2p search software
 User-agent: yacybot
 # yandex.com russian search engine
 User-agent: Yandex
 User-agent: YandexMobileBot
+# yep.com search engine
+User-agent: YepBot
 # search.naver.com south korean search engine
 user-agent: Yeti
 # yioop.com international search engine
