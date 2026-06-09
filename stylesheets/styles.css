@@ -5,6 +5,8 @@
     --acc1: #2d4059;
     --acc2: #ff5722;
     --text: #ffffff;
+    --footer1: #787575;
+    --footer2: #605b5b;
     --header-height: 60px;
 }
 
@@ -33,7 +35,9 @@ body {
 
 .header {
     background: var(--acc2);
-    width: 100%;
+    max-width: 950px;
+    margin-left: auto;
+    margin-right: auto;
     min-height: var(--header-height);
     border-radius: 5px;
 
@@ -98,9 +102,9 @@ body {
 /* basic page setup */
 
 main {
-    max-width: 90%;
-    margin: 0 auto;
-    padding: 2rem;
+    max-width: 850px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 .base {
@@ -221,4 +225,54 @@ main {
 .player-flavor a:hover {
     color: var(--text);
     transform: translateY(-1px);
+}
+
+/* footer */
+
+.site-footer {
+    max-width: 650px;
+    margin: 80px auto 30px auto;
+    padding-top: 20px;
+    border-top: 1px solid #222;
+    font-family: maassslicer;
+    font-size: 0.9rem;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Automatically drops to two lines on mobile screens */
+    gap: 15px;
+}
+
+.footer-info p {
+    margin: 0;
+    color: var(--footer1);
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: var(--footer2);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+    color: var(--acc2); 
+    text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-links {
+        justify-content: center;
+    }
 }
