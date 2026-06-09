@@ -32,6 +32,24 @@
             <section class="base">
                 <h1>Blog</h1>
                 <!-- always add entries from the top -->
+                <article class="blog-post">
+                    <h2>The Pi-Monitor</h2>
+                    <time datetime="2026-06-09">June 9, 2026</time>
+                    <p>I made a live CPU/RAM monitor you can embed in your website! (seelower right corner)</p>
+                    <p>There are no requirements, as it uses only pre-installed /Pi-packages.</p>
+                    <p>Check out the <a href="https://github.com/sh0ds/pi-monitor">GitHub repo</a> if you want to embed it in your own Pi-hosted page,</p>
+                    <p>To install, simply put the files into your website folder and pastethis into the html-page you want it in:</p>
+                    <pre><code>&lt;div class=&quot;pi-monitor-card&quot;&gt;
+                        &lt;img src=&quot;pim-logo.png&quot;&gt;
+                        &lt;p id=&quot;pi-stats&quot;&gt;Loading Pi5 stats...&lt;/p&gt;
+                    &lt;/div&gt;
+
+                    &lt;script src=&quot;pi-monitor.js&quot;&gt;&lt;/script&gt;`</code></pre>
+                    <p>(see this website or the test_page.html in the repo for examples)</p>
+                    <p>Currently only works on Pi because the bash script uses vcgencmd for
+                    temperature, but I plan to extend compatibility in the near future.
+                    (maybe not)</p>
+                </article>
                 <article class="blog-post" id="shmup">
                     <h2>Shoot 'Em Up in the works!</h2>
                     <time datetime="2026-06-08">June 8, 2026</time>
