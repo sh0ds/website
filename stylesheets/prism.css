@@ -7,13 +7,7 @@ https://prismjs.com/download#themes=prism-twilight&languages=markup+css+clike+ja
  */
 
 :root {
-    --bg: #222831;
-    --acc1: #2d4059;
     --acc2: #ff5722;
-    --text: #ffffff;
-    --footer1: #787575;
-    --footer2: #605b5b;
-    --header-height: 60px;
 }
 
 code[class*="language-"],
@@ -42,7 +36,7 @@ pre[class*="language-"] {
 
 pre[class*="language-"],
 :not(pre) > code[class*="language-"] {
-	background: hsl(0, 0%, 8%); /* #141414 */
+	background: #0f132a; /* #141414 */
 }
 
 /* Code blocks */

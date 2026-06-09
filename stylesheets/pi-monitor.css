@@ -1,12 +1,3 @@
-:root {
-    --bg: #222831;
-    --acc1: #2d4059;
-    --acc2: #ff5722;
-    --text: #ffffff;
-    --footer1: #787575;
-    --footer2: #605b5b;
-}
-
 .pi-monitor-card {
     background: var(--acc1);
     border-radius: 60px;
