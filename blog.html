@@ -3,22 +3,23 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sh0ds' devblog</title>
+    <title>#sh0ds-devblog</title>
     <meta name="description" content="Solo developer interested in game development, data science, and web development. Self hosted on a Pi 5.⚡">
     
-    <meta property="og:title" content="sh0ds' devblog">
+    <meta property="og:title" content="#sh0ds-devblog">
     <meta property="og:description" content="Game dev, data science, and Linux exploration.">
     <meta property="og:url" content="https://sh0ds.dev">
     <meta property="og:type" content="website">
     
     <link rel="stylesheet" href="./stylesheets/styles.css">
     <link rel="stylesheet" href="./stylesheets/pi-monitor.css">
+        <link rel="stylesheet" href="stylesheets/prism.css">
     <link href="images/favicon.ico" rel="icon" type="image/x-icon">
     </head>
     <body>
         <header class="header">
             <div class="brand">
-                <a href="./index.html">sh0ds' devblog</a>
+                <a href="./index.html">#sh0ds-devblog</a>
             </div>
             <nav class="nav">
                 <ul>
@@ -39,7 +40,7 @@
                     <p>There are no requirements, as it uses only pre-installed / Pi-packages.</p>
                     <p>Check out the <a href="https://github.com/sh0ds/pi-monitor">GitHub repo</a> if you want to embed it in your own Pi-hosted page,</p>
                     <p>To install, simply put the files into your website folder and paste this into the html-page you want it in:</p>
-                    <pre><code>&lt;div class=&quot;pi-monitor-card&quot;&gt;
+                    <pre><code class="language-html">&lt;div class=&quot;pi-monitor-card&quot;&gt;
 &lt;img src=&quot;pim-logo.png&quot;&gt;
 &lt;p id=&quot;pi-stats&quot;&gt;Loading Pi5 stats...&lt;/p&gt;
 &lt;/div&gt;
@@ -94,5 +95,6 @@
                 </div>
             </div>
         </footer>
+        <script src="scripts/prism.js"></script>
     </body>
 </html>
