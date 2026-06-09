@@ -396,19 +396,20 @@ pre code {
         gap: 1.5rem;
         transform: none;
     }
+}
 
-    pre[class*="language-"] {
-        max-width: 100% !important;
-        overflow-x: auto !important;
-        white-space: pre !important;
-        word-break: normal !important;
-        word-wrap: normal !important;
-        box-sizing: border-box !important;
-    }
 
-    code[class*="language-"] {
-        white-space: pre !important;
-        word-break: normal !important;
-        word-wrap: normal !important;
-    }
+pre[class*="language-"] {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    white-space: pre !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
+    box-sizing: border-box !important;
+}
+
+code[class*="language-"] {
+    white-space: pre !important;
+    word-break: normal !important;
+    word-wrap: normal !important;
 }
