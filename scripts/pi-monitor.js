@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // -- FETCH & DISPLAY STATS --
                 const updateStats = () => {
-                    fetch(pistats)
+                    fetch(`${pistats}?t=${Date.now()}`)
                         .then((response) => response.json())
                         .then(data => {
                             const degTemp = data.temp.replace(/'+/, '°');
