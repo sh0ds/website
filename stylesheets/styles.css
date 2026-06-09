@@ -315,6 +315,7 @@ main {
 .error h1 {
     font-family: Maassslicer3D;
     font-size: 3.5rem;
+    text-shadow: 0.1rem 0.1rem 0.5rem var(--acc2);
 }
 
 .error p {
