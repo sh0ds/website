@@ -13,14 +13,6 @@
 /* custom fonts */
 
 @font-face {
-    font-family: Maassslicer;
-    src: url("fonts/maassSlicerItalic.ttf") format("truetype");
-}
-@font-face {
-    font-family: Maassslicer3D;
-    src: url("fonts/maassSlicerItalic3D.ttf") format("truetype");
-}
-@font-face {
     font-family: JuliaMono;
     src: url("fonts/JuliaMono-Medium.ttf") format("truetype");
 }
