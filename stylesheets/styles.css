@@ -17,7 +17,6 @@
     src: url("fonts/JuliaMono-Medium.ttf") format("truetype");
 }
 
-
 /* base elements */
 
 html {
@@ -139,7 +138,7 @@ main {
 .blog-post {
     margin-bottom: 40px;
     padding-bottom: 40px;
-    border-bottom: 1px solid var(--acc2); /* Subtle line instead of <hr> */
+    border-bottom: 1px solid var(--acc2);
 }
 
 .blog-post:last-of-type {
@@ -159,8 +158,8 @@ main {
     height: auto;
     display: block;
     margin: 20px 0;
-    border-radius: 6px; /* Smooths out screenshot corners */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* Soft depth layer */
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .blog-post a {
@@ -293,16 +292,6 @@ main {
     font-family: JuliaMono;
 }
 
-@media (max-width: 600px) {
-    .footer-content {
-        flex-direction: column;
-        text-align: center;
-    }
-    .footer-links {
-        justify-content: center;
-    }
-}
-
 /* error page */
 
 .error {
@@ -345,6 +334,8 @@ main {
     color: var(--text);
 }
 
+/* mobile stuff */
+
 @media (max-width: 480px) {
     .header {
         flex-direction: column;
@@ -358,6 +349,17 @@ main {
     }
 }
 
+@media (max-width: 600px) {
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .footer-links {
+        justify-content: center;
+    }
+}
+
+/* prism override */
 
 pre[class*="language-"] {
     max-width: 100% !important;

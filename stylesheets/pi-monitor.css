@@ -1,3 +1,5 @@
+/*widget*/
+
 .pi-monitor-card {
     background: var(--acc1);
     border-radius: 60px;
@@ -29,6 +31,8 @@
     max-height: 75px;
     padding-left: 25px;
 }
+
+/*mobile behaviour*/
 
 @media (max-width: 600px) {
     .pi-monitor-card {
