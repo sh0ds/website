@@ -29,3 +29,30 @@
     max-height: 75px;
     padding-left: 25px;
 }
+
+@media (max-width: 600px) {
+    .pi-monitor-card {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+
+        bottom: 15px;
+
+        width: calc(100%-30px);
+        min-width: 260px;
+        gap: 12px;
+        border-radius: 30px;
+    }
+
+    .pi-monitor-card img {
+        max-width: 55px;
+        max-height: 55px;
+        padding-left: 15px;
+    }
+
+    #pi-stats {
+        font-size: 0.75rem;
+        padding-right: 15px;
+ 
+    }
+}
