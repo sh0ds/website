@@ -18,8 +18,8 @@
     src: url("fonts/JuliaMono-Medium.ttf") format("truetype");
 }
 
-html, body {
-    height: 100%;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -175,6 +175,7 @@ main {
 .game-grid {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     gap: 2rem;  
 }
 
@@ -229,7 +230,7 @@ main {
    6. SITE FOOTER
    ========================================== */
 .site-footer {
-    max-width: 650px;
+    max-width: 80%;
     margin: 90px auto 30px auto;
     padding-top: 20px;
     border-top: 1px solid #222;
@@ -238,7 +239,7 @@ main {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
@@ -252,6 +253,7 @@ main {
 .footer-links {
     display: flex;
     gap: 22px;
+    justify-content: center;
 }
 
 .footer-links a {
