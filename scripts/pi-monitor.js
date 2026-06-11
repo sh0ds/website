@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-                const pistats = "./srv/www/ramdisk/pistats.json";
+                const pistats = "/srv/www/ramdisk/pistats.json";
                 const monitorCard = document.querySelector(".pi-monitor-card");
                 const footer = document.querySelector(".site-footer");
 
