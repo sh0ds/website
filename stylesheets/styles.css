@@ -264,6 +264,12 @@ main {
     color: var(--acc2); 
 }
 
+.footer-lightning, 
+.footer-lightning:visited {
+    color: #787575 !important;
+    text-decoration: none !important;
+}
+
 /* ==========================================
    7. ERROR PAGE
    ========================================== */
