@@ -48,10 +48,10 @@ function displayBooks() {
       <strong>${book.title}</strong><br>
       <em>${book.author}</em><br>
       <span class="pages">${book.pages} pages</span><br><br>
-      <button class="btn btn-toggle" onclick="toggleRead('${book.bookID}')">
+      <button class="btn btn-toggle" data-book-id="${book.bookID}">
         ${book.read ? "✓ Read" : "Mark as Read"}
       </button>
-      <button class="btn btn-delete" onclick="deleteBook('${book.bookID}')">Delete</button>
+      <button class="btn btn-delete" data-book-id="${book.bookID}">Delete</button>
     `;
     mainContainer.appendChild(bookDiv);
   });
@@ -85,5 +85,16 @@ bookAuthor.addEventListener("keypress", function(event) {
 bookPages.addEventListener("keypress", function(event) {
   if (event.key === "Enter") {
     addBook();
+  }
+});
+
+// Event delegation for book buttons
+mainContainer.addEventListener("click", (event) => {
+  if (event.target.classList.contains("btn-toggle")) {
+    const bookID = event.target.getAttribute("data-book-id");
+    toggleRead(bookID);
+  } else if (event.target.classList.contains("btn-delete")) {
+    const bookID = event.target.getAttribute("data-book-id");
+    deleteBook(bookID);
   }
 });
