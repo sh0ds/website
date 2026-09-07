@@ -1,11 +1,11 @@
-/*widget*/
+/* widget — terminal status chip */
 
 .pi-monitor-card {
-    background: var(--acc1);
-    border-radius: 60px;
-    border: 1px solid var(--acc2);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
     z-index: 4;
+    background: color-mix(in srgb, var(--acc1) 78%, #000);
+    border: 1px solid var(--acc2);
+    border-radius: 4px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45), 0 0 1rem color-mix(in srgb, var(--acc2) 30%, transparent);
 
     display: flex;
     align-items: center;
@@ -20,19 +20,21 @@
 }
 
 #pi-stats {
-    font-family: monospace;
+    font-family: JuliaMono, ui-monospace, monospace;
     font-size: 0.8rem;
     font-weight: 600;
+    color: var(--text);
     padding-right: 25px;
 }
 
 .pi-monitor-card img {
     max-width: 75px;
     max-height: 75px;
+    image-rendering: pixelated;
     padding-left: 25px;
 }
 
-/*mobile behaviour*/
+/* mobile behaviour */
 
 @media (max-width: 600px) {
     .pi-monitor-card {
@@ -42,10 +44,10 @@
 
         bottom: 15px;
 
-        width: calc(100%-30px);
+        width: calc(100% - 30px);
         min-width: 260px;
         gap: 12px;
-        border-radius: 30px;
+        border-radius: 4px;
     }
 
     .pi-monitor-card img {
@@ -57,6 +59,5 @@
     #pi-stats {
         font-size: 0.75rem;
         padding-right: 15px;
- 
     }
 }
