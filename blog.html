@@ -33,6 +33,35 @@
             <section class="base">
                 <h1>Blog</h1>
                 <!-- always add entries from the top -->
+                <article class="blog-post" id="3sgc">
+                    <h2>3sgc - building a static site generator in C</h2>
+                    <time datetime="2026-09-23">September 23, 2026</time>
+                    <p>
+                        new project! I'm writing my own static site generator in C: <a href="https://github.com/sh0ds/3sgc">3sgc</a>
+                        (that's SSSGC - sh0ds static site generator (in) C). it's my first big C project, so I'm taking it slow
+                        and building it piece by piece.
+                    </p>
+                    <p>
+                        the plan: write posts in markdown, put them into html templates and get a finished site out.
+                        which means one day this blog won't be hand-written anymore 👀
+                    </p>
+                    <p>
+                        so far there's the project skeleton (Makefile with address sanitizer turned on, which already saved me a few times),
+                        a binary-safe file copy function, directory walking with <code>opendir</code>/<code>readdir</code> and <code>stat</code>,
+                        and a recursive copy for the static folder (css, images, etc.).
+                    </p>
+                    <p>
+                        things I learned the hard way: never pass file content as a format string. my first copy function looked like this:
+                    </p>
+                    <pre><code class="language-c">fprintf(f_dst, str); // breaks on the first % in your css</code></pre>
+                    <p>
+                        also: <code>fread</code> returning less than you asked for is not an error, it's just the end of the file.
+                        and <code>readdir</code> gives you <code>.</code> and <code>..</code> too, which is a great way to recurse forever.
+                    </p>
+                    <p>
+                        next up: markdown to html, front matter and templates. repo is <a href="https://github.com/sh0ds/3sgc">here</a> if you want to follow along!
+                    </p>
+                </article>
                  <article class="blog-post" id="librarby">
                     <h2>little library app</h2>
                     <time datetime="2026-08-25">August 25, 2026</time>
