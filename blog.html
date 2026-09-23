@@ -80,31 +80,162 @@
 &lt;img src=&quot;pim-logo.png&quot;&gt;
 &lt;p id=&quot;pi-stats&quot;&gt;Loading Pi5 stats...&lt;/p&gt;
 &lt;/div&gt;
+<!doctype html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>#sh0ds-devblog</title>
+    <meta name="description" content="Solo developer interested in game development, data science, and web development. Self hosted on a Pi 5.⚡">
+    
+    <meta property="og:title" content="#sh0ds-devblog">
+    <meta property="og:description" content="Game dev, data science, and Linux exploration.">
+    <meta property="og:url" content="https://sh0ds.dev">
+    <meta property="og:type" content="website">
+    
+    <link rel="stylesheet" href="./stylesheets/styles.css">
+    <link rel="stylesheet" href="./stylesheets/pi-monitor.css">
+    <link rel="stylesheet" href="./stylesheets/prism.css">
+    <link href="images/favicon.ico" rel="icon" type="image/x-icon">
+    </head>
+    <body>
+        <header class="header">
+            <div class="brand">
+                <a href="./index.html">#sh0ds-devblog</a>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="./blog.html">Blog</a></li>
+                    <li><a href="./games.html">Games</a></li>
+                </ul>
+            </nav>
+        </header>
 
-&lt;script src=&quot;pi-monitor.js&quot;&gt;&lt;/script&gt;</code></pre>
-                    <p>(see this website or the test_page.html in the repo for examples)</p>
-                    <p>Currently only works on Pi because the bash script uses vcgencmd for
-                    temperature, but I plan to extend compatibility in the near future.
-                    (maybe not)</p>
-                </article>
-                <article class="blog-post" id="shmup">
-                    <h2>Shoot 'Em Up in the works!</h2>
-                    <time datetime="2026-06-08">June 8, 2026</time>
+        <main>
+            <section class="base">
+                <h1>Blog</h1>
+                <!-- always add entries from the top -->
+                <article class="blog-post" id="3sgc">
+                    <h2>3sgc - building a static site generator in C</h2>
+                    <time datetime="2026-09-23">September 23, 2026</time>
                     <p>
-                        Ok so first, this website is now actually hosted on my RPi 5. &#128170; <br>
-                        Secondly, I'm working on another small game, a Shoot 'Em Up this time. I'm hoping
-                        to learn more about enemy spawn behaviour and also, bullet patterns.<br>
-                        <br>
-                        Here's an image of the currently missing shooter to be implented:<br>
-                        <br>
-                        <img src="images/shooter.png"><br>
-                        <br>
-                        <a href="shmup.html">Check it out!</a>
+                        new project! I'm writing my own static site generator in C: <a href="https://github.com/sh0ds/3sgc">3sgc</a>
+                        (that's SSSGC - sh0ds static site generator (in) C). it's my first big C project, so I'm taking it slow
+                        and building it piece by piece.
+                    </p>
+                    <p>
+                        the plan: write posts in markdown, put them into html templates and get a finished site out.
+                        which means one day this blog won't be hand-written anymore 👀
+                    </p>
+                    <p>
+                        so far there's the project skeleton (Makefile with address sanitizer turned on, which already saved me a few times),
+                        a binary-safe file copy function, directory walking with <code>opendir</code>/<code>readdir</code> and <code>stat</code>,
+                        and a recursive copy for the static folder (css, images, etc.).
+                    </p>
+                    <p>
+                        things I learned the hard way: never pass file content as a format string. my first copy function looked like this:
+                    </p>
+                    <pre><code class="language-c">fprintf(f_dst, str); // breaks on the first % in your css</code></pre>
+                    <p>
+                        also: <code>fread</code> returning less than you asked for is not an error, it's just the end of the file.
+                        and <code>readdir</code> gives you <code>.</code> and <code>..</code> too, which is a great way to recurse forever.
+                    </p>
+                    <p>
+                        next up: markdown to html, front matter and templates. repo is <a href="https://github.com/sh0ds/3sgc">here</a> if you want to follow along!
                     </p>
                 </article>
-                <article class="blog-post">
+
+                <article class="blog-post" id="library">
+                    <h2>little library app</h2>
+                    <time datetime="2026-08-25">August 25, 2026</time>
+                    <p>
+                        back from a little hiatus, getting into web dev again. made <a href="library.html">this</a>
+                        little library app to start it off.
+                    </p>
+                </article>
+
+                <article class="blog-post" id="pi-monitor">
+                    <h2>the pi-monitor</h2>
+                    <time datetime="2026-06-09">June 9, 2026</time>
+                    <p>
+                        I made a live CPU/RAM monitor you can embed in your website! (see lower right corner 👀)
+                        no requirements, it only uses pre-installed Pi packages.
+                    </p>
+                    <p>
+                        check out the <a href="https://github.com/sh0ds/pi-monitor">GitHub repo</a> if you want to embed it
+                        in your own Pi-hosted page. to install, put the files into your website folder and paste this
+                        into the html page you want it in:
+                    </p>
+                    <pre><code class="language-html">&lt;div class=&quot;pi-monitor-card&quot;&gt;
+    &lt;img src=&quot;pim-logo.png&quot;&gt;
+    &lt;p id=&quot;pi-stats&quot;&gt;Loading Pi5 stats...&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;pi-monitor.js&quot;&gt;&lt;/script&gt;</code></pre>
+                    <p>
+                        (see this website or <code>test_page.html</code> in the repo for examples)
+                    </p>
+                    <p>
+                        currently it only works on a Pi, because the bash script uses <code>vcgencmd</code> for the
+                        temperature. I plan to extend compatibility in the near future. (maybe not)
+                    </p>
+                </article>
+
+                <article class="blog-post" id="shmup">
+                    <h2>shoot 'em up in the works!</h2>
+                    <time datetime="2026-06-08">June 8, 2026</time>
+                    <p>
+                        ok so first, this website is now actually hosted on my RPi 5 💪
+                    </p>
+                    <p>
+                        secondly, I'm working on another small game, a shoot 'em up this time. I'm hoping to learn more
+                        about enemy spawn behaviour and bullet patterns.
+                    </p>
+                    <p>
+                        here's the shooter that's still missing and needs to be implemented:
+                    </p>
+                    <img src="images/shooter.png" alt="pixel art sprite of the player ship for the shoot 'em up">
+                    <p>
+                        <a href="shmup.html">check it out!</a>
+                    </p>
+                </article>
+
+                <article class="blog-post" id="href-hell">
                     <h2>I almost lost my mind...</h2>
                     <time datetime="2026-06-07">June 7, 2026</time>
+                    <p>
+                        ...while doing the <code>href</code> statements for the links between pages.
+                        (don't look at the commit history 😫)
+                    </p>
+                    <img src="images/commit_history.png" alt="screenshot of a long commit history full of link fixes">
+                </article>
+            </section>
+            <div class="pi-monitor-card">
+                <img src="images/pim-logo.png" alt="pi-monitor logo">
+                <p id="pi-stats">Loading Pi5 stats...</p>
+            </div>
+        </main>
+
+        <script src="scripts/pi-monitor.js"></script>
+        
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>© 2026 sh0ds. Hosted on a Raspberry Pi 5 ⚡</p>
+                </div>
+                
+                <div class="footer-links">
+                    <a href="https://github.com/sh0ds" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://sh0ds.itch.io/" target="_blank" rel="noopener">itch.io</a>
+                    <a href="mailto:mail@sh0ds.dev">Contact</a>
+                </div>
+            </div>
+        </footer>
+        <script src="scripts/prism.js"></script>
+    </body>
+</html>
+
+</time>
                     <p>...while doing the href statements for the links between pages.<br>
                     ( Dont look at the commit history 😫 )</p>
                     <img src="images/commit_history.png">
