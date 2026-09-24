@@ -1,68 +1,74 @@
 <!doctype html>
 <html lang="en">
-    <head>
+<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>#sh0ds-devblog</title>
-    <meta name="description" content="Solo developer interested in game development, data science, and web development. Self hosted on a Pi 5.⚡">
-    
-    <meta property="og:title" content="#sh0ds-devblog">
-    <meta property="og:description" content="Game dev, data science, and Linux exploration.">
-    <meta property="og:url" content="https://sh0ds.dev">
-    <meta property="og:type" content="website">
-    
-    <link rel="stylesheet" href="./stylesheets/styles.css">
-    <link rel="stylesheet" href="./stylesheets/pi-monitor.css">
-    <link href="images/favicon.ico" rel="icon" type="image/x-icon">
-    </head>
-    <body>
-        <header class="header">
-            <div class="brand">
-                <a href="./index.html">#sh0ds-devblog</a>
-            </div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="./blog.html">Blog</a></li>
-                    <li><a href="./games.html">Games</a></li>
-                </ul>
-            </nav>
-        </header>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="sh0ds@devblog">sh0ds<span>@devblog</span></a>
+        <nav aria-label="Main">
+            <ul>
+                <li><a href="/blog.html">Blog</a></li>
+                <li><a href="/projects.html">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <main>
-            <div class="base">
-                <h1>Hi, I'm sh0ds.</h1>
-                <p>
-                    I'm a solo developer interested in game development, data
-                    science, and web development. I also enjoy dabbling in all
-                    things Linux, which is why I host this site on my Raspberry
-                    Pi 5. 😎
-                    <br />
-                    <br />
-                    Check out what I'm currently working on under the "Blog"
-                    tab, or play my games under the "Games" tab.
-                </p>
-            </div>
+    <main>
+<h1>down for maintenance</h1>
+<p>I'm currently rebuilding this website from the ground up,
+using my own static site generator, 3sgc, which you can find <a href="https://github.com/sh0ds/3sgc" target="_blank">here</a>.
+Stay tuned!
+</p>
 
-            <div class="pi-monitor-card">
-                <img src="images/pim-logo.png">
-                <p id="pi-stats">Loading Pi5 stats...</p>
-            </div>
-        </main>
+    </main>
 
-        <script src="scripts/pi-monitor.js"></script> 
-        
-        <footer class="site-footer">
-            <div class="footer-content">
-                <div class="footer-info">
-                    <p>© 2026 sh0ds. Hosted on a Raspberry Pi 5 ⚡</p>
-                </div>
-                
-                <div class="footer-links">
-                    <a href="https://github.com/sh0ds" target="_blank" rel="noopener">GitHub</a>
-                    <a href="https://sh0ds.itch.io/" target="_blank" rel="noopener">itch.io</a>
-                    <a href="mailto:mail@sh0ds.dev">Contact</a>
-                </div>
-            </div>
-        </footer>
-    </body>
+    <footer class="site-footer">
+        <p><small>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc" target="_blank">3sgc</a></small></p>
+        <ul>
+            <li><a href="https://github.com/sh0ds" target="_blank">GitHub</a></li>
+            <li><a href="https://sh0ds.itch.io/" target="_blank">itch.io</a></li>
+            <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+
+        // brand hover: a band of 0s and 1s runs through sh0ds@devblog
+        const brand = document.querySelector(".brand");
+        const user = brand.firstChild;
+        const host = brand.querySelector("span");
+        const original = user.data + host.textContent;
+        let frame;
+
+        function bitflip() {
+            if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            cancelAnimationFrame(frame);
+            const start = performance.now();
+            let last = 0;
+
+            (function tick(now) {
+                const p = Math.min((now - start) / 650, 1);
+                if (now - last > 30 || p === 1) {
+                    last = now;
+                    const band = p * (original.length + 6) - 3;
+                    const text = [...original].map((c, i) =>
+                        p < 1 && Math.abs(i - band) < 2.5 ? (Math.random() < .5 ? "0" : "1") : c
+                    ).join("");
+                    user.data = text.slice(0, user.data.length);
+                    host.textContent = text.slice(user.data.length);
+                }
+                if (p < 1) frame = requestAnimationFrame(tick);
+            })(start);
+        }
+
+        brand.addEventListener("mouseenter", bitflip);
+        brand.addEventListener("focus", bitflip);
+    </script>
+</body>
 </html>
