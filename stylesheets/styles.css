@@ -5,6 +5,7 @@
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
   --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", Menlo, Consolas, monospace;
 
+<<<<<<< HEAD
   --bg: #0c0a10;        /* near-black with a violet cast */
   --surface: #15121c;
   --border: #2a2436;
@@ -18,6 +19,18 @@
   --col: min(42rem, 90%);
   --radius: 6px;
   --ease: cubic-bezier(.2, .7, .2, 1);
+=======
+    /* geometry */
+    --radius: 3px;
+    --border: 1px solid var(--line);
+    --shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+    --shadow-glow: 0 0 0 1px var(--acc2), 0 0 1.4rem var(--glow);
+    --transition: 0.18s ease;
+    --tab-bar: 2px solid var(--acc2);
+
+    /* code */
+    --mono: JuliaMono, ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+>>>>>>> a23e98caed13d90e09f92e0b5bae1a47e5ee73a1
 }
 
 /* ---------- Base ---------- */
@@ -26,12 +39,30 @@
 html { scroll-behavior: smooth; }
 
 body {
+<<<<<<< HEAD
   margin: 0;
   display: grid;
   grid-template-columns: 1fr var(--col) 1fr;
   background: var(--bg);
   color: var(--text);
   font: 1.1rem/1.7 var(--sans);
+=======
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    color: var(--text);
+    background-color: var(--bg);
+    /* faint terminal grid + vignette, mixed from --acc1 only */
+    background-image:
+        linear-gradient(color-mix(in srgb, var(--acc1) 55%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--acc1) 55%, transparent) 1px, transparent 1px),
+        radial-gradient(120% 90% at 50% 0%, transparent 55%, rgba(0, 0, 0, 0.45) 100%);
+    background-size: 34px 34px, 34px 34px, 100% 100%;
+    background-attachment: fixed;
+    font-family: var(--mono);
+    line-height: 1.6;
+>>>>>>> a23e98caed13d90e09f92e0b5bae1a47e5ee73a1
 }
 body > * { grid-column: 2; }
 
@@ -160,6 +191,227 @@ body > * { grid-column: 2; }
 /* ---------- Main & footer ---------- */
 main { padding-top: 2rem; animation: rise .6s var(--ease) both; }
 
+<<<<<<< HEAD
+=======
+.nav a:hover,
+.nav a:focus-visible {
+    color: var(--bg);
+    background: var(--acc2);
+    transform: translateY(-1px);
+}
+
+.nav a:hover::before,
+.nav a:hover::after {
+    color: var(--bg);
+}
+
+/* ==========================================
+   3. MAIN CONTENT
+   ========================================== */
+main {
+    width: 100%;
+    max-width: 860px;
+    margin: 48px auto;
+    padding: 0 16px;
+    flex-grow: 1;
+}
+
+.base {
+    width: 100%;
+    padding: 1.5rem 1.75rem 2rem;
+}
+
+.base h1 {
+    margin: 0.4rem 0 1.2rem;
+    text-align: center;
+    font-size: clamp(1.9rem, 6vw, 2.6rem);
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 0.9rem var(--glow);
+}
+
+.base h1::after {
+    content: "\2588";
+    margin-left: 0.15em;
+    color: var(--acc2);
+    animation: caret-blink 1.1s steps(1) infinite;
+}
+
+.base hr {
+    height: 0;
+    border: none;
+    border-top: 1px dashed var(--line);
+    box-shadow: 0 0 0.4rem var(--glow);
+    margin: 1.5rem 0;
+}
+
+.base > p {
+    color: color-mix(in srgb, var(--text) 88%, var(--bg));
+}
+
+/* ==========================================
+   4. BLOG COMPONENT
+   ========================================== */
+.blog-post {
+    margin: 2rem 0;
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    border-left: 2px solid var(--line);
+}
+
+.blog-post:hover {
+    border-left-color: var(--acc2);
+}
+
+.blog-post:last-of-type {
+    margin-bottom: 0;
+}
+
+.blog-post h2 {
+    margin: 0 0 0.25rem;
+    font-size: 1.4rem;
+    text-shadow: 0 0 0.5rem var(--glow);
+}
+
+.blog-post h2::before {
+    content: "> ";
+    color: var(--acc2);
+}
+
+.blog-post time {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.blog-post time::before {
+    content: "// ";
+}
+
+.blog-post img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+}
+
+/* inline code (opendir, fread, ...): same font as the text,
+   so the browser's default monospace doesn't shrink it */
+.blog-post :not(pre) > code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    color: var(--acc2);
+    background: var(--panel-inset);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.05em 0.35em;
+    white-space: nowrap;
+}
+
+.blog-post a,
+.player-flavor a,
+.error a {
+    color: var(--acc2);
+    padding: 0 0.15em;
+    box-decoration-break: clone;
+}
+
+.blog-post a:hover,
+.blog-post a:focus-visible,
+.player-flavor a:hover,
+.player-flavor a:focus-visible,
+.error a:hover,
+.error a:focus-visible {
+    color: var(--bg);
+    background: var(--acc2);
+}
+
+/* ==========================================
+   5. GAME ARCHIVE & PLAYER
+   ========================================== */
+.game-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.75rem;
+    margin-top: 1.5rem;
+}
+
+.grid-item {
+    flex: 0 1 240px;
+    padding: 1rem 1rem 1.25rem;
+    text-align: center;
+    background: var(--panel-inset);
+    border: var(--border);
+    border-top: var(--tab-bar);
+    border-radius: var(--radius);
+}
+
+.grid-item h2 {
+    margin: 0 0 0.9rem;
+    font-size: 1.05rem;
+    text-shadow: 0 0 0.4rem var(--glow);
+}
+
+.grid-item img {
+    width: 100%;
+    max-width: 200px;
+    image-rendering: pixelated;
+    border: 1px solid var(--line);
+    filter: drop-shadow(0 5px 6px rgba(0, 0, 0, 0.4));
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.5s ease;
+}
+
+.grid-item a:focus-visible img,
+.grid-item img:hover {
+    transform: scale(1.06);
+    box-shadow: var(--shadow-glow);
+    transition: transform 0.3s cubic-bezier(0.65, 0.05, 0.36, 1),
+        box-shadow 0.3s ease;
+}
+
+.pico-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-inline: 1rem;
+}
+
+.pico-player h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    letter-spacing: 0.03em;
+    text-shadow: 0 0 0.6rem var(--glow);
+}
+
+.pico-player h1::before {
+    content: "> ";
+    color: var(--acc2);
+}
+
+.pico-player iframe {
+    width: clamp(18rem, 95vw, 40rem);
+    height: auto;
+    aspect-ratio: 1 / 1;
+    image-rendering: pixelated;
+    border: 1px solid var(--acc2);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow), 0 0 1.6rem var(--glow);
+}
+
+.player-flavor {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* ==========================================
+   6. SITE FOOTER  (status bar)
+   ========================================== */
+>>>>>>> a23e98caed13d90e09f92e0b5bae1a47e5ee73a1
 .site-footer {
   margin-top: 4rem;
   padding: 2rem 0;
@@ -342,8 +594,56 @@ th { font-family: var(--mono); color: var(--muted); font-weight: 600; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
+<<<<<<< HEAD
 /* ---------- Small screens ---------- */
 @media (max-width: 480px) {
   .site-header { padding-block: 1.1rem; }
   .site-footer { flex-direction: column; text-align: center; }
+=======
+/* ==========================================
+   9. CODE BLOCKS & PRISM OVERRIDES
+   ------------------------------------------
+   !important is needed here because
+   prism.css is loaded after styles.css
+   ========================================== */
+pre[class*="language-"],
+code[class*="language-"] {
+    white-space: pre !important;
+    font-family: var(--mono) !important;
+}
+
+pre,
+pre[class*="language-"] {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    word-wrap: normal !important;
+    margin: 1.2em 0 !important;
+    padding: 0.9em 1.1em !important;
+    font-size: 0.85em !important;
+    line-height: 1.5 !important;
+    background: var(--panel-inset) !important;
+    border: 1px solid var(--line) !important;
+    border-left: 3px solid var(--acc2) !important;
+    border-radius: var(--radius) !important;
+}
+
+/* code inside a block: no second box, inherit size from the pre */
+pre code,
+pre code[class*="language-"] {
+    font-size: inherit !important;
+    background: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+code[class*="language-"] {
+    word-break: normal !important;
+    word-wrap: normal !important;
+}
+
+:not(pre) > code[class*="language-"] {
+    background: var(--panel-inset) !important;
+    border: 1px solid var(--line) !important;
+>>>>>>> a23e98caed13d90e09f92e0b5bae1a47e5ee73a1
 }
