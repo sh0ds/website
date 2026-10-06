@@ -234,3 +234,23 @@ ul.post-list time {
     transition-duration: 0ms !important;
   }
 }
+
+.colophon dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 1.5rem 0 0 0;
+}
+
+.colophon dt {
+  color: #666;
+}
+
+.colophon dd {
+  margin: 0;
+}
+
+.tagline {
+  color: #888;
+  margin: 0 0 0.75rem 0;
+}
