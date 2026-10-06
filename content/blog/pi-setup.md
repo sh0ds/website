@@ -5,13 +5,13 @@ date: 2026-10-06
 summary: What's actually on my Pi 5 — Pi-hole, Unbound, nginx, restic, and a VPN tunnel that only carries DNS (because the full-tunnel version was a nightmare).
 ---
 
-So here's the thing: this website runs on a Raspberry Pi 5 under my desk, headless, connected to a FRITZ!Repeater, Wi-Fi off. Hostname rasberry-pizian, user sh0ds, static IP at 192.168.178.36. Two drives: the SD card for the system (476 GB), and a 931 GB HDD mounted at /mnt/backup doing nothing but holding restic snapshots.
+So here's the thing: this website runs on a Raspberry Pi 5 on my desk, headless, connected to a FRITZ!Repeater, Wi-Fi off. Hostname rasberry-pizian, user sh0ds, static IP at 192.168.178.36. Two drives: the SD card for the system (476 GB), and a 931 GB HDD mounted at /mnt/backup doing nothing but holding restic snapshots.
 
 The setup works now, mostly because I spent enough time breaking it that I finally learned what not to do.
 
 # What's actually running
 
-I try to keep the number of moving parts low. Right now the list is: Pi-hole for DNS filtering, Unbound as the recursive resolver (Pi-hole talks to it on localhost port 5335), nginx serving sh0ds.dev on ports 80 and 443, ufw as the firewall, Docker running exactly one container called Uptime Kuma, restic backing up everything nightly via systemd timer, rpi-connect for remote access (a user service, not system), and a WireGuard tunnel on the FRITZ!Box itself for reaching home stuff from outside.
+I try to keep the number of moving parts low. Right now the list is: Pi-hole for DNS filtering, Unbound as the recursive resolver (Pi-hole talks to it on localhost port 5335), nginx serving sh0ds.dev on ports 80 and 443, ufw as the firewall, Docker running exactly one container called Uptime Kuma, restic backing up everything nightly via systemd timer, rpi-connect for remote access and a WireGuard tunnel on the FRITZ!Box itself for reaching home stuff from outside.
 
 One rule runs this machine: Keep It Simple, sh0ds.
 
@@ -30,9 +30,9 @@ One thing I tried and wish I hadn't: binding Unbound to the tunnel interface wit
 
 # nginx and certificates
 
-nginx.conf handles both the bare domain and www, port 80 and 443, IPv4 only — the domain has no AAAA record, so no v6 listener needed. Web root is /srv/www, and /srv/www/ramdisk is excluded from backups, since nothing important lives there anyway.
+nginx.conf handles both the bare domain and www, port 80 and 443, IPv4 only — the domain has no AAAA record, so no v6 listener needed. Web root is /srv/www, and /srv/www/ramdisk is excluded from backups, since a tempfs is mounted there for the stats on the home page.
 
-Certificates come from Let's Encrypt via acme.sh, installed as root, ECDSA ec-256, auto-renewing roughly every 60 days. There's also a leftover user-level acme.sh install with no certificates — harmless, but annoying. Probably deleting it soon.
+Certificates come from Let's Encrypt via acme.sh, installed as root, ECDSA ec-256, auto-renewing roughly every 60 days.
 
 Quick sanity checks:
 
@@ -60,7 +60,7 @@ Do this once in a while. A backup you've never tested isn't really a backup.
 
 # The Proton split tunnel
 
-This is the part that took the longest. Status as of today: operational. The full-tunnel version is retired at /etc/wireguard/protonvpn-fulltunnel.bak if you want to see what not to do.
+This is the part that took the longest. Status as of today: operational.
 
 Here's what actually works now: only DNS egress, meaning UDP to port 53, travels through the tunnel. Everything else — websites, SSH, apt, restic to Hetzner, rpi-connect — leaves via the native connection.
 
@@ -89,8 +89,4 @@ sudo wg-quick down protonvpn && sudo wg-quick up protonvpn
 
 The full-tunnel setup needed an ever-growing pile of exceptions, each with its own failure mode. The LAN and SSH replies escaped via the tunnel, so I needed a priority-100 rule with its own table. Replies to external visitors became asymmetric, which took a CONNMARK mangle pair to fix. apt hung on IPv6, cured by a blackhole route plus forced IPv4 in the apt config. And rpi-connect's relay refused Proton's exit IP, which needed host routes for two address ranges.
 
-Three things stuck with me from that mess. Leftover state killed most of it — every hook command must be idempotent, using things like "or true" and "route replace", because half-completed teardowns caused more bugs than the actual logic. rpi-connect is a user-level service, not system, so enabling it with sudo systemctl fails by design; you need loginctl enable-linger sh0ds to survive headless boots. And exit IPs churn per tunnel cycle, so long-lived relay sessions get stuck — a restart of rpi-connect fixes it.
-
-The meta-lesson, honestly: complexity was the bug. Every exception I added felt like a temporary workaround. Six months later, all of them were permanent. Simplicity scales. Maintenance doesn't.
-
-That's it. This is the full tour — the stuff I keep around because it earns its keep, not because I like collecting services.
+The meta-lesson, honestly: complexity was the bug. Every exception I added felt like a temporary workaround. Six months later, all of them were permanent. Simplicity scales.

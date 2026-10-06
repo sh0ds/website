@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const updateStats = () => {
-        fetch(`pistats.json?t=${Date.now()}`)
+        fetch(`ramdisk/pistats.json?t=${Date.now()}`)
             .then(response => response.json())
             .then(data => {
                 setText("stat-temp", data.temp);
