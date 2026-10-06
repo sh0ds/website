@@ -38,7 +38,6 @@ body > * { grid-column: 2; }
 ::selection { background: var(--accent); color: var(--bg); }
 
 /* ---------- Scrollbar ---------- */
-/* Chrome, Edge, Safari */
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb {
@@ -74,7 +73,7 @@ body > * { grid-column: 2; }
 }
 
 /* Brand: a shell prompt, sh0ds@devblog:~$ (the :~$ is added by CSS).
-   On hover a band of 0s and 1s runs through it (bit flip, see template) */
+   On hover a band of 0s and 1s runs through it (bit flip, see main.js) */
 .brand {
   display: inline-block;
   color: var(--text);
@@ -160,15 +159,7 @@ body > * { grid-column: 2; }
 /* ---------- Main & footer ---------- */
 main { padding-top: 2rem; animation: rise .6s var(--ease) both; }
 
-/* landing-page additions — promote into styles.css when stable */
-.session .cmd {
-    color: var(--muted);
-    font-family: var(--mono);
-    margin: 2.25rem 0 .5rem;
-}
-.session .cmd::before { content: "sh0ds@devblog:~$ "; color: var(--accent); }
-.session .cmd::after  { content: "_"; color: var(--accent); animation: blink 1.2s steps(1) infinite; }
-.session .out { margin-top: 0; }
+.out { margin-top: 0; }
 .post-list {
     list-style: none;
     margin: 1.25rem 0;
@@ -189,11 +180,57 @@ main { padding-top: 2rem; animation: rise .6s var(--ease) both; }
     font: .85rem var(--mono);
     margin: 0;
 }
-.stack th:first-child, .stack td:first-child { color: var(--muted); font-family: var(--mono); }
-@keyframes blink { 50% { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) {
-    .session .cmd::after { animation: none; }
+
+/* ---------- Status board (homepage) ---------- */
+.machine {
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin: 2.5rem 0;
 }
+.machine h2 {
+    font: .8rem var(--mono);
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    margin: 0 0 1rem;
+}
+.machine h2 .dot {
+    display: inline-block;
+    width: .55em; height: .55em;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: .5em;
+    animation: pulse 2.4s ease-in-out infinite;
+}
+.gauges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    font-family: var(--mono);
+}
+.gauge .val {
+    font-size: 1.75rem;
+    line-height: 1.1;
+}
+.gauge .lbl {
+    font-size: .75rem;
+    color: var(--muted);
+    margin-top: .35rem;
+}
+.hero { margin-top: 3rem; }
+.hero h1 {
+    font-size: clamp(2.4rem, 7vw, 4.2rem);
+    line-height: 1.05;
+    margin: 0 0 1rem;
+}
+.colophon {
+    border-top: 1px solid var(--border);
+    margin-top: 3.5rem;
+    padding-top: 1.5rem;
+    color: var(--muted);
+    font: .85rem var(--mono);
+}
+@keyframes pulse { 50% { opacity: .35; } }
 
 .site-footer {
   margin-top: 4rem;
