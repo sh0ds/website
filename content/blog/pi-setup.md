@@ -109,7 +109,9 @@ The full-tunnel setup needed an ever-growing pile of exceptions, each with its o
 Three things stuck with me from that mess:
 
 - Leftover state killed most of it. Every hook command must be idempotent (`|| true`, `route replace`). Half-completed teardowns caused more bugs than the actual logic.
+
 - rpi-connect is a user-level service, not system. `sudo systemctl enable rpi-connect` fails by design. You need `loginctl enable-linger sh0ds` to survive headless boots.
+
 - Exit IPs churn per tunnel cycle. Long-lived relay sessions get stuck. `rpi-connect restart` fixes it.
 
 The meta-lesson, honestly: complexity was the bug. Every exception I added felt like a temporary workaround. Six months later, all of them were permanent. Simplicity scales. Maintenance doesn't.
