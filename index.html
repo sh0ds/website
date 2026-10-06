@@ -8,8 +8,7 @@
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="/" aria-label="sh0ds devblog, home">sh0ds<span>(7)</span></a>
-        <span class="manual" aria-hidden="true">devblog manual</span>
+        <a class="brand" href="/" aria-label="sh0ds@devblog, home">sh0ds<span>@devblog</span></a>
         <nav aria-label="Main">
             <ul>
                 <li><a href="/blog/index.html">blog</a></li>
@@ -19,16 +18,8 @@
     </header>
 
     <main>
-        <h1 class="visually-hidden">sh0ds devblog</h1>
-
-        <h2>Name</h2>
-        <p><b>sh0ds</b> — a devblog about learning various languages and using my RPi as home server.</p>
-
-        <h2>Synopsis</h2>
-        <p><b>sh0ds</b> [<a href="/blog/index.html">blog</a>] [<a href="/projects/index.html">projects</a>]</p>
-
-        <h2>Description</h2>
-        <p>Every page here is built by <a href="/projects/3sgc.html">3sgc</a>, a static site generator I'm writing in C11, and served from a Raspberry Pi 5 on my desk. The numbers below are read live from that Pi.</p>
+        <h1>Notes on C, Linux, and the Raspberry Pi 5 that serves this site.</h1>
+        <p class="lede">I'm sh0ds. Every page here is built by <a href="/projects/3sgc.html">3sgc</a>, a static site generator I'm writing in C11, and served from a Pi on my desk.</p>
 
         <section class="machine" aria-label="Live server status">
             <h2><span class="dot"></span>rasberry-pizian — live</h2>
@@ -40,23 +31,32 @@
             </div>
         </section>
 
-        <h2>Recent</h2>
-        <dl class="entries">
-            <dt><time datetime="2026-10-06">2026-10-06</time><a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a></dt>
-            <dd>Pi-hole, Unbound, nginx, restic, and a DNS-only VPN tunnel.</dd>
-        </dl>
+        <h2>Recent posts</h2>
+        <ol class="entries">
+            <li>
+                <time datetime="2026-10-06">2026-10-06</time>
+                <a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a>
+                <p>Pi-hole, Unbound, nginx, restic, and a DNS-only VPN tunnel.</p>
+            </li>
+        </ol>
+        <p class="more"><a href="/blog/index.html">All posts</a></p>
 
-        <h2>See also</h2>
-        <p><a href="/blog/index.html">blog(7)</a>, <a href="/projects/index.html">projects(7)</a>, <a href="/projects/3sgc.html">3sgc(1)</a>, <a href="https://github.com/sh0ds">github</a></p>
+        <h2>Projects</h2>
+        <ul class="entries">
+            <li>
+                <a href="/projects/3sgc.html">3sgc</a>
+                <p>A static site generator in C11 with no dependencies. It builds this website.</p>
+            </li>
+        </ul>
     </main>
 
     <footer class="site-footer">
-        <p>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
         <ul>
             <li><a href="https://github.com/sh0ds">GitHub</a></li>
             <li><a href="https://sh0ds.itch.io/">itch.io</a></li>
             <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
         </ul>
+        <p>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
     </footer>
 
     <script src="/main.js" defer></script>

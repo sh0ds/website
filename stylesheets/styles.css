@@ -1,28 +1,29 @@
 /* stylesheets/styles.css — #sh0ds-devblog
  *
- * The whole site is set like a man page: one monospace face,
- * hierarchy from weight and indentation instead of size,
- * section headings hang left, everything else sits one tab in.
- * Colors follow Zed's "The Dark Side": violet structure, gold data.
+ * Layout borrowed from the editor this palette comes from:
+ * a project panel on the left (brand, nav, links), the page as
+ * the open buffer, and the Pi's live stats pinned in the panel.
+ * Colors: Zed "The Dark Side" — violet structure, gold data.
  */
 
 /* ---------- tokens ---------- */
 :root {
   color-scheme: dark;
 
-  --mono: "Berkeley Mono", "JetBrains Mono", "Iosevka", ui-monospace,
-          "Cascadia Code", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --sans: "Zed Plex Sans", "IBM Plex Sans", "Inter", system-ui, sans-serif;
+  --mono: "Zed Plex Mono", "IBM Plex Mono", "JetBrains Mono", ui-monospace,
+          Menlo, Consolas, "DejaVu Sans Mono", monospace;
 
-  --bg:     #15121b;  /* aubergine black */
-  --pane:   #0c0a10;  /* terminal panes */
-  --rule:   #2d2638;
-  --ink:    #e4dfee;
-  --dim:    #8c84a0;
-  --violet: #a98bf0;  /* structure: headings, links */
-  --gold:   #f2c460;  /* data: stats, code, current page */
+  --bg:     #15121b;  /* buffer */
+  --panel:  #1c1824;  /* side panel */
+  --pane:   #0e0c12;  /* code */
+  --rule:   #2e2739;
+  --ink:    #e6e1ef;
+  --dim:    #8d85a1;
+  --violet: #a98bf0;
+  --gold:   #f2c460;
 
-  --measure: 80ch;    /* a terminal is 80 columns wide */
-  --indent: 4.2rem;   /* man(1) body indent, ~7 columns */
+  --side: 15rem;
   --ease: cubic-bezier(.2, .7, .2, 1);
 }
 
@@ -32,192 +33,194 @@
 html {
   background: var(--bg);
   color: var(--ink);
-  font: 400 1rem/1.65 var(--mono);
-  font-variant-numeric: slashed-zero tabular-nums;
+  font: 400 1.0625rem/1.7 var(--sans);
   -webkit-text-size-adjust: 100%;
 }
-
-body {
-  max-width: var(--measure);
-  margin: 0 auto;
-  padding: 0 2ch;
-}
+body { margin: 0; }
 
 ::selection { background: var(--violet); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-
-/* ---------- running header: "sh0ds(7)   devblog manual   blog projects" ---------- */
-.site-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .5rem 2ch;
-  padding: 2.5rem 0 1rem;
-  border-bottom: 1px solid var(--rule);
+/* ---------- side panel ---------- */
+.site-header,
+.site-footer {
+  position: fixed;
+  left: 0;
+  width: var(--side);
+  padding: 1.5rem 1.25rem;
+  font-family: var(--mono);
+  font-size: .875rem;
 }
+body::before {               /* the panel surface itself */
+  content: "";
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--side);
+  background: var(--panel);
+  border-right: 1px solid var(--rule);
+}
+.site-header { top: 0; }
+.site-footer { bottom: 0; color: var(--dim); }
 
 .brand {
+  display: block;
+  margin-bottom: 2rem;
   color: var(--ink);
   font-weight: 700;
+  font-size: 1rem;
   text-decoration: none;
 }
 .brand span { color: var(--dim); font-weight: 400; }
-.brand:hover span { color: var(--violet); }
 
-.manual { color: var(--dim); }
+.site-header ul,
+.site-footer ul { margin: 0; padding: 0; list-style: none; }
 
-.site-header nav ul {
-  display: flex;
-  gap: 3ch;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 .site-header nav a {
+  display: block;
+  margin: 0 -1.25rem;
+  padding: .3rem 1.25rem;
   color: var(--dim);
   text-decoration: none;
 }
-.site-header nav a:hover { color: var(--ink); }
+.site-header nav a::after { content: "/"; }
+.site-header nav a:hover { color: var(--ink); background: color-mix(in srgb, var(--violet) 8%, transparent); }
 .site-header nav a[aria-current="page"] {
-  color: var(--gold);
-  text-decoration: underline 1px;
-  text-underline-offset: .3em;
-}
-
-/* ---------- page body ---------- */
-main { padding: 2rem 0 3rem; }
-
-/* everything sits one indent in, except headings */
-main > :not(h1, h2, section),
-main > section > :not(h2) {
-  margin-left: var(--indent);
-}
-
-h1, h2, h3 {
-  font-size: 1rem;
-  line-height: 1.4;
-  margin: 2rem 0 .5rem;
-}
-
-h1 { margin-top: 0; color: var(--ink); }
-main > :first-child,
-main > .visually-hidden + * { margin-top: 0; }
-
-/* man section heading: NAME, SYNOPSIS, DESCRIPTION ... */
-h2 {
-  color: var(--violet);
-  text-transform: uppercase;
-  letter-spacing: .04em;
-}
-
-h3 { margin-left: calc(var(--indent) / 2); color: var(--ink); }
-
-p { margin: 0 0 1rem; }
-
-.meta { color: var(--dim); }
-
-b, strong { font-weight: 700; color: var(--ink); }
-
-code, pre { font-family: inherit; }
-code { color: var(--gold); }
-
-/* ---------- links: the underline grows in from the left ---------- */
-main a,
-.site-footer a {
-  color: var(--violet);
-  text-decoration: none;
-  background:
-    linear-gradient(var(--gold) 0 0) no-repeat 0 100% / 0 1px,
-    linear-gradient(var(--rule) 0 0) no-repeat 0 100% / 100% 1px;
-  transition: background-size .3s var(--ease), color .2s var(--ease);
-}
-main a:hover,
-.site-footer a:hover {
   color: var(--ink);
-  background-size: 100% 1px, 100% 1px;
+  background: color-mix(in srgb, var(--violet) 16%, transparent);
+  box-shadow: inset 2px 0 var(--violet);
 }
 
-/* ---------- entries: blog + projects listings, like man OPTIONS ---------- */
-.entries { margin-top: 0; }
-.entries dt { margin-top: 1.25rem; }
-.entries dt:first-child { margin-top: 0; }
-.entries time { display: block; color: var(--dim); }
-.entries dd {
-  margin: 0 0 0 var(--indent);
+.site-footer ul { margin-bottom: 1rem; }
+.site-footer li a { color: var(--dim); text-decoration: none; }
+.site-footer li a:hover { color: var(--violet); }
+.site-footer p { margin: 0; font-size: .75rem; line-height: 1.6; }
+.site-footer p a { color: var(--dim); }
+
+/* ---------- the buffer ---------- */
+main {
+  margin-left: var(--side);
+  padding: 4.5rem clamp(1.5rem, 6vw, 6rem) 6rem;
+  max-width: calc(var(--side) + 46rem + 12rem);
+  animation: open .5s var(--ease) backwards;
+}
+main > * { max-width: 46rem; }
+
+h1 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -.015em;
+  max-width: 28ch;
+  text-wrap: balance;
+}
+
+h2 {
+  margin: 3.5rem 0 1rem;
+  font: 600 .9375rem/1.4 var(--mono);
+  color: var(--violet);
+}
+h2::before { content: "## "; color: var(--rule); }
+
+h3 { margin: 2rem 0 .5rem; font-size: 1.125rem; }
+
+p { margin: 0 0 1.1rem; max-width: 66ch; }
+
+.lede { font-size: 1.1875rem; color: var(--dim); max-width: 52ch; }
+.meta { font: .875rem var(--mono); color: var(--dim); margin-bottom: 2.5rem; }
+
+a { color: var(--violet); text-underline-offset: .2em; text-decoration-thickness: 1px; }
+a:hover { color: var(--ink); text-decoration-color: var(--gold); }
+
+code, pre { font-family: var(--mono); }
+code { font-size: .9em; color: var(--gold); }
+
+/* ---------- entries: posts + projects ---------- */
+.entries { margin: 0; padding: 0; list-style: none; max-width: 46rem; }
+.entries li {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  column-gap: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--rule);
+}
+.entries li:last-child { border-bottom: 1px solid var(--rule); }
+.entries time { grid-row: span 2; font: .875rem/1.9 var(--mono); color: var(--dim); }
+.entries a { grid-column: 2; font-weight: 600; color: var(--ink); text-decoration: none; }
+.entries a:hover { color: var(--violet); }
+.entries p { grid-column: 2; margin: .25rem 0 0; color: var(--dim); }
+
+.more { font: .875rem var(--mono); margin-top: 1rem; padding-left: 9rem; }
+
+/* ---------- the live Pi: pinned into the side panel ---------- */
+.machine {
+  position: fixed;
+  top: 10.5rem;
+  left: 0;
+  z-index: 1;
+  width: var(--side);
+  padding: 1rem 1.25rem;
+  border-block: 1px solid var(--rule);
+  font: .8125rem/1.5 var(--mono);
   color: var(--dim);
 }
-
-/* ---------- live stats: a key ......... value readout ---------- */
-.machine h2 { display: flex; align-items: center; gap: 1ch; }
-
+.machine h2 {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin: 0 0 .75rem;
+  font: inherit;
+  color: var(--ink);
+}
+.machine h2::before { content: none; }
 .dot {
-  width: .55em;
-  height: .55em;
+  flex: none;
+  width: .5rem;
+  height: .5rem;
   border-radius: 50%;
   background: var(--gold);
   animation: pulse 2.4s ease-in-out infinite;
 }
+.gauge { display: flex; justify-content: space-between; gap: 1rem; padding: .15rem 0; }
+.gauge .val { order: 1; color: var(--gold); }
 
-.gauges {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .35rem 4ch;
-  padding: 1rem 2ch;
-  background: var(--pane);
-  border: 1px solid var(--rule);
-}
-
-.gauge { display: flex; align-items: baseline; }
-.gauge .val { order: 1; color: var(--gold); font-weight: 700; }
-.gauge .lbl {
-  flex: 1;
-  display: flex;
-  color: var(--dim);
-}
-.gauge .lbl::after {         /* dotted leader between label and value */
-  content: "";
-  flex: 1;
-  margin: 0 1ch .3em;
-  border-bottom: 1px dotted var(--rule);
-}
-
-/* ---------- code: terminal panes with a filename bar ---------- */
+/* ---------- code ---------- */
 pre {
   overflow-x: auto;
-  margin-top: 0;
-  margin-bottom: 1.5rem;
-  padding: 0 2ch 1rem;
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.25rem;
   background: var(--pane);
   border: 1px solid var(--rule);
-  font-size: .9rem;
-  line-height: 1.6;
+  border-radius: 4px;
+  font-size: .875rem;
+  line-height: 1.65;
 }
-pre::before {
-  content: "~/snippet";
+pre code { color: var(--ink); font-size: inherit; }
+
+pre::before {                 /* editor tab with the filename */
+  content: "snippet";
   display: block;
-  margin: 0 -2ch 1rem;
-  padding: .35rem 2ch;
+  width: max-content;
+  margin: -1rem 0 1rem -1.25rem;
+  padding: .3rem 1rem;
+  background: var(--panel);
+  border-right: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   color: var(--dim);
-  font-size: .8rem;
+  font-size: .75rem;
 }
-pre:has(> code.language-c)::before        { content: "~/snippet.c"; }
-pre:has(> code.language-h)::before        { content: "~/snippet.h"; }
-pre:has(> code.language-css)::before      { content: "~/styles.css"; }
-pre:has(> code.language-html)::before     { content: "~/index.html"; }
+pre:has(> code.language-c)::before        { content: "snippet.c"; }
+pre:has(> code.language-h)::before        { content: "snippet.h"; }
+pre:has(> code.language-css)::before      { content: "styles.css"; }
+pre:has(> code.language-html)::before     { content: "index.html"; }
 pre:has(> code.language-js)::before,
-pre:has(> code.language-javascript)::before { content: "~/snippet.js"; }
-pre:has(> code.language-python)::before   { content: "~/snippet.py"; }
-pre:has(> code.language-makefile)::before { content: "~/Makefile"; }
+pre:has(> code.language-javascript)::before { content: "snippet.js"; }
+pre:has(> code.language-python)::before   { content: "snippet.py"; }
+pre:has(> code.language-makefile)::before { content: "Makefile"; }
 pre:has(> code.language-bash)::before,
 pre:has(> code.language-sh)::before,
-pre:has(> code.language-shell)::before    { content: "$"; color: var(--gold); }
+pre:has(> code.language-shell)::before    { content: "terminal"; color: var(--gold); }
 
-pre code { display: block; color: var(--ink); background: none; }
-
-/* highlight.js — Zed "The Dark Side" */
 .hljs-comment, .hljs-quote                 { color: #6f6880; font-style: italic; }
 .hljs-keyword, .hljs-meta, .hljs-tag,
 .hljs-name, .hljs-selector-tag             { color: #a98bf0; }
@@ -232,71 +235,48 @@ pre code { display: block; color: var(--ink); background: none; }
 .hljs-deletion                             { color: #ff7a8a; }
 .hljs-operator, .hljs-punctuation          { color: #9d97ad; }
 
-/* ---------- media & tables ---------- */
 img, video { max-width: 100%; height: auto; }
 
-table { border-collapse: collapse; }
-th, td { padding: .25rem 2ch .25rem 0; text-align: left; }
-th { color: var(--dim); font-weight: 400; border-bottom: 1px solid var(--rule); }
-
-/* ---------- footer ---------- */
-.site-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: .5rem 3ch;
-  padding: 1rem 0 2.5rem;
-  border-top: 1px solid var(--rule);
-  color: var(--dim);
-  font-size: .875rem;
-}
-.site-footer p { margin: 0; }
-.site-footer ul {
-  display: flex;
-  gap: 3ch;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* ---------- motion: the page prints itself, top to bottom ---------- */
-main > * { animation: print .4s var(--ease) backwards; }
-main > :nth-child(2)  { animation-delay: .06s; }
-main > :nth-child(3)  { animation-delay: .12s; }
-main > :nth-child(4)  { animation-delay: .18s; }
-main > :nth-child(5)  { animation-delay: .24s; }
-main > :nth-child(6)  { animation-delay: .30s; }
-main > :nth-child(7)  { animation-delay: .36s; }
-main > :nth-child(8)  { animation-delay: .42s; }
-main > :nth-child(n+9) { animation-delay: .48s; }
-
-@keyframes print {
-  from { opacity: 0; clip-path: inset(0 0 100% 0); }
-  to   { opacity: 1; clip-path: inset(0 0 0 0); }
-}
-@keyframes pulse {
-  50% { opacity: .35; }
-}
+/* ---------- motion ---------- */
+@keyframes open  { from { opacity: 0; transform: translateY(6px); } }
+@keyframes pulse { 50% { opacity: .3; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-/* ---------- small screens ---------- */
-@media (max-width: 600px) {
-  :root { --indent: 1.2rem; }
-  .manual { display: none; }
-  .site-header { padding-top: 1.5rem; }
-  .gauges { grid-template-columns: 1fr; }
-  .site-footer { flex-direction: column; }
-}
-
-/* ---------- utility ---------- */
-.visually-hidden {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+/* ---------- narrow or short screens: panel becomes a top bar ---------- */
+@media (max-width: 760px), (max-height: 540px) {
+  body::before { content: none; }
+  .site-header, .site-footer { position: static; width: auto; }
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel);
+    border-bottom: 1px solid var(--rule);
+    padding: 1rem 1.25rem;
+  }
+  .brand { margin: 0; }
+  .site-header nav ul { display: flex; gap: .25rem; }
+  .site-header nav a { margin: 0; padding: .25rem .6rem; border-radius: 3px; }
+  main { margin: 0; padding: 2.5rem 1.25rem 3rem; }
+  h1 { font-size: 1.6rem; }
+  .site-footer { border-top: 1px solid var(--rule); }
+  .site-footer ul { display: flex; gap: 1.5rem; }
+  .lede { font-size: 1.0625rem; }
+  .machine {
+    position: static;
+    width: auto;
+    margin: 0 0 2.5rem;
+    padding: 1rem;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+  }
+  .gauges { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1.5rem; }
+  .entries li { grid-template-columns: 1fr; }
+  .entries time { grid-row: auto; }
+  .entries a, .entries p { grid-column: 1; }
+  .more { padding-left: 0; }
 }
