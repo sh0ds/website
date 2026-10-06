@@ -33,6 +33,7 @@ jobs:
             # sync site content to nginx root
             rsync -av --delete \
               --exclude='pistats.json' \
+              --exclude='ramdisk/' \
               --exclude='.git/' \
               --exclude='.github/' \
               --exclude='src/' \
