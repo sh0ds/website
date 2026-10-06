@@ -79,18 +79,16 @@ sudo wg-quick down protonvpn && sudo wg-quick up protonvpn
 
 Pushing to main triggers a GitHub Actions workflow that SSHes into the Pi, pulls the repo at /srv/repo, recompiles the site generator, rebuilds the pages, and rsyncs the result into /srv/www. One push, and the build runs on the machine that serves it.
 
-The first version of the pipeline failed twice over. The runner couldn't reach the Pi because ufw allowed SSH only from the LAN. Fixing that revealed the second problem: password authentication was still enabled in sshd. Opening the firewall without fixing that would have published a password prompt to the internet. Both are resolved — SSH is key-only and reachable on port 22.
+The first run failed because ufw allowed SSH only from the LAN. Behind that sat a second problem: password authentication was still enabled in sshd, which opening the firewall would have exposed to the internet. Both are fixed — SSH is key-only and reachable on port 22.
 
 # Live stats on the homepage
 
 The homepage shows the Pi's CPU temperature, load, RAM usage, and uptime in real time. A cron job runs update_stats.sh every minute, which reads the sensors, formats the values, and writes pistats.json to the tmpfs at /srv/www/ramdisk. Main.js fetches the file via the relative path `/ramdisk/pistats.json` and updates the gauges every 10 seconds.
 
-The tmpfs keeps the once-a-minute write off the SD card. It resets on reboot, and an @reboot cron entry refills it immediately. Early versions of the stats script had a UTF-8 encoding bug in the temperature field that displayed garbage characters. Replacing the broken `tr` command with sed fixed it. The uptime parser also started out stripping spaces from plural time units incorrectly, producing values like "5hs 37ms" before the pattern tolerance was added.
+The tmpfs keeps the once-a-minute write off the SD card. It resets on reboot, and an @reboot cron entry refills it immediately.
 
 # What broke before
 
-The full-tunnel setup accumulated exceptions, each with its own failure mode. LAN and SSH replies escaped through the tunnel and needed a priority-100 rule with its own table. Replies to external visitors arrived asymmetrically until a CONNMARK mangle pair fixed them. apt hung on IPv6 until a blackhole route and forced IPv4 took care of it. And rpi-connect's relay rejected Proton's exit IP until two address ranges got host routes.
+The full-tunnel setup failed slowly rather than suddenly. Its problems — leaking LAN traffic, asymmetric replies to visitors, IPv6 stalls, a relay that hated the exit IP — were each survivable alone. Together they made the machine impossible to reason about.
 
-Most of it traced back to leftover state — half-completed teardowns from earlier experiments caused more trouble than the logic itself. Making every hook command idempotent settled it.
-
-Every exception began as a temporary workaround and became permanent. Simplicity scales.
+The cause was leftovers. Teardowns from earlier attempts never fully completed, so every debugging session started from an unknown state. Making the hook commands idempotent fixed that, and most remaining issues turned out to be ghosts of problems already solved.
