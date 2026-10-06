@@ -160,6 +160,41 @@ body > * { grid-column: 2; }
 /* ---------- Main & footer ---------- */
 main { padding-top: 2rem; animation: rise .6s var(--ease) both; }
 
+/* landing-page additions — promote into styles.css when stable */
+.session .cmd {
+    color: var(--muted);
+    font-family: var(--mono);
+    margin: 2.25rem 0 .5rem;
+}
+.session .cmd::before { content: "sh0ds@devblog:~$ "; color: var(--accent); }
+.session .cmd::after  { content: "_"; color: var(--accent); animation: blink 1.2s steps(1) infinite; }
+.session .out { margin-top: 0; }
+.post-list {
+    list-style: none;
+    margin: 1.25rem 0;
+    padding: 0;
+}
+.post-list li { position: relative; }
+.post-list li::before {
+    content: "->";
+    position: absolute;
+    left: -1.75rem;
+    color: var(--border);
+    font-family: var(--mono);
+    transition: color .2s var(--ease);
+}
+.post-list li:hover::before { color: var(--accent); }
+.post-list .meta {
+    color: var(--muted);
+    font: .85rem var(--mono);
+    margin: 0;
+}
+.stack th:first-child, .stack td:first-child { color: var(--muted); font-family: var(--mono); }
+@keyframes blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+    .session .cmd::after { animation: none; }
+}
+
 .site-footer {
   margin-top: 4rem;
   padding: 2rem 0;
