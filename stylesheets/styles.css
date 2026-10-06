@@ -1,7 +1,11 @@
 /* sh0ds.dev theme 11-eclipse: Eclipse
  * Near-black with a pale corona that slowly breathes behind the page.
- * Fonts load from Google Fonts; self-host the woff2 files if you prefer. */
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=JetBrains+Mono&display=swap");
+ * Fonts are self-hosted from /fonts/, so the site's CSP ('self' only) allows them. */
+@font-face { font-family: "Manrope"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/manrope-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/manrope-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 700; font-style: normal; font-display: swap; src: url("/fonts/manrope-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-weight: 400; font-style: italic; font-display: swap; src: url("/fonts/jetbrains-mono-latin-400-italic.woff2") format("woff2"); }
 
 /* ---------- base (shared by every theme) ---------- */
 *, *::before, *::after { box-sizing: border-box; }
