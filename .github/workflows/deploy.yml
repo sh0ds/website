@@ -17,9 +17,28 @@ jobs:
           username: deploy
           key: ${{ secrets.SSH_KEY }}
           script: |
+            set -e
+
             cd /srv/repo
             git fetch origin main
             git reset --hard origin/main
-            
-            rsync -av --delete --exclude='pistats.json' /srv/repo/ /srv/www/
-            
+
+            # build the generator (requires build-essential on the Pi)
+            make clean && make
+
+            # wipe stale generated output, then rebuild
+            rm -rf blog projects
+            ./build/3sgc /srv/repo build
+
+            # sync site content to nginx root
+            rsync -av --delete \
+              --exclude='pistats.json' \
+              --exclude='.git/' \
+              --exclude='.github/' \
+              --exclude='src/' \
+              --exclude='build/' \
+              --exclude='content/' \
+              --exclude='templates/' \
+              --exclude='Makefile' \
+              --exclude='README.md' \
+              /srv/repo/ /srv/www/

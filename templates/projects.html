@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projects · #sh0ds-devblog</title>
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/" aria-label="sh0ds@devblog">sh0ds<span>@devblog</span></a>
+        <nav aria-label="Main">
+            <ul>
+                <li><a href="/blog/index.html">Blog</a></li>
+                <li><a href="/projects/index.html" aria-current="page">Projects</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>projects</h1>
+        <ul class="project-list">
+        {{#posts}}
+            <li>
+                <p><a href="{{ url }}">{{ title }}</a></p>
+                <p>{{ summary }}</p>
+            </li>
+        {{/posts}}
+        </ul>
+    </main>
+
+    <footer class="site-footer">
+        <p><small>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc" target="_blank">3sgc</a></small></p>
+        <ul>
+            <li><a href="https://github.com/sh0ds" target="_blank">GitHub</a></li>
+            <li><a href="https://sh0ds.itch.io/" target="_blank">itch.io</a></li>
+            <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
+        </ul>
+    </footer>
+</body>
+</html>

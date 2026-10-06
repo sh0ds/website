@@ -1,1 +1,10 @@
-pistats.json
+# build artifacts
+/build/
+/blog/
+/projects/
+
+# editor / OS noise
+*.o
+*.swp
+*~
+.DS_Store
