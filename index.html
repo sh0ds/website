@@ -18,36 +18,40 @@
     </header>
 
     <main>
-        <h1>Notes on C, Linux, and the Raspberry Pi 5 that serves this site.</h1>
-        <p class="lede">I'm sh0ds. Every page here is built by <a href="/projects/3sgc.html">3sgc</a>, a static site generator I'm writing in C11, and served from a Pi on my desk.</p>
+        <div class="intro">
+            <h1>Notes on C, Java, Haskell, Linux, and the Raspberry Pi 5 that serves this site.</h1>
+            <p class="lede">I'm sh0ds. Every page here is built by <a href="/projects/3sgc.html">3sgc</a>, a static site generator I'm writing in C11, and served from a Pi on my desk.</p>
 
-        <section class="machine" aria-label="Live server status">
-            <h2><span class="dot"></span>rasberry-pizian — live</h2>
-            <div class="gauges">
-                <div class="gauge"><div class="val" id="stat-temp">—°</div><div class="lbl">cpu temp</div></div>
-                <div class="gauge"><div class="val" id="stat-load">—</div><div class="lbl">load</div></div>
-                <div class="gauge"><div class="val" id="stat-mem">—%</div><div class="lbl">memory</div></div>
-                <div class="gauge"><div class="val" id="stat-uptime">—</div><div class="lbl">uptime</div></div>
-            </div>
-        </section>
+            <section class="machine" aria-label="Live server status">
+                <h2><span class="dot"></span>rasberry-pizian — live</h2>
+                <div class="gauges">
+                    <div class="gauge"><div class="val" id="stat-temp">—°</div><div class="lbl">cpu temp</div></div>
+                    <div class="gauge"><div class="val" id="stat-load">—</div><div class="lbl">load</div></div>
+                    <div class="gauge"><div class="val" id="stat-mem">—%</div><div class="lbl">memory</div></div>
+                    <div class="gauge"><div class="val" id="stat-uptime">—</div><div class="lbl">uptime</div></div>
+                </div>
+            </section>
+        </div>
 
-        <h2>Recent posts</h2>
-        <ol class="entries">
-            <li>
-                <time datetime="2026-10-06">2026-10-06</time>
-                <a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a>
-                <p>Pi-hole, Unbound, nginx, restic, and a DNS-only VPN tunnel.</p>
-            </li>
-        </ol>
-        <p class="more"><a href="/blog/index.html">All posts</a></p>
+        <div class="feed">
+            <h2>Recent posts</h2>
+            <ol class="entries">
+                <li>
+                    <time datetime="2026-10-06">2026-10-06</time>
+                    <a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a>
+                    <p>Pi-hole, Unbound, nginx, restic, and a DNS-only VPN tunnel.</p>
+                </li>
+            </ol>
+            <p class="more"><a href="/blog/index.html">All posts</a></p>
 
-        <h2>Projects</h2>
-        <ul class="entries">
-            <li>
-                <a href="/projects/3sgc.html">3sgc</a>
-                <p>A static site generator in C11 with no dependencies. It builds this website.</p>
-            </li>
-        </ul>
+            <h2>Projects</h2>
+            <ul class="entries">
+                <li>
+                    <a href="/projects/3sgc.html">3sgc</a>
+                    <p>A static site generator in C11 with no dependencies. It builds this website.</p>
+                </li>
+            </ul>
+        </div>
     </main>
 
     <footer class="site-footer">
