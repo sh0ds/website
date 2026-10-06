@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>System Status · sh0ds.dev</title>
+    <title>System Status · #sh0ds-devblog</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body>
-    <!-- Header: Minimal, purely functional -->
     <header class="site-header">
         <a class="brand" href="/" aria-label="sh0ds@devblog">sh0ds<span>@devblog</span></a>
         <nav aria-label="Main">
@@ -19,7 +18,6 @@
     </header>
 
     <main>
-        <!-- THE HERO: A full-width status dashboard -->
         <section class="dashboard">
             <div class="status-header">
                 <h1>System Status</h1>
@@ -29,23 +27,19 @@
             </div>
 
             <div class="grid-gauges">
-                <div class="gauge-card">
-                    <div class="icon">🌡️</div>
+                <div class="gauge-card" data-stat="temp">
                     <div class="val" id="stat-temp">—°</div>
                     <div class="lbl">core temp</div>
                 </div>
-                <div class="gauge-card">
-                    <div class="icon">⚡</div>
+                <div class="gauge-card" data-stat="load">
                     <div class="val" id="stat-load">—</div>
                     <div class="lbl">load avg</div>
                 </div>
-                <div class="gauge-card">
-                    <div class="icon">💾</div>
+                <div class="gauge-card" data-stat="mem">
                     <div class="val" id="stat-mem">—%</div>
                     <div class="lbl">mem usage</div>
                 </div>
-                <div class="gauge-card">
-                    <div class="icon">⏱️</div>
+                <div class="gauge-card" data-stat="uptime">
                     <div class="val" id="stat-uptime">—</div>
                     <div class="lbl">uptime</div>
                 </div>
@@ -62,7 +56,6 @@
             </div>
         </section>
 
-        <!-- CONTENT: Moved to a "Recent Activity" stream below -->
         <section class="activity-feed">
             <h2>recent activity</h2>
             <div class="feed-item">

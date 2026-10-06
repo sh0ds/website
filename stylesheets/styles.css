@@ -471,3 +471,45 @@ th { font-family: var(--mono); color: var(--muted); font-weight: 600; }
   .grid-gauges { grid-template-columns: 1fr 1fr; }
   .feed-item { flex-direction: column; gap: 0.5rem; }
 }
+
+/* --- FOOTER FIX --- */
+.site-footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font: .85rem var(--mono);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.site-footer p { margin: 0; }
+.site-footer ul {
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-footer a { color: var(--accent); text-decoration: none; }
+.site-footer a:hover { color: var(--accent-hi); }
+
+/* --- INDEX TAGLINE --- */
+.tagline {
+  color: var(--muted);
+  margin: 0 0 1.5rem 0;
+  font-size: 1rem;
+  font-family: var(--mono);
+}
+
+/* --- GAUGE ICONS (REPLACING EMOJIS) --- */
+/* We use pseudo-elements or simple text chars instead of emojis for consistency */
+.gauge-card[data-stat="temp"]::before { content: "°"; font-size: 1.2rem; color: var(--code); display: block; margin-bottom: 0.25rem; }
+.gauge-card[data-stat="load"]::before { content: "⚡"; font-size: 1.2rem; color: var(--accent); display: block; margin-bottom: 0.25rem; }
+.gauge-card[data-stat="mem"]::before { content: "≡"; font-size: 1.2rem; color: var(--text); display: block; margin-bottom: 0.25rem; }
+.gauge-card[data-stat="uptime"]::before { content: "↻"; font-size: 1.2rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+
+/* Hide the old icon div if it exists, or just rely on ::before */
+.gauge-card .icon { display: none; }
