@@ -1,5 +1,5 @@
 /* stylesheets/styles.css — #sh0ds-devblog */
-/* dark theme, monospace, KISS */
+/* dark, monospace, lightly animated, KISS */
 
 /* ---------- baseline ---------- */
 *, *::before, *::after {
@@ -23,10 +23,11 @@ body {
 a {
   color: #6d4aff;
   text-decoration-thickness: 1px;
+  transition: color 150ms ease;
 }
 
 a:hover {
-  text-decoration: none;
+  color: #9d85ff;
 }
 
 pre, code {
@@ -46,6 +47,24 @@ code {
   background: #1a1a1a;
   padding: 0.1em 0.3em;
   border-radius: 2px;
+}
+
+/* ---------- entrance animation ---------- */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+main > * {
+  animation: rise 300ms ease both;
+}
+
+main > *:nth-child(2) { animation-delay: 80ms; }
+main > *:nth-child(3) { animation-delay: 160ms; }
+main > *:nth-child(4) { animation-delay: 240ms; }
+
+.site-header, .site-footer {
+  animation: rise 300ms ease both;
 }
 
 /* ---------- layout ---------- */
@@ -72,6 +91,26 @@ nav ul {
   margin: 0;
   display: flex;
   gap: 1.5rem;
+}
+
+nav a {
+  font-size: 0.9rem;
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  border-bottom: 1px solid #6d4aff;
+  transition: right 150ms ease;
+}
+
+nav a:hover::after,
+nav a[aria-current="page"]::after {
+  right: 0;
 }
 
 main {
@@ -119,11 +158,41 @@ ul.post-list li {
   margin-bottom: 1.5rem;
   border-left: 2px solid #1f1f1f;
   padding-left: 1rem;
+  transition: border-color 200ms ease;
+}
+
+ul.post-list li:hover {
+  border-color: #6d4aff;
 }
 
 ul.post-list time {
   color: #666;
   margin-right: 0.5rem;
+}
+
+/* ---------- homepage colophon ---------- */
+.tagline {
+  color: #888;
+  margin: 0 0 0.75rem 0;
+}
+
+.colophon dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.5rem 1.5rem;
+  margin: 1.5rem 0 0 0;
+}
+
+.colophon dt {
+  color: #666;
+}
+
+.colophon dd {
+  margin: 0;
+}
+
+.more {
+  margin-top: 0.5rem;
 }
 
 /* ---------- gauges (stats) ---------- */
@@ -147,6 +216,12 @@ ul.post-list time {
   border-radius: 50%;
   background: #2ecc71;
   display: inline-block;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
 }
 
 .gauges {
@@ -167,6 +242,11 @@ ul.post-list time {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 0.25rem;
+  transition: transform 200ms ease;
+}
+
+.gauge:hover .val {
+  transform: scale(1.1);
 }
 
 .gauge .lbl {
@@ -175,82 +255,20 @@ ul.post-list time {
   text-transform: lowercase;
 }
 
-/* ---------- variation-4: raw dump ---------- */
-.banner {
-  background: #141414;
-  border: 1px solid #1f1f1f;
-  padding: 1.5rem 1rem;
-  margin: 0 0 1.5rem 0;
-  font-size: 0.75rem;
-  white-space: pre;
-  overflow-x: hidden;
-  border-radius: 4px;
-}
-
-.info {
-  background: #141414;
-  border-left: 3px solid #6d4aff;
-  padding: 1rem;
-  color: #ccc;
-}
-
-.links {
-  background: #141414;
-  border: 1px solid #1f1f1f;
-  padding: 1rem;
-  border-radius: 4px;
-}
-
-.links ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.links li {
-  margin-bottom: 0.5rem;
-}
-
-.eof {
-  margin-top: 2rem;
-  padding-top: 1rem;
-  border-top: 1px dashed #262626;
-  text-align: center;
-  color: #444;
-  font-size: 0.8rem;
-}
-
 /* ---------- mobile ---------- */
 @media (max-width: 480px) {
   html { font-size: 14px; }
   .gauges { grid-template-columns: repeat(2, 1fr); }
   .site-header { flex-direction: column; gap: 1rem; align-items: flex-start; }
   footer ul { flex-wrap: wrap; }
+  main > * { animation: none; }
 }
 
+/* ---------- accessibility ---------- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0ms !important;
+    animation-delay: 0ms !important;
     transition-duration: 0ms !important;
   }
-}
-
-.colophon dl {
-  display: grid;
-  grid-template-columns: max-content 1fr;
-  gap: 0.5rem 1.5rem;
-  margin: 1.5rem 0 0 0;
-}
-
-.colophon dt {
-  color: #666;
-}
-
-.colophon dd {
-  margin: 0;
-}
-
-.tagline {
-  color: #888;
-  margin: 0 0 0.75rem 0;
 }
