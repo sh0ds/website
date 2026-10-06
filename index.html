@@ -3,81 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>System Status · #sh0ds-devblog</title>
+    <title>#sh0ds-devblog</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="/" aria-label="sh0ds@devblog">sh0ds<span>@devblog</span></a>
+        <a class="brand" href="/" aria-label="sh0ds devblog, home">sh0ds<span>(7)</span></a>
+        <span class="manual" aria-hidden="true">devblog manual</span>
         <nav aria-label="Main">
             <ul>
-                <li><a href="/blog/index.html">logs</a></li>
-                <li><a href="/projects/index.html">binaries</a></li>
+                <li><a href="/blog/index.html">blog</a></li>
+                <li><a href="/projects/index.html">projects</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="dashboard">
-            <div class="status-header">
-                <h1>System Status</h1>
-                <div class="status-badge live">
-                    <span class="dot"></span> OPERATIONAL
-                </div>
-            </div>
+        <h1 class="visually-hidden">sh0ds devblog</h1>
 
-            <div class="grid-gauges">
-                <div class="gauge-card" data-stat="temp">
-                    <div class="val" id="stat-temp">—°</div>
-                    <div class="lbl">core temp</div>
-                </div>
-                <div class="gauge-card" data-stat="load">
-                    <div class="val" id="stat-load">—</div>
-                    <div class="lbl">load avg</div>
-                </div>
-                <div class="gauge-card" data-stat="mem">
-                    <div class="val" id="stat-mem">—%</div>
-                    <div class="lbl">mem usage</div>
-                </div>
-                <div class="gauge-card" data-stat="uptime">
-                    <div class="val" id="stat-uptime">—</div>
-                    <div class="lbl">uptime</div>
-                </div>
-            </div>
+        <h2>Name</h2>
+        <p><b>sh0ds</b> — a devblog about learning various languages and using my RPi as home server.</p>
 
-            <div class="system-log">
-                <h2>active processes</h2>
-                <ul>
-                    <li><code>nginx</code> serving static content</li>
-                    <li><code>pihole</code> + <code>unbound</code> (dns)</li>
-                    <li><code>restic</code> (backups)</li>
-                    <li><code>3sgc</code> (build tool)</li>
-                </ul>
+        <h2>Synopsis</h2>
+        <p><b>sh0ds</b> [<a href="/blog/index.html">blog</a>] [<a href="/projects/index.html">projects</a>]</p>
+
+        <h2>Description</h2>
+        <p>Every page here is built by <a href="/projects/3sgc.html">3sgc</a>, a static site generator I'm writing in C11, and served from a Raspberry Pi 5 on my desk. The numbers below are read live from that Pi.</p>
+
+        <section class="machine" aria-label="Live server status">
+            <h2><span class="dot"></span>rasberry-pizian — live</h2>
+            <div class="gauges">
+                <div class="gauge"><div class="val" id="stat-temp">—°</div><div class="lbl">cpu temp</div></div>
+                <div class="gauge"><div class="val" id="stat-load">—</div><div class="lbl">load</div></div>
+                <div class="gauge"><div class="val" id="stat-mem">—%</div><div class="lbl">memory</div></div>
+                <div class="gauge"><div class="val" id="stat-uptime">—</div><div class="lbl">uptime</div></div>
             </div>
         </section>
 
-        <section class="activity-feed">
-            <h2>recent activity</h2>
-            <div class="feed-item">
-                <time datetime="2026-10-06">Oct 06</time>
-                <div class="content">
-                    <h3><a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a></h3>
-                    <p>Documenting the stack: Pi-hole, Unbound, nginx, restic, and the DNS-only VPN tunnel.</p>
-                </div>
-            </div>
+        <h2>Recent</h2>
+        <dl class="entries">
+            <dt><time datetime="2026-10-06">2026-10-06</time><a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a></dt>
+            <dd>Pi-hole, Unbound, nginx, restic, and a DNS-only VPN tunnel.</dd>
+        </dl>
 
-            <div class="feed-more">
-                <a href="/blog/index.html">view all logs</a> &bull; <a href="/projects/index.html">view binaries</a>
-            </div>
-        </section>
+        <h2>See also</h2>
+        <p><a href="/blog/index.html">blog(7)</a>, <a href="/projects/index.html">projects(7)</a>, <a href="/projects/3sgc.html">3sgc(1)</a>, <a href="https://github.com/sh0ds">github</a></p>
     </main>
 
     <footer class="site-footer">
-        <p><small>rasberry-pizian • rpi5 • debian • c11</small></p>
+        <p>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
         <ul>
-            <li><a href="https://github.com/sh0ds">github</a></li>
-            <li><a href="https://sh0ds.itch.io">itch.io</a></li>
-            <li><a href="mailto:mail@sh0ds.dev">signal</a></li>
+            <li><a href="https://github.com/sh0ds">GitHub</a></li>
+            <li><a href="https://sh0ds.itch.io/">itch.io</a></li>
+            <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
         </ul>
     </footer>
 
