@@ -1,7 +1,5 @@
 ---
 title: 3sgc — static site generator in C
-author: sh0ds
-date: 2026-10-06
 summary: A small static site generator written in C11. No dependencies. It builds this website.
 ---
 
