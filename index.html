@@ -3,61 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>#sh0ds-devblog</title>
+    <title>System Status · sh0ds.dev</title>
     <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body>
+    <!-- Header: Minimal, purely functional -->
     <header class="site-header">
         <a class="brand" href="/" aria-label="sh0ds@devblog">sh0ds<span>@devblog</span></a>
         <nav aria-label="Main">
             <ul>
-                <li><a href="/blog/index.html">Blog</a></li>
-                <li><a href="/projects/index.html">Projects</a></li>
+                <li><a href="/blog/index.html">logs</a></li>
+                <li><a href="/projects/index.html">binaries</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="colophon">
-            <h1>welcome to my page<span class="cursor">▌</span></h1>
-            <hr>
-            <dl>
-                <dt>who</dt><dd>sh0ds — hobby developer</dd>
-                <dt>what</dt><dd>small tools, mostly C, occasionally documented</dd>
-                <dt>how</dt><dd>built by <a href="https://github.com/sh0ds/3sgc" target="_blank">3sgc</a>, my own SSG in c11</dd>
-                <dt>where</dt><dd>nginx on a Raspberry Pi 5. no frameworks involved</dd>
-            </dl>
-        </section>
-
-        <section class="machine" aria-label="Live server status">
-            <h2><span class="dot"></span>rasberry-pizian — live</h2>
-            <div class="gauges">
-                <div class="gauge"><div class="val" id="stat-temp">—°</div><div class="lbl">cpu temp</div></div>
-                <div class="gauge"><div class="val" id="stat-load">—</div><div class="lbl">load</div></div>
-                <div class="gauge"><div class="val" id="stat-mem">—%</div><div class="lbl">memory</div></div>
-                <div class="gauge"><div class="val" id="stat-uptime">—</div><div class="lbl">uptime</div></div>
+        <!-- THE HERO: A full-width status dashboard -->
+        <section class="dashboard">
+            <div class="status-header">
+                <h1>System Status</h1>
+                <div class="status-badge live">
+                    <span class="dot"></span> OPERATIONAL
+                </div>
             </div>
-            <p class="hint">hover a gauge — updated every 10s</p>
+
+            <div class="grid-gauges">
+                <div class="gauge-card">
+                    <div class="icon">🌡️</div>
+                    <div class="val" id="stat-temp">—°</div>
+                    <div class="lbl">core temp</div>
+                </div>
+                <div class="gauge-card">
+                    <div class="icon">⚡</div>
+                    <div class="val" id="stat-load">—</div>
+                    <div class="lbl">load avg</div>
+                </div>
+                <div class="gauge-card">
+                    <div class="icon">💾</div>
+                    <div class="val" id="stat-mem">—%</div>
+                    <div class="lbl">mem usage</div>
+                </div>
+                <div class="gauge-card">
+                    <div class="icon">⏱️</div>
+                    <div class="val" id="stat-uptime">—</div>
+                    <div class="lbl">uptime</div>
+                </div>
+            </div>
+
+            <div class="system-log">
+                <h2>active processes</h2>
+                <ul>
+                    <li><code>nginx</code> serving static content</li>
+                    <li><code>pihole</code> + <code>unbound</code> (dns)</li>
+                    <li><code>restic</code> (backups)</li>
+                    <li><code>3sgc</code> (build tool)</li>
+                </ul>
+            </div>
         </section>
 
-        <section class="latest">
-            <h2>latest</h2>
-            <ul class="post-list">
-                <li>
-                    <p><time>2026-10-06</time> <a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a></p>
-                    <p>Pi-hole, Unbound, nginx, restic, and a DNS-only VPN tunnel (the full-tunnel version was a nightmare).</p>
-                </li>
-            </ul>
-            <p class="more"><a href="/blog/index.html">all posts →</a> &nbsp; <a href="/projects/index.html">all projects →</a></p>
+        <!-- CONTENT: Moved to a "Recent Activity" stream below -->
+        <section class="activity-feed">
+            <h2>recent activity</h2>
+            <div class="feed-item">
+                <time datetime="2026-10-06">Oct 06</time>
+                <div class="content">
+                    <h3><a href="/blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a></h3>
+                    <p>Documenting the stack: Pi-hole, Unbound, nginx, restic, and the DNS-only VPN tunnel.</p>
+                </div>
+            </div>
+
+            <div class="feed-more">
+                <a href="/blog/index.html">view all logs</a> &bull; <a href="/projects/index.html">view binaries</a>
+            </div>
         </section>
     </main>
 
     <footer class="site-footer">
-        <p><small>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc" target="_blank">3sgc</a></small></p>
+        <p><small>rasberry-pizian • rpi5 • debian • c11</small></p>
         <ul>
-            <li><a href="https://github.com/sh0ds" target="_blank">GitHub</a></li>
-            <li><a href="https://sh0ds.itch.io/" target="_blank">itch.io</a></li>
-            <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
+            <li><a href="https://github.com/sh0ds">github</a></li>
+            <li><a href="https://sh0ds.itch.io">itch.io</a></li>
+            <li><a href="mailto:mail@sh0ds.dev">signal</a></li>
         </ul>
     </footer>
 
