@@ -102,8 +102,11 @@ sudo wg-quick down protonvpn && sudo wg-quick up protonvpn
 The full-tunnel setup needed an ever-growing pile of exceptions, each with its own failure mode:
 
 1. LAN/SSH replies escaping via the tunnel — priority-100 rule with its own table
+
 2. Website replies to external visitors becoming asymmetric — CONNMARK mangle pair
+
 3. apt hanging on IPv6 — blackhole route plus forced IPv4 in apt config
+
 4. rpi-connect's relay refusing Proton's exit IP — host routes for two address ranges
 
 Three things stuck with me from that mess:
