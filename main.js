@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const showAge = () => {
         if (!lastSample) return;
         const s = Math.round((Date.now() - lastSample) / 1000);
-        setText("stat-age", s < 2 ? "last read just now" : `last read ${s} s ago`);
+        setText("stat-age", s < 2 ? "last sample just now" : `last sample ${s} s ago`);
     };
 
     const setState = (text, ok) => {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>#sh0ds-devblog</title>
-    <meta name="description" content="sh0ds.dev: a site rebuilt one language at a time, served from a Raspberry Pi 5.">
+    <meta name="description" content="sh0ds.dev: one person, one Raspberry Pi 5, and the whole stack under this site, rebuilt one language at a time.">
     <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body class="home">
@@ -21,19 +21,19 @@
     <main>
         <section class="hero" aria-labelledby="hero-title">
             <p class="cmd" aria-hidden="true">whoami</p>
-            <h1 id="hero-title">I like knowing how things work underneath.</h1>
-            <p class="lede">This site runs on a Raspberry Pi 5 on my desk. I'm rebuilding it one language at a time, from shell scripts down to assembly and back up to Erlang, and writing about what breaks on the way.</p>
+            <h1 id="hero-title">Everything here runs on a Pi on my desk.</h1>
+            <p class="lede">I'm sh0ds. I build the stack under this site myself, one language at a time: shell and SQL first, then C and ARM64 assembly, then Haskell, Pharo and Erlang. The blog is where I write down what broke and why.</p>
 
             <dl class="spec">
-                <div><dt>host</dt><dd>raspberry-pizian</dd></div>
+                <div><dt>host</dt><dd>rasberry-pizian</dd></div>
                 <div><dt>arch</dt><dd>aarch64, 4× Cortex-A76</dd></div>
                 <div><dt>os</dt><dd>Raspberry Pi OS (Debian)</dd></div>
-                <div><dt>build</dt><dd><a href="/projects/3sgc.html">3sgc</a>, my static site generator in C</dd></div>
+                <div><dt>build</dt><dd><a href="/projects/3sgc.html">3sgc</a>, a static site generator in C</dd></div>
             </dl>
         </section>
 
         <section class="telemetry" aria-labelledby="telemetry-title">
-            <h2 id="telemetry-title"><span class="dot" aria-hidden="true"></span>/proc/raspberry-pizian <span class="state" id="stat-state">connecting</span></h2>
+            <h2 id="telemetry-title"><span class="dot" aria-hidden="true"></span>/proc/rasberry-pizian <span class="state" id="stat-state">connecting</span></h2>
             <div class="meters">
                 <div class="meter" id="meter-temp">
                     <div class="lbl">cpu temp</div>
@@ -56,34 +56,34 @@
                 <div class="meter">
                     <div class="lbl">uptime</div>
                     <div class="val" id="stat-uptime">—</div>
-                    <div class="scale" aria-hidden="true"><span>since last boot</span></div>
+                    <div class="scale" aria-hidden="true"><span>since the last reboot</span></div>
                 </div>
             </div>
-            <p class="source">read from <code>/ramdisk/pistats.json</code> every 10 s, <span id="stat-age">no sample yet</span></p>
+            <p class="source">polled from <code>/ramdisk/pistats.json</code> every 10 s · <span id="stat-age">waiting for the first sample</span></p>
         </section>
 
         <section aria-labelledby="stack-title">
             <h2 id="stack-title">stack <span class="legend" aria-hidden="true"><b class="using">using</b><b class="learning">learning</b><b class="next">next</b></span></h2>
             <ol class="stack">
-                <li><span class="idx">01</span><span class="lang">Linux</span><span class="use">runs everything here: web server, DNS, deploys, backups</span><span class="status">using</span></li>
-                <li><span class="idx">02</span><span class="lang">Bash · AWK</span><span class="use">the glue: deploys, cron jobs, digging through logs</span><span class="status">using</span></li>
-                <li><span class="idx">03</span><span class="lang">SQL</span><span class="use">whenever data needs to stick around, like visit counts and search</span><span class="status">using</span></li>
-                <li><span class="idx">04</span><span class="lang">C</span><span class="use">what 3sgc is written in</span><span class="status">using</span></li>
-                <li><span class="idx">05</span><span class="lang">ARM64</span><span class="use">so I can read what the compiler actually does</span><span class="status learning">learning</span></li>
-                <li><span class="idx">06</span><span class="lang">Haskell</span><span class="use">for parsers, like the Markdown one in 3sgc</span><span class="status learning">learning</span></li>
-                <li><span class="idx">07</span><span class="lang">Pharo</span><span class="use">objects all the way down, for the tool that builds and checks this site</span><span class="status next">next</span></li>
-                <li><span class="idx">08</span><span class="lang">Erlang</span><span class="use">for servers that don't fall over, like live stats and a guestbook</span><span class="status next">next</span></li>
+                <li><span class="idx">01</span><span class="lang">Linux</span><span class="use">the base layer: web server, DNS, deploys, backups</span><span class="status">using</span></li>
+                <li><span class="idx">02</span><span class="lang">Bash · AWK</span><span class="use">glue code: deploys, cron jobs, log digging</span><span class="status">using</span></li>
+                <li><span class="idx">03</span><span class="lang">SQL</span><span class="use">anything that has to persist: visit counts, search</span><span class="status">using</span></li>
+                <li><span class="idx">04</span><span class="lang">C</span><span class="use">3sgc, the generator behind the blog and project pages</span><span class="status">using</span></li>
+                <li><span class="idx">05</span><span class="lang">ARM64</span><span class="use">reading what the compiler actually emits</span><span class="status learning">learning</span></li>
+                <li><span class="idx">06</span><span class="lang">Haskell</span><span class="use">parsers, starting with the Markdown one in 3sgc</span><span class="status learning">learning</span></li>
+                <li><span class="idx">07</span><span class="lang">Pharo</span><span class="use">objects all the way down: the tool that builds and checks this site</span><span class="status next">next</span></li>
+                <li><span class="idx">08</span><span class="lang">Erlang</span><span class="use">servers that stay up: live stats and a guestbook</span><span class="status next">next</span></li>
             </ol>
         </section>
 
         <section aria-labelledby="pipeline-title">
             <h2 id="pipeline-title">how this page got here</h2>
             <ol class="pipeline">
-                <li><span class="step">git push</span><span class="what">Markdown in <code>content/</code></span></li>
-                <li><span class="step">deploy</span><span class="what">the Pi gets the new commit</span></li>
-                <li><span class="step">make</span><span class="what">builds 3sgc on the Pi</span></li>
-                <li><span class="step">3sgc</span><span class="what">turns the posts into HTML</span></li>
-                <li><span class="step">rsync</span><span class="what">into <code>/srv/www</code></span></li>
+                <li><span class="step">git push</span><span class="what">a post lands in <code>content/</code> as Markdown</span></li>
+                <li><span class="step">deploy</span><span class="what">the Pi picks up the new commit</span></li>
+                <li><span class="step">make</span><span class="what">compiles 3sgc from source</span></li>
+                <li><span class="step">3sgc</span><span class="what">renders posts and listings through the templates</span></li>
+                <li><span class="step">rsync</span><span class="what">copies the output into <code>/srv/www</code></span></li>
                 <li><span class="step">you</span><span class="what" id="req-timing">over HTTPS</span></li>
             </ol>
             <p class="links"><a href="/blog/index.html">./blog</a><a href="/projects/index.html">./projects</a><a href="https://github.com/sh0ds/3sgc">source</a></p>
@@ -96,7 +96,7 @@
             <li><a href="https://sh0ds.itch.io/">itch.io</a></li>
             <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
         </ul>
-        <p>© 2026 sh0ds. Hosted on RPi 5, built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
+        <p>© 2026 sh0ds · served from a Raspberry Pi 5 · built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
     </footer>
 
     <script src="/main.js" defer></script>
