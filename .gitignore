@@ -8,3 +8,7 @@
 *.swp
 *~
 .DS_Store
+
+baseline/
+snap/
+scratch/
