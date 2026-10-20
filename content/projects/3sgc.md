@@ -7,7 +7,7 @@ summary: A small static site generator written in C11. No dependencies. It build
 
 # What it does
 
-Walks a content directory, parses front matter from markdown files, sorts posts by date, renders them through HTML templates, and generates blog and project index pages. Push to main and GitHub Actions rebuilds the site on the Pi.
+Walks a content directory, parses front matter from markdown files, sorts posts by date, renders them through HTML templates, and generates blog and project index pages. Push to main and the Pi pulls it and rebuilds the site within 2 minutes.
 
 # Features
 
