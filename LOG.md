@@ -27,3 +27,11 @@ Stuck: permissions for the file missing, mixed up repo and local dotfiles
 Learned: always edit local dotfiles, not repo; chmod 777 helpers
 Redo: delete the log helper, get running again from memory
 Next: Day 4, SQL placement
+
+## Day 4 · week 0
+
+Did: last 3 SQLBolt exercises, 5 pgexercises aggregation problems
+Stuck: floating point division with 2 decimal places
+Learned: division by 1.0 instead of 1, round() lets you decide decimal places
+Redo: nothing
+Next: Day 5, staging at /next/
