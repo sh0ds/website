@@ -114,7 +114,6 @@ h2 .state { order: 2; }
 /* ---------- footer ---------- */
 .site-footer { padding: 1rem 0 2.5rem; border-top: 2px solid var(--faint); color: var(--dim); }
 .site-footer a { text-decoration: none; }
-.hint { margin: .75rem 0 0; color: var(--faint); }
 
 /* ---------- homepage ---------- */
 .hero .diag dd { color: var(--ink); }
