@@ -1,41 +1,69 @@
 ---
 title: My rice
 author: sh0ds
-date: 2026-10-20
-summary: Arch, Hyprland and way too much Catppuccin Mocha.
+date: 2026-10-23
+summary: Arch, Hyprland with a Lua config, Amethyst: black, plum greys, one violet.
 ---
 
-My desktop is finally done, so here's what it is.
+First version was Catppuccin Mocha with glow, blur and spring animations. Looked like every other rice. Stripped it down to something that looks like the machine underneath and called it Amethyst.
 
-It's plain Arch with Hyprland and the new Lua config. Everything is Catppuccin Mocha: the bar, the terminal, the lock screen, GTK and Qt apps, even the OSRS interface. Nothing flashes white anymore.
+# Base
 
-# The look
+```
+os      Arch, plain
+wm      Hyprland 0.56, Lua config
+login   SDDM
+font    Terminess Nerd Font
+gpu     NVIDIA, two 1080p screens
+config  hyprland.lua base, rice.lua look + rules + keys
+```
 
-Only the focused window gets a blue-to-mauve border and a soft glow, the rest are dimmed a bit. One window on a workspace fills the whole screen. The bar is waybar on frosted glass: workspaces and the current song on the left, the clock in the middle, and pills for volume, network and my Pi (green when it's up) on the right.
+If rice.lua breaks, the base still starts.
 
-# Pop-ups
+# Look
 
-Everything I only need for a few seconds slides down from the top and back up when I press the key again: a terminal, my notes in Obsidian, SoundCloud, my music, my calendar, WhatsApp, mail and btop on Ctrl+Shift+Escape, same as the task manager on Windows. Old habits.
+```
+bg      #000000
+line    #2b2238
+dim     #5e5270
+fg      #b0a6c4
+bright  #ece4fb
+accent  #b06cff
+```
+
+3 px gaps, square corners, 1 px borders. Only the focused window gets the violet frame. No shadows, blur or transparency. Motion: critically damped springs for anything that moves, so no overshoot, same at any frame rate, and an interrupted move keeps its speed instead of restarting. Small amplitudes: windows open from 97 %, workspaces shift 8 % under a cross-fade. Fades are linear, 120 ms. Closing is twice as fast as opening. The bar never moves. Same palette in kitty, tmux, Neovim, GTK, Qt and every TUI. Neovim runs its own scheme: code grey, keywords bright, strings and numbers violet.
+
+# Bar
+
+waybar, one line of text along the bottom, no icons:
+
+```
+left    1 2 3 4 5  Burial - Archangel
+right   cpu 07% | mem 3.1G | 52°C | gpu 4% | pi up
+        vol  64 | eth ↓1.2M ↑84K | 2026-10-23 09:45 | off
+```
+
+pi up turns violet when my Pi answers a ping. LIVE and REC show up in the middle while I share or record.
+
+# Quick apps
+
+Things I need for a few seconds are normal tiles with one key each: SoundCloud, rmpc, calendar, WhatsApp (nchat), mail (aerc), btop on Ctrl+Shift+Escape. The key jumps to the app, starts it next to what I'm doing if it isn't open, or jumps back if I'm already on it. One short script does it all.
 
 # Terminal
 
-kitty and tmux, bash with starship, and Neovim with LazyVim on the same see-through background. Mail runs in the terminal too, with aerc. There are some joke commands in my bashrc. Try typing claer.
+kitty and tmux, bash with a one-line starship prompt, Neovim with LazyVim, yazi, lazygit. Some joke commands in my bashrc. Try typing claer.
 
 # Music
 
-Bitwig Studio for making speedhouse, Mixo for my DJ library, Audacity for recording. Each has its own workspace and a key that jumps to it or starts it.
-
-# OSRS
-
-Yes, I play Old School RuneScape on it. RuneLite runs through Bolt so Jagex accounts work on Linux, and I recoloured its interface to Mocha with a little Python script. Probably the most time I've spent on anything in this rice (duh).
+mpd and rmpc for my own files. PipeWire plays each song at its own sample rate. Easy Effects corrects my headset to the Harman curve with a limiter after it. DJ software (Lexicon, rekordbox, Traktor) runs in a Windows VM, songs dropped in ~/Music/DJ show up there as Z:.
 
 # Getting it
 
-Everything is on GitHub at github.com/sh0ds/dotfiles. Clone it and run the install script, it symlinks everything and backs up your old files first:
+github.com/sh0ds/dotfiles. Clone and run the install script, it symlinks everything and backs up old files first:
 
 ```
 git clone https://github.com/sh0ds/dotfiles.git ~/code/dotfiles
 bash ~/code/dotfiles/install-dotfiles.sh
 ```
 
-It's set up for my machine (NVIDIA, two 1080p monitors), so change things to your liking.
+Set up for my machine, so change what you need.

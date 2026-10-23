@@ -3,42 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Blog · #sh0ds-devblog</title>
+    <title>Blog · sh0ds@devblog</title>
+    <link rel="icon" href="/images/raspberry.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="/" aria-label="sh0ds@devblog, home">sh0ds<span>@devblog</span></a>
-        <nav aria-label="Main">
-            <ul>
-                <li><a href="/blog/index.html" aria-current="page">blog</a></li>
-                <li><a href="/projects/index.html">projects</a></li>
-            </ul>
-        </nav>
+        <img class="logo" src="/images/raspberry.svg" alt="" width="41" height="46">
+        <p class="release">Raspberry Pi 5 Model B · 8 GB</p>
+        <dl class="diag">
+            <div><dt>board</dt><dd><a class="brand" href="/" aria-label="sh0ds@devblog, home">sh0ds@devblog</a></dd></div>
+            <div><dt>boot</dt><dd><nav aria-label="Main"><ul><li><a href="/blog/index.html" aria-current="page">/blog</a></li><li><a href="/projects/index.html">/projects</a></li></ul></nav></dd></div>
+        </dl>
+        <a class="qr" href="https://github.com/sh0ds/website"><img src="/images/qr-repo.svg" alt="QR code for github.com/sh0ds/website" width="99" height="99"><span>sh0ds/website</span></a>
     </header>
 
     <main>
-        <h1>Blog</h1>
-        <p class="meta">Notes from the build, newest first. Mostly what broke and how I fixed it.</p>
+        <section class="hero" aria-labelledby="blog-title">
+            <h1 id="blog-title">blog</h1>
+            <dl class="diag">
+                <div><dt>dir</dt><dd>/blog</dd></div>
+                <div><dt>sort</dt><dd>date, newest first</dd></div>
+                <div><dt>type</dt><dd>dev notes</dd></div>
+            </dl>
+        </section>
 
-        <ol class="entries">
-        {{#posts}}
-            <li>
-                <time>{{ date }}</time>
-                <a href="/{{ url }}">{{ title }}</a>
-                <p>{{ summary }}</p>
-            </li>
-        {{/posts}}
-        </ol>
+        <section aria-labelledby="files-title">
+            <h2 id="files-title">files</h2>
+            <ol class="entries">
+            {{#posts}}
+                <li>
+                    <time>{{ date }}</time>
+                    <a href="/{{ url }}">{{ title }}</a>
+                    <p>{{ summary }}</p>
+                </li>
+            {{/posts}}
+            </ol>
+        </section>
     </main>
 
     <footer class="site-footer">
-        <ul>
-            <li><a href="https://github.com/sh0ds">GitHub</a></li>
-            <li><a href="https://sh0ds.itch.io/">itch.io</a></li>
-            <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
-        </ul>
-        <p>© 2026 sh0ds · served from a Raspberry Pi 5 · built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
+        <dl class="diag">
+            <div><dt>net</dt><dd><ul><li><a href="https://github.com/sh0ds">github</a></li><li><a href="https://sh0ds.itch.io/">itch.io</a></li><li><a href="mailto:mail@sh0ds.dev">mail</a></li></ul></dd></div>
+            <div><dt>src</dt><dd><a href="https://github.com/sh0ds/website">sh0ds/website</a>, built with <a href="/projects/3sgc.html">3sgc</a></dd></div>
+            <div><dt>info</dt><dd>© 2026 sh0ds</dd></div>
+        </dl>
     </footer>
 </body>
 </html>

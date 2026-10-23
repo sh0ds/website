@@ -62,46 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (timing && nav && nav.responseStart > 0) {
         const ttfb = Math.round(nav.responseStart - nav.requestStart);
         const kb = nav.transferSize ? `, ${(nav.transferSize / 1024).toFixed(1)} kB` : "";
-        timing.textContent = `over HTTPS, first byte in ${ttfb} ms${kb}`;
-    }
-
-    // -- SYNTAX HIGHLIGHTING --
-    if (typeof window.hljs !== "undefined") {
-        hljs.highlightAll();
-    }
-
-    // -- BRAND HOVER EFFECT --
-    const brand = document.querySelector(".brand");
-    if (brand) {
-        const user = brand.firstChild;
-        const host = brand.querySelector("span");
-        if (user && host) {
-            const original = user.data + host.textContent;
-            let frame;
-
-            function bitflip() {
-                if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-                cancelAnimationFrame(frame);
-                const start = performance.now();
-                let last = 0;
-
-                (function tick(now) {
-                    const p = Math.min((now - start) / 650, 1);
-                    if (now - last > 30 || p === 1) {
-                        last = now;
-                        const band = p * (original.length + 6) - 3;
-                        const text = [...original].map((c, i) =>
-                            p < 1 && Math.abs(i - band) < 2.5 ? (Math.random() < .5 ? "0" : "1") : c
-                        ).join("");
-                        user.data = text.slice(0, user.data.length);
-                        host.textContent = text.slice(user.data.length);
-                    }
-                    if (p < 1) frame = requestAnimationFrame(tick);
-                })(start);
-            }
-
-            brand.addEventListener("mouseenter", bitflip);
-            brand.addEventListener("focus", bitflip);
-        }
+        timing.textContent = `HTTPS, TTFB ${ttfb} ms${kb}`;
     }
 });

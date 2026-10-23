@@ -2,39 +2,45 @@
 title: How my Raspberry Pi 5 runs sh0ds.dev
 author: sh0ds
 date: 2026-10-20
-summary: I rebuilt my Pi from scratch with fewer moving parts. Here's what runs on it now.
+summary: Rebuild from scratch: NVMe boot, AdGuard Home, Caddy, pull-based deploys, restic backups.
 ---
 
-This website runs on a Raspberry Pi 5 on my desk. It used to run off an SD card with Pi-hole, Unbound, nginx, Docker and a VPN tunnel that only carried DNS. It worked, but every fix added another piece, and in the end I couldn't tell which piece broke what. So I wiped it and started over.
+Old setup: SD card, Pi-hole, Unbound, nginx, acme.sh, Docker and a VPN tunnel that only carried DNS. Every fix added a part, and after a while I couldn't tell which part broke what. Wiped it, started over.
 
-# The hardware
+# Hardware
 
-A Pi 5 with 8 GB of RAM, booting from an NVMe SSD now instead of the SD card. A 1 TB HDD sits next to it for backups. It runs Raspberry Pi OS Lite, no desktop, plugged into the router with a cable.
+```
+board  Raspberry Pi 5, 8 GB
+root   NVMe SSD (was: SD card)
+backup 1 TB HDD, USB
+os     Pi OS Lite, no desktop
+net    ethernet to the router
+```
 
-# What runs on it
+# Services
 
-AdGuard Home blocks ads and trackers for the whole house and sends everything else encrypted to Quad9. It replaced Pi-hole, Unbound and the VPN tunnel in one go.
+AdGuard Home does DNS for the whole house: blocklists, everything else forwarded encrypted to Quad9. Replaces Pi-hole, Unbound and the tunnel.
 
-Caddy serves this site and gets the certificates by itself. It replaced nginx and acme.sh, and the whole config fits on one screen.
+Caddy serves the site and handles TLS certificates itself. Replaces nginx and acme.sh. The config fits on one screen.
 
-That's it for services. No Docker, no tunnel.
+No Docker, no tunnel. Router forwards 80 and 443 only, SSH is LAN-only.
 
-# How the site gets here
+# Deploys
 
-Before, GitHub logged into the Pi over SSH every time I pushed. That meant SSH had to be open to the whole internet. Now it's the other way around: the Pi asks GitHub every 2 minutes if main moved, and if it did, it builds the site with 3sgc and swaps it in. SSH is only reachable from home now.
+Old way: GitHub logged into the Pi over SSH on every push, so SSH had to be open to the internet. New way is pull-based. A systemd timer checks every 2 minutes whether main moved. If it did, it pulls, builds with 3sgc and swaps the output into /srv/www.
 
 # Backups and alerts
 
-Every night at 03:30 restic backs everything up twice, once to the HDD and once to a Hetzner Storage Box. A small script checks every 5 minutes that DNS answers, the site loads, the certificate isn't about to run out and the disks are fine, then pings healthchecks.io. If something breaks, or the Pi dies and stops pinging, my phone buzzes.
+restic runs at 03:30 and writes two copies, one to the HDD and one to a Hetzner Storage Box. A health script runs every 5 minutes: DNS answers, site loads, certificate valid, disks fine. Then it pings healthchecks.io. If a check fails, or the Pi stops pinging, my phone gets a push.
 
-# The live stats
+# Live stats
 
-The numbers on the homepage come from a script that runs every minute and writes a small JSON file to a RAM disk, so the SSD doesn't get written to all day. The homepage fetches it every 10 seconds.
+A timer writes temp, load, memory and uptime to /ramdisk/pistats.json every minute. RAM disk, so the SSD isn't written all day. The homepage polls the file every 10 seconds.
 
-# One command
+# pi
 
-When I SSH in I get my usual terminal look and a command called pi. It shows everything on one screen: services, last health check, last backup, certificate, last deploy, disks and updates. Green means fine. I don't have to remember a single service name anymore.
+One command over SSH that prints services, last health check, last backup, certificate expiry, last deploy, disks and pending updates on one screen. Green is fine. No service names to remember.
 
-# What I learned
+# Takeaway
 
-Complexity was the bug. Half the problems I fixed on the old setup were leftovers from earlier fixes. The new one has fewer parts, every part does one job, and when something breaks I know where to look.
+Most bugs on the old setup were leftovers from earlier fixes. Fewer parts, one job each, and a failure points at one place.
