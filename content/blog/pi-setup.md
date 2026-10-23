@@ -13,7 +13,7 @@ Old setup: SD card, Pi-hole, Unbound, nginx, acme.sh, Docker and a VPN tunnel th
 board  Raspberry Pi 5, 8 GB
 root   NVMe SSD (was: SD card)
 backup 1 TB HDD, USB
-os     Raspberry Pi OS Lite, no desktop
+os     Pi OS Lite, no desktop
 net    ethernet to the router
 ```
 

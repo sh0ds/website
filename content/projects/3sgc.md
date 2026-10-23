@@ -12,9 +12,12 @@ Walks content/, parses the front matter of each Markdown file, sorts posts by da
 # Supported
 
 ```
-markdown   headings, paragraphs, fenced code blocks
-templates  {{ title }} style fields, {{#posts}} loop
-build      -Wall -Wextra, ASan + UBSan on every compile
+markdown   headings, paragraphs,
+           fenced code blocks
+templates  {{ title }} fields,
+           {{#posts}} loop
+build      -Wall -Wextra,
+           ASan + UBSan
 ```
 
 # Not yet
