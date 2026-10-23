@@ -13,6 +13,19 @@ This repo is also my learning project. Over the next months I'm working through 
 
 You can watch it at [sh0ds.dev/next](https://sh0ds.dev/next/) while it's in progress. When it's done, `next` becomes `main`.
 
+## Appearance
+
+The site shares the Diag desktop's flat panel rails, square navigation controls,
+one-pixel separators and two-pixel focus markers. The Pi palette stays raspberry
+pink and leaf green, with amber warnings and the existing sky-blue pipeline labels.
+The Raspberry logo, repository QR, diagnostic columns, section order and page
+routes are unchanged.
+
+The VT323 font stays self-hosted. Colour transitions take 120 ms and respect
+reduced-motion preferences; nothing slides or scales. Narrow screens collapse
+columns without hiding content. Keyboard users can skip the header and see focus
+on navigation links and complete file rows.
+
 ## Getting Started
 
 ### Dependencies
