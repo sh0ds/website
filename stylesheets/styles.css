@@ -38,7 +38,8 @@ html { background: var(--bg); color: var(--ink); font: 400 clamp(1.25rem, 1.1rem
 body { max-width: calc(80ch + 2 * var(--pad)); margin: 0 auto; padding: 0 var(--pad); }
 ::selection { background: var(--rasp); color: var(--bg); }
 :focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
-a { color: var(--sky); text-decoration: underline; text-underline-offset: .15em; }
+/* one link style everywhere: sky, dotted underline like the dotted rules; hover inverts */
+a { color: var(--sky); text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: .2em; }
 a:hover, a:focus-visible { background: var(--sky); color: var(--bg); text-decoration: none; outline: none; }
 code { color: var(--amber); }
 html { scrollbar-color: var(--faint) var(--bg); }
@@ -61,17 +62,15 @@ html { scrollbar-color: var(--faint) var(--bg); }
 .site-header .diag { grid-column: 2; grid-row: 2; align-self: end; margin: 0; }
 .site-header .diag div { grid-template-columns: 7ch 1fr; }
 .release, .site-header .diag { font-size: 1.4em; line-height: 1.35; }  /* three lines, as tall as the logo */
-.brand { color: var(--ink); text-decoration: none; }
-.brand:hover, .brand:focus-visible { background: none; color: var(--leaf); }
 .site-header nav ul { gap: 0; }
 .site-header nav li + li::before { content: "\2192"; margin: 0 1ch; color: var(--faint); }
-.site-header nav a { text-decoration: none; }
-.site-header nav a[aria-current] { background: var(--leaf); color: var(--bg); }
-.qr { grid-column: 3; grid-row: 1 / 3; display: grid; justify-items: center; gap: .15rem; color: var(--faint); text-decoration: none; font-size: .8em; }
+.site-header nav a[aria-current] { background: var(--leaf); color: var(--bg); text-decoration: none; }
+.qr { grid-column: 3; grid-row: 1 / 3; display: grid; justify-items: center; gap: .15rem; text-decoration: none; font-size: .8em; }
 .qr { position: relative; }
 .qr img { display: block; width: var(--hh); height: var(--hh); image-rendering: pixelated; }
-.qr span { position: absolute; top: 100%; right: 0; left: 0; text-align: center; }
-.qr:hover, .qr:focus-visible { background: none; color: var(--sky); }
+.qr span { position: absolute; top: 100%; right: 0; left: 0; width: max-content; margin: 0 auto; text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+.qr:hover, .qr:focus-visible { background: none; }
+.qr:hover span, .qr:focus-visible span { background: var(--sky); color: var(--bg); text-decoration: none; }
 
 /* ---------- page ---------- */
 main { padding: 2rem 0 2.5rem; }
@@ -106,17 +105,15 @@ h2 .state { order: 2; letter-spacing: 0; }
 .entries li::before { content: "file:"; grid-row: 1 / span 3; color: var(--rasp); }
 .entries time, .entries a, .entries p { grid-column: 2; }
 .entries time { color: var(--dim); }
-.entries a { color: var(--ink); text-decoration: none; }
 .entries p { grid-column: 2 / -1; margin: 0; color: var(--dim); }
 .entries li:hover, .entries li:focus-within { background: var(--row); }
-.entries li:hover a, .entries li:focus-within a { background: none; color: var(--leaf); }
-.entries li:hover::before, .entries li:focus-within::before { content: "load:"; color: var(--leaf); }
+.entries li:hover a, .entries li:focus-within a { background: var(--sky); color: var(--bg); text-decoration: none; }
+.entries li:hover::before, .entries li:focus-within::before { content: "load:"; color: var(--sky); }
 .entries li::after { content: "BOOT \2192"; grid-column: 3; grid-row: 1; padding: 0 .5ch; color: var(--faint); }
-.entries li:hover::after, .entries li:focus-within::after { background: var(--leaf); color: var(--bg); }
+.entries li:hover::after, .entries li:focus-within::after { background: var(--sky); color: var(--bg); }
 
 /* ---------- footer ---------- */
 .site-footer { padding: 1rem 0 2.5rem; border-top: 6px double var(--faint); color: var(--dim); }
-.site-footer a { text-decoration: none; }
 
 /* ---------- homepage ---------- */
 .hero h1 { margin-top: 0; }
