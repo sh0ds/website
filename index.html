@@ -30,7 +30,7 @@
         </section>
 
         <section aria-labelledby="hw-title">
-            <h2 id="hw-title"><span class="tag" aria-hidden="true">STAGE 1</span>hardware</h2>
+            <h2 id="hw-title">hardware</h2>
             <dl class="diag">
                 <div><dt>host</dt><dd>raspberry-pizian</dd></div>
                 <div><dt>soc</dt><dd>BCM2712, 4× Cortex-A76 @ 2.4 GHz</dd></div>
@@ -44,7 +44,7 @@
         </section>
 
         <section class="telemetry" aria-labelledby="telemetry-title">
-            <h2 id="telemetry-title"><span class="tag" aria-hidden="true">STAGE 2</span>/proc/raspberry-pizian <span class="state" id="stat-state">connecting</span></h2>
+            <h2 id="telemetry-title">live stats <span class="state" id="stat-state">connecting</span></h2>
             <div class="meters">
                 <div class="meter" id="meter-temp">
                     <div class="lbl">temp</div>
@@ -73,7 +73,7 @@
         </section>
 
         <section aria-labelledby="stack-title">
-            <h2 id="stack-title"><span class="tag" aria-hidden="true">STAGE 3</span>partitions</h2>
+            <h2 id="stack-title">partitions</h2>
             <table class="parts">
                 <thead><tr><th>part</th><th>label</th><th>used for</th><th>flag</th></tr></thead>
                 <tbody>
@@ -90,7 +90,7 @@
         </section>
 
         <section aria-labelledby="pipeline-title">
-            <h2 id="pipeline-title"><span class="tag" aria-hidden="true">STAGE 4</span>boot sequence</h2>
+            <h2 id="pipeline-title">boot sequence</h2>
             <ol class="pipeline">
                 <li><span class="step">push</span><span class="what">commit to <code>main</code></span><span class="res">OK</span></li>
                 <li><span class="step">pull</span><span class="what"><code>site-deploy.timer</code> polls GitHub every 2 min</span><span class="res">OK</span></li>

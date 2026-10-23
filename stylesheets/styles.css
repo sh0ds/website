@@ -75,23 +75,20 @@ html { scrollbar-color: var(--faint) var(--bg); }
 .qr:hover, .qr:focus-visible { background: none; color: var(--sky); }
 
 /* ---------- page ---------- */
-main { padding: 2rem 0 2.5rem; counter-reset: stage; }
+main { padding: 2rem 0 2.5rem; }
 h1 { margin: 0 0 .6rem; padding-left: var(--kw); color: var(--ink); font-size: clamp(2rem, 1.4rem + 2vw, 2.75rem); font-weight: 400; line-height: 1.05; text-wrap: balance; }
 .meta { margin-bottom: 1.5rem; }
 .meta dd { color: var(--dim); }
 p { margin: 0 0 .7em; max-width: 72ch; }
 
-/* section headings: a STAGE tag in the key column and a dotted rule */
+/* section headings: a raspberry rule through the key column, the name in caps, a faint rule to the edge */
 h2, .body h1 {
-  display: flex; flex-wrap: wrap; align-items: center; gap: .2rem var(--gap); margin: 2rem 0 .6rem; padding: 0;
-  color: var(--ink); font-size: 1em; font-weight: 400; line-height: 1.3;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .2rem var(--gap); margin: 2.25rem 0 .7rem; padding: 0;
+  color: var(--ink); font-size: 1em; font-weight: 400; line-height: 1.3; text-transform: uppercase; letter-spacing: .06em;
 }
-.tag, .body h1::before { flex: 0 0 var(--key); padding: 0 .5ch; background: var(--rasp); color: var(--bg); }
-h2::after, .body h1::after { content: ""; order: 1; flex: 1 1 2ch; border-top: 2px dotted var(--faint); }
-h2 .state { order: 2; }
-/* post bodies come out of 3sgc with every heading as h1, numbered here */
-.body h1 { counter-increment: stage; }
-.body h1::before { content: "STAGE " counter(stage); }
+h2::before, .body h1::before { content: ""; flex: 0 0 var(--key); height: 2px; background: var(--rasp); }
+h2::after, .body h1::after { content: ""; order: 1; flex: 1 1 2ch; height: 2px; background: var(--faint); }
+h2 .state { order: 2; letter-spacing: 0; }
 
 /* post text sits in the value column */
 .body > :not(h1) { margin-left: var(--kw); }
@@ -185,7 +182,7 @@ h2 .state { order: 2; }
   .qr span { display: none; }
   main { padding: 1.5rem 0 2rem; }
   h1 { padding-left: 0; font-size: 1.875rem; }
-  .tag, .body h1::before { flex-basis: auto; }
+  h2::before, .body h1::before { flex-basis: 2ch; }
   .body > :not(h1), .body pre { margin-left: 0; }
   .eof { padding-left: 0; }
   .meter { grid-template-columns: var(--key) 1fr; row-gap: .1rem; }
