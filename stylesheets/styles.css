@@ -49,7 +49,6 @@ a { color: var(--sky); text-decoration: underline; text-underline-offset: .15em;
 a:hover, a:focus-visible { background: var(--sky); color: var(--bg); text-decoration: none; outline: none; }
 code { color: var(--amber); }
 html { scrollbar-color: var(--faint) var(--bg); }
-@keyframes blink { 50% { opacity: 0; } }
 
 /* ---------- diagnostic lines: key column, value column ---------- */
 .diag { margin: 0; display: grid; }
@@ -125,7 +124,6 @@ h2 .state { order: 2; }
 
 /* ---------- homepage ---------- */
 .hero .diag dd { color: var(--ink); }
-.hero h1::after { content: ""; display: inline-block; width: .45em; height: .8em; margin-left: .2em; background: var(--leaf); animation: blink 1s steps(1) infinite; }
 
 /* live stats: '#' bars */
 .state { color: var(--leaf); text-transform: uppercase; }
