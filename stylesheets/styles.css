@@ -15,7 +15,6 @@
   --focus: var(--leaf);
   --key: 9ch; --gap: 1ch; --kw: calc(var(--key) + var(--gap));
   --pad: clamp(1rem, 3vw, 1.75rem);
-  --hl-com: #8c8c8c; --hl-kw: #e0306a; --hl-str: #75c94d; --hl-num: #ffb000; --hl-fn: #6ec6ff;
 }
 /* ---------- base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -32,12 +31,6 @@ code, pre { font-family: var(--mono); }
 .entries a::after { content: ""; position: absolute; inset: 0; } /* the whole row is the link */
 .entries a:focus-visible { outline: none; }
 .entries li:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
-.hljs-comment, .hljs-quote { color: var(--hl-com); font-style: italic; }
-.hljs-keyword, .hljs-meta, .hljs-tag, .hljs-name, .hljs-selector-tag { color: var(--hl-kw); }
-.hljs-string, .hljs-regexp, .hljs-addition { color: var(--hl-str); }
-.hljs-number, .hljs-literal, .hljs-built_in, .hljs-params { color: var(--hl-num); }
-.hljs-title, .hljs-title.function_, .hljs-title.class_, .hljs-type,
-.hljs-attr, .hljs-attribute, .hljs-variable { color: var(--hl-fn); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }

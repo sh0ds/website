@@ -64,9 +64,4 @@ document.addEventListener("DOMContentLoaded", () => {
         const kb = nav.transferSize ? `, ${(nav.transferSize / 1024).toFixed(1)} kB` : "";
         timing.textContent = `HTTPS, TTFB ${ttfb} ms${kb}`;
     }
-
-    // -- SYNTAX HIGHLIGHTING --
-    if (typeof window.hljs !== "undefined") {
-        hljs.highlightAll();
-    }
 });
