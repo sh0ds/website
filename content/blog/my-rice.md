@@ -31,7 +31,7 @@ bright  #ece4fb
 accent  #b06cff
 ```
 
-3 px gaps, square corners, 1 px borders. Only the focused window gets the violet frame. No shadows, blur or transparency. Motion: critically damped springs for anything that moves, so no overshoot, same at any frame rate, and an interrupted move keeps its speed instead of restarting. Small amplitudes: windows open from 97 %, workspaces shift 8 % under a cross-fade, drop-downs slide 10 %. Fades are linear, 120 ms. Closing is twice as fast as opening. The bar never moves. Same palette in kitty, tmux, Neovim, GTK, Qt and every TUI. Neovim runs its own scheme: code grey, keywords bright, strings and numbers violet.
+3 px gaps, square corners, 1 px borders. Only the focused window gets the violet frame. No shadows, blur or transparency. Motion: critically damped springs for anything that moves, so no overshoot, same at any frame rate, and an interrupted move keeps its speed instead of restarting. Small amplitudes: windows open from 97 %, workspaces shift 8 % under a cross-fade. Fades are linear, 120 ms. Closing is twice as fast as opening. The bar never moves. Same palette in kitty, tmux, Neovim, GTK, Qt and every TUI. Neovim runs its own scheme: code grey, keywords bright, strings and numbers violet.
 
 # Bar
 
@@ -45,9 +45,9 @@ right   cpu 07% | mem 3.1G | 52°C | gpu 4% | pi up
 
 pi up turns violet when my Pi answers a ping. LIVE and REC show up in the middle while I share or record.
 
-# Drop-downs
+# Quick apps
 
-Things I need for a few seconds drop down from the top edge and go away on the same key: terminal, SoundCloud, rmpc, calendar, WhatsApp (nchat), mail (aerc), btop on Ctrl+Shift+Escape. One at a time.
+Things I need for a few seconds are normal tiles with one key each: SoundCloud, rmpc, calendar, WhatsApp (nchat), mail (aerc), btop on Ctrl+Shift+Escape. The key jumps to the app, starts it next to what I'm doing if it isn't open, or jumps back if I'm already on it. One short script does it all.
 
 # Terminal
 
