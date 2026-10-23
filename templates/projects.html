@@ -19,20 +19,25 @@
     </header>
 
     <main>
-        <h1>Projects</h1>
-        <dl class="diag meta">
-            <div><dt>dir</dt><dd>/projects</dd></div>
-            <div><dt>type</dt><dd>builds, done and in progress</dd></div>
-        </dl>
+        <section class="hero" aria-labelledby="projects-title">
+            <h1 id="projects-title">projects</h1>
+            <dl class="diag">
+                <div><dt>dir</dt><dd>/projects</dd></div>
+                <div><dt>type</dt><dd>builds, done and in progress</dd></div>
+            </dl>
+        </section>
 
-        <ul class="entries">
-        {{#posts}}
-            <li>
-                <a href="/{{ url }}">{{ title }}</a>
-                <p>{{ summary }}</p>
-            </li>
-        {{/posts}}
-        </ul>
+        <section aria-labelledby="files-title">
+            <h2 id="files-title">files</h2>
+            <ul class="entries">
+            {{#posts}}
+                <li>
+                    <a href="/{{ url }}">{{ title }}</a>
+                    <p>{{ summary }}</p>
+                </li>
+            {{/posts}}
+            </ul>
+        </section>
     </main>
 
     <footer class="site-footer">

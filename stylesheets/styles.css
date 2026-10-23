@@ -38,8 +38,8 @@ html { background: var(--bg); color: var(--ink); font: 400 clamp(1.25rem, 1.1rem
 body { max-width: calc(80ch + 2 * var(--pad)); margin: 0 auto; padding: 0 var(--pad); }
 ::selection { background: var(--rasp); color: var(--bg); }
 :focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
-/* one link style everywhere: sky, dotted underline like the dotted rules; hover inverts */
-a { color: var(--sky); text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+/* one link style everywhere: sky text, no underline; hover and focus invert it to a sky block */
+a { color: var(--sky); text-decoration: none; }
 a:hover, a:focus-visible { background: var(--sky); color: var(--bg); text-decoration: none; outline: none; }
 code { color: var(--amber); }
 html { scrollbar-color: var(--faint) var(--bg); }
@@ -62,13 +62,15 @@ html { scrollbar-color: var(--faint) var(--bg); }
 .site-header .diag { grid-column: 2; grid-row: 2; align-self: end; margin: 0; }
 .site-header .diag div { grid-template-columns: 7ch 1fr; }
 .release, .site-header .diag { font-size: 1.4em; line-height: 1.35; }  /* three lines, as tall as the logo */
+.brand { color: var(--ink); }  /* the board name stays white, green on hover */
+.brand:hover, .brand:focus-visible { background: none; color: var(--leaf); }
 .site-header nav ul { gap: 0; }
 .site-header nav li + li::before { content: "\2192"; margin: 0 1ch; color: var(--faint); }
 .site-header nav a[aria-current] { background: var(--leaf); color: var(--bg); text-decoration: none; }
 .qr { grid-column: 3; grid-row: 1 / 3; display: grid; justify-items: center; gap: .15rem; text-decoration: none; font-size: .8em; }
 .qr { position: relative; }
 .qr img { display: block; width: var(--hh); height: var(--hh); image-rendering: pixelated; }
-.qr span { position: absolute; top: 100%; right: 0; left: 0; width: max-content; margin: 0 auto; text-decoration: underline dotted; text-decoration-thickness: 2px; text-underline-offset: .2em; }
+.qr span { position: absolute; top: 100%; right: 0; left: 0; width: max-content; margin: 0 auto; }
 .qr:hover, .qr:focus-visible { background: none; }
 .qr:hover span, .qr:focus-visible span { background: var(--sky); color: var(--bg); text-decoration: none; }
 
@@ -100,7 +102,7 @@ h2 .state { order: 2; letter-spacing: 0; }
 .eof { margin: 2rem 0 0; padding-left: var(--kw); color: var(--faint); }
 
 /* ---------- blog + projects: files on the boot partition ---------- */
-.entries { margin: 0; padding: 0; list-style: none; border-top: 2px dotted var(--faint); }
+.entries { margin: 0; padding: 0; list-style: none; }
 .entries li { display: grid; grid-template-columns: var(--key) 1fr auto; column-gap: var(--gap); padding: .4rem 0; border-bottom: 2px dotted var(--faint); }
 .entries li::before { content: "file:"; grid-row: 1 / span 3; color: var(--rasp); }
 .entries time, .entries a, .entries p { grid-column: 2; }

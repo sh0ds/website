@@ -19,22 +19,27 @@
     </header>
 
     <main>
-        <h1>Blog</h1>
-        <dl class="diag meta">
-            <div><dt>dir</dt><dd>/blog</dd></div>
-            <div><dt>sort</dt><dd>date, newest first</dd></div>
-            <div><dt>type</dt><dd>dev notes</dd></div>
-        </dl>
+        <section class="hero" aria-labelledby="blog-title">
+            <h1 id="blog-title">blog</h1>
+            <dl class="diag">
+                <div><dt>dir</dt><dd>/blog</dd></div>
+                <div><dt>sort</dt><dd>date, newest first</dd></div>
+                <div><dt>type</dt><dd>dev notes</dd></div>
+            </dl>
+        </section>
 
-        <ol class="entries">
-        {{#posts}}
-            <li>
-                <time>{{ date }}</time>
-                <a href="/{{ url }}">{{ title }}</a>
-                <p>{{ summary }}</p>
-            </li>
-        {{/posts}}
-        </ol>
+        <section aria-labelledby="files-title">
+            <h2 id="files-title">files</h2>
+            <ol class="entries">
+            {{#posts}}
+                <li>
+                    <time>{{ date }}</time>
+                    <a href="/{{ url }}">{{ title }}</a>
+                    <p>{{ summary }}</p>
+                </li>
+            {{/posts}}
+            </ol>
+        </section>
     </main>
 
     <footer class="site-footer">
