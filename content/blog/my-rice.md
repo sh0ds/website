@@ -31,7 +31,7 @@ bright  #ece4fb
 accent  #b06cff
 ```
 
-3 px gaps, square corners, 1 px borders. Only the focused window gets the violet frame. No shadows, blur or transparency. Motion is one expo-out curve: hard start, clean stop, no bounce or scaling. New windows fade in where they land while the others glide aside, workspaces shift with a short cross-fade, drop-downs shoot down from the top. Under 200 ms, 180 Hz. Same palette in kitty, tmux, Neovim, GTK, Qt and every TUI. Neovim runs its own scheme: code grey, keywords bright, strings and numbers violet.
+3 px gaps, square corners, 1 px borders. Only the focused window gets the violet frame. No shadows, blur or transparency. Motion: critically damped springs for anything that moves, so no overshoot, same at any frame rate, and an interrupted move keeps its speed instead of restarting. Small amplitudes: windows open from 97 %, workspaces shift 8 % under a cross-fade, drop-downs slide 10 %. Fades are linear, 120 ms. Closing is twice as fast as opening. The bar never moves. Same palette in kitty, tmux, Neovim, GTK, Qt and every TUI. Neovim runs its own scheme: code grey, keywords bright, strings and numbers violet.
 
 # Bar
 
