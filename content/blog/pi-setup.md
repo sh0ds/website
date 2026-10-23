@@ -2,7 +2,7 @@
 title: How my Raspberry Pi 5 runs sh0ds.dev
 author: sh0ds
 date: 2026-10-20
-summary: I rebuilt my Pi from scratch with fewer moving parts. Here's what runs on it now.
+summary: Rebuild from scratch: NVMe boot, AdGuard Home, Caddy, pull-based deploys, restic backups.
 ---
 
 This website runs on a Raspberry Pi 5 on my desk. It used to run off an SD card with Pi-hole, Unbound, nginx, Docker and a VPN tunnel that only carried DNS. It worked, but every fix added another piece, and in the end I couldn't tell which piece broke what. So I wiped it and started over.

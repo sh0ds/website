@@ -1,6 +1,6 @@
 ---
 title: 3sgc — static site generator in C
-summary: A small static site generator written in C11. No dependencies. It builds this website.
+summary: Static site generator in C11, libc and POSIX only. Builds this site.
 ---
 
 3sgc (sh0ds static site generator) is this website's build tool — roughly 500 lines of C11, no dependencies beyond libc and POSIX.

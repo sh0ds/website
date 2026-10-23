@@ -2,7 +2,7 @@
 title: My rice
 author: sh0ds
 date: 2026-10-20
-summary: Arch, Hyprland and way too much Catppuccin Mocha.
+summary: Arch, Hyprland with a Lua config, Catppuccin Mocha everywhere.
 ---
 
 My desktop is finally done, so here's what it is.

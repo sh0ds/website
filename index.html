@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>#sh0ds-devblog</title>
-    <meta name="description" content="sh0ds.dev: one person, one Raspberry Pi 5, and the whole stack under this site, rebuilt one language at a time.">
+    <meta name="description" content="sh0ds.dev: static site, built by a C generator and served from a Raspberry Pi 5.">
     <link rel="stylesheet" href="/stylesheets/styles.css">
 </head>
 <body class="home">
     <header class="site-header">
         <img class="logo" src="/images/raspberry.svg" alt="" width="42" height="45">
-        <p class="release">Raspberry Pi 5 · bootloader 2026/10/20</p>
+        <p class="release">Raspberry Pi 5 Model B · 8 GB</p>
         <dl class="diag">
             <div><dt>board</dt><dd><a class="brand" href="/" aria-label="sh0ds@devblog, home">sh0ds@devblog</a></dd></div>
             <div><dt>boot</dt><dd><nav aria-label="Main"><ul><li><a href="/blog/index.html">/blog</a></li><li><a href="/projects/index.html">/projects</a></li></ul></nav></dd></div>
@@ -20,13 +20,12 @@
 
     <main>
         <section class="hero" aria-labelledby="hero-title">
-            <h1 id="hero-title">Everything here runs on a Pi on my desk.</h1>
+            <h1 id="hero-title">Served from a Raspberry Pi 5 on my desk.</h1>
             <dl class="diag">
                 <div><dt>user</dt><dd>sh0ds</dd></div>
-                <div><dt>task</dt><dd>build the stack under this site myself, one language at a time</dd></div>
+                <div><dt>goal</dt><dd>write every tool behind this site myself</dd></div>
                 <div><dt>order</dt><dd>shell, SQL → C, ARM64 → Haskell → Pharo → Erlang</dd></div>
-                <div><dt>log</dt><dd><a href="https://github.com/sh0ds/website/blob/next/LOG.md">LOG.md</a>, where I write down what broke and why</dd></div>
-                <div><dt>blog</dt><dd><a href="/blog/index.html">/blog</a>, dev stuff I want to share</dd></div>
+                <div><dt>log</dt><dd><a href="https://github.com/sh0ds/website/blob/next/LOG.md">LOG.md</a>, one entry per session</dd></div>
             </dl>
         </section>
 
@@ -34,11 +33,13 @@
             <h2 id="hw-title"><span class="tag" aria-hidden="true">STAGE 1</span>hardware</h2>
             <dl class="diag">
                 <div><dt>host</dt><dd>raspberry-pizian</dd></div>
-                <div><dt>cpu</dt><dd>4× Cortex-A76, aarch64</dd></div>
-                <div><dt>ram</dt><dd>8 GB</dd></div>
-                <div><dt>disk</dt><dd>NVMe SSD, HDD for backups</dd></div>
-                <div><dt>os</dt><dd>Raspberry Pi OS (Debian)</dd></div>
-                <div><dt>build</dt><dd><a href="/projects/3sgc.html">3sgc</a>, a static site generator in C</dd></div>
+                <div><dt>soc</dt><dd>BCM2712, 4× Cortex-A76 @ 2.4 GHz</dd></div>
+                <div><dt>ram</dt><dd>8 GB LPDDR4X</dd></div>
+                <div><dt>root</dt><dd>NVMe SSD</dd></div>
+                <div><dt>bak</dt><dd>restic 03:30, local HDD + Hetzner Storage Box</dd></div>
+                <div><dt>os</dt><dd>Raspberry Pi OS Lite, arm64</dd></div>
+                <div><dt>httpd</dt><dd>Caddy 2.11</dd></div>
+                <div><dt>build</dt><dd><a href="/projects/3sgc.html">3sgc</a>, C11</dd></div>
             </dl>
         </section>
 
@@ -63,11 +64,11 @@
                 <div class="meter">
                     <div class="lbl">up</div>
                     <div class="val" id="stat-uptime">—</div>
-                    <div class="note">since the last reboot</div>
+                    <div class="note">since last boot</div>
                 </div>
             </div>
             <dl class="diag source">
-                <div><dt>src</dt><dd><code>/ramdisk/pistats.json</code>, every 10 s, <span id="stat-age">waiting for the first sample</span></dd></div>
+                <div><dt>src</dt><dd><code>/ramdisk/pistats.json</code>, polled every 10 s, <span id="stat-age">waiting for the first sample</span></dd></div>
             </dl>
         </section>
 
@@ -76,14 +77,14 @@
             <table class="parts">
                 <thead><tr><th>part</th><th>label</th><th>used for</th><th>flag</th></tr></thead>
                 <tbody>
-                    <tr><td>p01</td><td>Linux</td><td>the base layer: web server, DNS, deploys, backups</td><td class="using">using</td></tr>
-                    <tr><td>p02</td><td>Bash · AWK</td><td>glue code: deploys, cron jobs, log digging</td><td class="using">using</td></tr>
-                    <tr><td>p03</td><td>SQL</td><td>anything that has to persist: visit counts, search</td><td class="using">using</td></tr>
-                    <tr><td>p04</td><td>C</td><td>3sgc, the generator behind the blog and project pages</td><td class="using">using</td></tr>
-                    <tr><td>p05</td><td>ARM64</td><td>reading what the compiler actually emits</td><td class="learning">learning</td></tr>
-                    <tr><td>p06</td><td>Haskell</td><td>parsers, starting with the Markdown one in 3sgc</td><td class="learning">learning</td></tr>
-                    <tr><td>p07</td><td>Pharo</td><td>objects all the way down: the tool that builds and checks this site</td><td class="next">next</td></tr>
-                    <tr><td>p08</td><td>Erlang</td><td>servers that stay up: live stats and a guestbook</td><td class="next">next</td></tr>
+                    <tr><td>p01</td><td>Linux</td><td>Caddy, AdGuard Home, systemd timers, restic</td><td class="using">using</td></tr>
+                    <tr><td>p02</td><td>Bash · AWK</td><td>deploy script, timers, log parsing</td><td class="using">using</td></tr>
+                    <tr><td>p03</td><td>SQL</td><td>SQLite: visit counts, FTS5 search</td><td class="using">using</td></tr>
+                    <tr><td>p04</td><td>C</td><td>3sgc: Markdown → HTML, templates, listings</td><td class="using">using</td></tr>
+                    <tr><td>p05</td><td>ARM64</td><td>reading compiler output, crc32 by hand</td><td class="learning">learning</td></tr>
+                    <tr><td>p06</td><td>Haskell</td><td>Markdown parser for 3sgc</td><td class="learning">learning</td></tr>
+                    <tr><td>p07</td><td>Pharo</td><td>site tool: build, link check, feeds</td><td class="next">next</td></tr>
+                    <tr><td>p08</td><td>Erlang</td><td>live stats over WebSocket, guestbook</td><td class="next">next</td></tr>
                 </tbody>
             </table>
         </section>
@@ -91,12 +92,12 @@
         <section aria-labelledby="pipeline-title">
             <h2 id="pipeline-title"><span class="tag" aria-hidden="true">STAGE 4</span>boot sequence</h2>
             <ol class="pipeline">
-                <li><span class="step">push</span><span class="what">a post lands in <code>content/</code> as Markdown</span><span class="res">OK</span></li>
-                <li><span class="step">pull</span><span class="what">the Pi picks up the new commit</span><span class="res">OK</span></li>
-                <li><span class="step">make</span><span class="what">compiles 3sgc from source</span><span class="res">OK</span></li>
-                <li><span class="step">3sgc</span><span class="what">renders posts and listings through the templates</span><span class="res">OK</span></li>
-                <li><span class="step">rsync</span><span class="what">copies the output into <code>/srv/www</code></span><span class="res">OK</span></li>
-                <li><span class="step">you</span><span class="what" id="req-timing">over HTTPS</span><span class="res">BOOT</span></li>
+                <li><span class="step">push</span><span class="what">commit to <code>main</code></span><span class="res">OK</span></li>
+                <li><span class="step">pull</span><span class="what"><code>site-deploy.timer</code> polls GitHub every 2 min</span><span class="res">OK</span></li>
+                <li><span class="step">make</span><span class="what"><code>cc -std=c11 -Wall -Wextra</code> → <code>build/3sgc</code></span><span class="res">OK</span></li>
+                <li><span class="step">3sgc</span><span class="what"><code>content/*.md</code> → <code>blog/</code>, <code>projects/</code></span><span class="res">OK</span></li>
+                <li><span class="step">rsync</span><span class="what">output → <code>/srv/www</code></span><span class="res">OK</span></li>
+                <li><span class="step">you</span><span class="what" id="req-timing">HTTPS</span><span class="res">BOOT</span></li>
             </ol>
         </section>
     </main>
@@ -105,9 +106,8 @@
         <dl class="diag">
             <div><dt>net</dt><dd><ul><li><a href="https://github.com/sh0ds">github</a></li><li><a href="https://sh0ds.itch.io/">itch.io</a></li><li><a href="mailto:mail@sh0ds.dev">mail</a></li></ul></dd></div>
             <div><dt>src</dt><dd><a href="https://github.com/sh0ds/website">sh0ds/website</a>, built with <a href="/projects/3sgc.html">3sgc</a></dd></div>
-            <div><dt>info</dt><dd>© 2026 sh0ds, served from a Raspberry Pi 5</dd></div>
+            <div><dt>info</dt><dd>© 2026 sh0ds</dd></div>
         </dl>
-        <p class="hint">Boot mode: NVMe. Hold SPACE for the recovery menu.</p>
     </footer>
 
     <script src="/main.js" defer></script>

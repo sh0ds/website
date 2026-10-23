@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (timing && nav && nav.responseStart > 0) {
         const ttfb = Math.round(nav.responseStart - nav.requestStart);
         const kb = nav.transferSize ? `, ${(nav.transferSize / 1024).toFixed(1)} kB` : "";
-        timing.textContent = `over HTTPS, first byte in ${ttfb} ms${kb}`;
+        timing.textContent = `HTTPS, TTFB ${ttfb} ms${kb}`;
     }
 
     // -- SYNTAX HIGHLIGHTING --
