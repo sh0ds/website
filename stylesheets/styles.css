@@ -38,9 +38,9 @@ html { background: var(--bg); color: var(--ink); font: 400 clamp(1.25rem, 1.1rem
 body { max-width: calc(80ch + 2 * var(--pad)); margin: 0 auto; padding: 0 var(--pad); }
 ::selection { background: var(--rasp); color: var(--bg); }
 :focus-visible { outline: 2px solid var(--leaf); outline-offset: 2px; }
-/* one link style everywhere: sky text, no underline; hover and focus invert it to a sky block */
-a { color: var(--sky); text-decoration: none; }
-a:hover, a:focus-visible { background: var(--sky); color: var(--bg); text-decoration: none; outline: none; }
+/* one link style everywhere: leaf text, no underline; hover and focus invert it to a leaf block */
+a { color: var(--leaf); text-decoration: none; }
+a:hover, a:focus-visible { background: var(--leaf); color: var(--bg); text-decoration: none; outline: none; }
 code { color: var(--amber); }
 html { scrollbar-color: var(--faint) var(--bg); }
 
@@ -62,8 +62,8 @@ html { scrollbar-color: var(--faint) var(--bg); }
 .site-header .diag { grid-column: 2; grid-row: 2; align-self: end; margin: 0; }
 .site-header .diag div { grid-template-columns: 7ch 1fr; }
 .release, .site-header .diag { font-size: 1.4em; line-height: 1.35; }  /* three lines, as tall as the logo */
-.brand { color: var(--ink); }  /* the board name stays white, green on hover */
-.brand:hover, .brand:focus-visible { background: none; color: var(--leaf); }
+.brand { color: var(--ink); }  /* the board name stays white, raspberry on hover */
+.brand:hover, .brand:focus-visible { background: none; color: var(--rasp); }
 .site-header nav ul { gap: 0; }
 .site-header nav li + li::before { content: "\2192"; margin: 0 1ch; color: var(--faint); }
 .site-header nav a[aria-current] { background: var(--leaf); color: var(--bg); text-decoration: none; }
@@ -72,7 +72,7 @@ html { scrollbar-color: var(--faint) var(--bg); }
 .qr img { display: block; width: var(--hh); height: var(--hh); image-rendering: pixelated; }
 .qr span { position: absolute; top: 100%; right: 0; left: 0; width: max-content; margin: 0 auto; }
 .qr:hover, .qr:focus-visible { background: none; }
-.qr:hover span, .qr:focus-visible span { background: var(--sky); color: var(--bg); text-decoration: none; }
+.qr:hover span, .qr:focus-visible span { background: var(--leaf); color: var(--bg); text-decoration: none; }
 
 /* ---------- page ---------- */
 main { padding: 2rem 0 2.5rem; }
@@ -109,10 +109,10 @@ h2 .state { order: 2; letter-spacing: 0; }
 .entries time { color: var(--dim); }
 .entries p { grid-column: 2 / -1; margin: 0; color: var(--dim); }
 .entries li:hover, .entries li:focus-within { background: var(--row); }
-.entries li:hover a, .entries li:focus-within a { background: var(--sky); color: var(--bg); text-decoration: none; }
-.entries li:hover::before, .entries li:focus-within::before { content: "load:"; color: var(--sky); }
+.entries li:hover a, .entries li:focus-within a { background: var(--leaf); color: var(--bg); text-decoration: none; }
+.entries li:hover::before, .entries li:focus-within::before { content: "load:"; color: var(--leaf); }
 .entries li::after { content: "BOOT \2192"; grid-column: 3; grid-row: 1; padding: 0 .5ch; color: var(--faint); }
-.entries li:hover::after, .entries li:focus-within::after { background: var(--sky); color: var(--bg); }
+.entries li:hover::after, .entries li:focus-within::after { background: var(--leaf); color: var(--bg); }
 
 /* ---------- footer ---------- */
 .site-footer { padding: 1rem 0 2.5rem; border-top: 6px double var(--faint); color: var(--dim); }
