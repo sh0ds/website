@@ -8,29 +8,37 @@
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="/" aria-label="sh0ds@devblog, home">sh0ds<span>@devblog</span></a>
-        <nav aria-label="Main">
-            <ul>
-                <li><a href="/blog/index.html">blog</a></li>
-                <li><a href="/projects/index.html">projects</a></li>
-            </ul>
-        </nav>
+        <img class="logo" src="/images/raspberry.svg" alt="" width="42" height="45">
+        <p class="release">Raspberry Pi 5 · bootloader 2026/10/20</p>
+        <dl class="diag">
+            <div><dt>board</dt><dd><a class="brand" href="/" aria-label="sh0ds@devblog, home">sh0ds@devblog</a></dd></div>
+            <div><dt>boot</dt><dd><nav aria-label="Main"><ul><li><a href="/blog/index.html">/blog</a></li><li><a href="/projects/index.html">/projects</a></li></ul></nav></dd></div>
+        </dl>
+        <a class="qr" href="https://github.com/sh0ds/website"><img src="/images/qr-repo.svg" alt="QR code for github.com/sh0ds/website" width="99" height="99"><span>sh0ds/website</span></a>
     </header>
 
     <main>
-        <h1>{{ title }}</h1>
-        <p class="meta">{{ date }}, {{ author }}</p>
-
-        {{ content }}
+        <article>
+            <h1>{{ title }}</h1>
+            <dl class="diag meta">
+                <div><dt>date</dt><dd>{{ date }}</dd></div>
+                <div><dt>by</dt><dd>{{ author }}</dd></div>
+                <div><dt>msg</dt><dd>{{ summary }}</dd></div>
+            </dl>
+            <div class="body">
+                {{ content }}
+            </div>
+            <p class="eof">EOF · <a href="/">back to /</a></p>
+        </article>
     </main>
 
     <footer class="site-footer">
-        <ul>
-            <li><a href="https://github.com/sh0ds">GitHub</a></li>
-            <li><a href="https://sh0ds.itch.io/">itch.io</a></li>
-            <li><a href="mailto:mail@sh0ds.dev">Contact</a></li>
-        </ul>
-        <p>© 2026 sh0ds · served from a Raspberry Pi 5 · built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></p>
+        <dl class="diag">
+            <div><dt>net</dt><dd><ul><li><a href="https://github.com/sh0ds">github</a></li><li><a href="https://sh0ds.itch.io/">itch.io</a></li><li><a href="mailto:mail@sh0ds.dev">mail</a></li></ul></dd></div>
+            <div><dt>src</dt><dd><a href="https://github.com/sh0ds/website">sh0ds/website</a>, built with <a href="/projects/3sgc.html">3sgc</a></dd></div>
+            <div><dt>info</dt><dd>© 2026 sh0ds, served from a Raspberry Pi 5</dd></div>
+        </dl>
+        <p class="hint">Boot mode: NVMe. Hold SPACE for the recovery menu.</p>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
