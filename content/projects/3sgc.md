@@ -1,20 +1,26 @@
 ---
-title: 3sgc — static site generator in C
+title: 3sgc, static site generator in C
 summary: Static site generator in C11, libc and POSIX only. Builds this site.
 ---
 
-3sgc (sh0ds static site generator) is this website's build tool — roughly 500 lines of C11, no dependencies beyond libc and POSIX.
+3sgc builds this site. About 1,000 lines of C11, no dependencies beyond libc and POSIX.
 
-# What it does
+# Pipeline
 
-Walks a content directory, parses front matter from markdown files, sorts posts by date, renders them through HTML templates, and generates blog and project index pages. Push to main and the Pi pulls it and rebuilds the site within 2 minutes.
+Walks content/, parses the front matter of each Markdown file, sorts posts by date, renders them through the HTML templates and writes the blog and project index pages. A push to main is live within 2 minutes.
 
-# Features
+# Supported
 
-Headings, paragraphs, and fenced code blocks. Templates with `{{ title }}`-style placeholders and a `{{#posts}}` loop for listings. Builds with `-Wall -Wextra` plus ASan and UBSan on every compile.
+```
+markdown   headings, paragraphs, fenced code blocks
+templates  {{ title }} style fields, {{#posts}} loop
+build      -Wall -Wextra, ASan + UBSan on every compile
+```
 
-Missing features are a deliberate work-in-progress: lists, inline formatting, and syntax highlighting classes are on the TODO list.
+# Not yet
+
+Lists, inline formatting, syntax highlighting classes. Missing on purpose, they're next.
 
 # Source
 
-On GitHub. Written to be read.
+In the website repo under src/, at github.com/sh0ds/website.
