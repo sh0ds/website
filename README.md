@@ -15,16 +15,16 @@ You can watch it at [sh0ds.dev/next](https://sh0ds.dev/next/) while it's in prog
 
 ## Appearance
 
-The site shares the Diag desktop's flat panel rails, square navigation controls,
-one-pixel separators and two-pixel focus markers. The Pi palette stays raspberry
-pink and leaf green, with amber warnings and the existing sky-blue pipeline labels.
-The Raspberry logo, repository QR, diagnostic columns, section order and page
-routes are unchanged.
+The original Pi header and open ruled headings frame the desktop's flat meters,
+one-pixel separators and keyboard focus markers. The Pi palette stays raspberry
+pink and leaf green, with amber warnings and sky-blue pipeline labels. The logo,
+QR, diagnostic columns, section order and routes retain their original layout.
 
-The VT323 font stays self-hosted. Colour transitions take 120 ms and respect
-reduced-motion preferences; nothing slides or scales. Narrow screens collapse
-columns without hiding content. Keyboard users can skip the header and see focus
-on navigation links and complete file rows.
+The same Terminess Nerd Font Mono family as the desktop is self-hosted at 18 px.
+The bundled WOFF2 keeps the upstream letterforms; font source and license are in
+[fonts/README.md](fonts/README.md). Colour transitions take 120 ms and respect
+reduced-motion preferences. Narrow screens collapse content columns, and keyboard
+users can skip the header and see focus on links and complete file rows.
 
 ## Getting Started
 

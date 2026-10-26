@@ -1,11 +1,11 @@
-/* Diag: the desktop's flat rails, square controls and quiet focus hierarchy,
- * in the website's original Raspberry Pi palette. Fonts stay self-hosted. */
+/* Diag: desktop typography and controls in the original Pi diagnostic layout.
+ * Terminess is self-hosted; see fonts/Terminess-LICENSE.txt. */
 @font-face {
-  font-family: "VT323";
+  font-family: "Terminess Nerd Font Mono";
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("/fonts/vt323-latin-400-normal.woff2") format("woff2");
+  src: url("/fonts/terminess-nerd-font-mono-regular.woff2") format("woff2");
 }
 
 /* Keep the diagnostic key column aligned across heading font sizes. */
@@ -15,7 +15,7 @@
   color-scheme: dark;
   --bg: #000000; --ink: #e8e8e8; --dim: #8c8c8c; --faint: #4a4a4a; --row: #141414;
   --rasp: #e0306a; --leaf: #75c94d; --amber: #ffb000; --sky: #6ec6ff;
-  --mono: "VT323", ui-monospace, monospace;
+  --mono: "Terminess Nerd Font Mono", ui-monospace, monospace;
   --unit: 4px;
   --key: 9ch; --gap: 1ch; --kw: calc(var(--key) + var(--gap));
   --pad: clamp(16px, 4vw, 32px);
@@ -25,7 +25,7 @@
 *, *::before, *::after { box-sizing: border-box; }
 html {
   background: var(--bg); color: var(--ink);
-  font: 400 22px/1.4 var(--mono);
+  font: 400 18px/1.5 var(--mono);
   -webkit-text-size-adjust: 100%;
   scrollbar-color: var(--faint) var(--bg);
 }
@@ -57,43 +57,40 @@ a, .entries li, .parts tbody tr, .bar i {
 .diag dd { margin: 0; min-width: 0; }
 .diag ul { display: flex; flex-wrap: wrap; gap: 0 2ch; margin: 0; padding: 0; list-style: none; }
 
-/* Header: the same board, navigation and QR in a compact instrument rail. */
-.site-header {
-  display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 8px 24px; align-items: center;
-  padding: 24px 0; border-bottom: 1px solid var(--faint);
-}
-.logo { grid-column: 1; grid-row: 1 / 3; width: 82px; height: 92px; max-width: none; image-rendering: pixelated; }
-.release { grid-column: 2; grid-row: 1; margin: 0; color: var(--dim); align-self: end; }
-.site-header .diag { grid-column: 2; grid-row: 2; align-self: start; }
-.site-header .diag div { grid-template-columns: 6ch minmax(0, 1fr); align-items: baseline; }
-.brand { color: var(--ink); }
-.brand:hover { color: var(--rasp); background: none; }
-.site-header nav ul { gap: 4px; }
-.site-header nav a {
-  display: inline-block; min-height: 36px; padding: 0 1ch;
-  border: 1px solid var(--faint); border-bottom: 2px solid var(--faint);
-  line-height: 33px;
-}
-.site-header nav a:hover, .site-header nav a[aria-current="page"] {
-  background: var(--row); border-bottom-color: var(--leaf); text-decoration: none;
-}
-.qr { grid-column: 3; grid-row: 1 / 3; display: grid; justify-items: center; gap: 4px; font-size: .8em; }
-.qr img { display: block; width: 99px; height: 99px; image-rendering: pixelated; }
-.qr:hover { background: none; }
+/* Original header: full-size Pi, board diagnostics, arrow links and QR. */
+.site-header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 2ch; align-items: center; padding: 1.75rem 0 2rem; border-bottom: 6px double var(--faint); }
+/* logo, text block and QR share one height: --hh, 3 px per logo pixel */
+.site-header { --hh: 138px; }
+.logo { grid-column: 1; grid-row: 1 / 3; width: auto; max-width: none; height: var(--hh); image-rendering: pixelated; }
+.release { grid-column: 2; grid-row: 1; align-self: start; margin: 0; color: var(--dim); }
+.site-header .diag { grid-column: 2; grid-row: 2; align-self: end; margin: 0; }
+.site-header .diag div { grid-template-columns: 7ch minmax(0, 1fr); }
+.release, .site-header .diag { font-size: 1.4em; line-height: 1.35; }  /* three lines, as tall as the logo */
+.brand { color: var(--ink); }  /* the board name stays white, raspberry on hover */
+.brand:hover, .brand:focus-visible { background: none; color: var(--rasp); }
+.site-header nav ul { gap: 0; }
+.site-header nav li + li::before { content: "\2192"; margin: 0 1ch; color: var(--faint); }
+.site-header nav a[aria-current] { background: var(--leaf); color: var(--bg); text-decoration: none; }
+.qr { grid-column: 3; grid-row: 1 / 3; display: grid; justify-items: center; gap: .15rem; text-decoration: none; font-size: .8em; }
+.qr { position: relative; }
+.qr img { display: block; width: var(--hh); height: var(--hh); image-rendering: pixelated; }
+.qr span { position: absolute; top: 100%; right: 0; left: 0; width: max-content; margin: 0 auto; }
+.qr:hover, .qr:focus-visible { background: none; }
+.qr:hover span, .qr:focus-visible span { background: var(--leaf); color: var(--bg); text-decoration: none; }
 
-/* Page headings behave like panel rails, with the active marker at the edge. */
+
+/* Original open headings with a raspberry lead-in and grey trailing rule. */
 main { padding: 24px 0 40px; }
-h1 { margin: 0 0 16px; padding-left: var(--kw); font-size: 1.45em; font-weight: 400; line-height: 1.2; text-wrap: balance; }
+h1 { margin: 0 0 16px; padding-left: var(--kw); font-size: 1.4em; font-weight: 400; line-height: 1.2; text-wrap: balance; }
+/* section headings: a raspberry rule through the key column, the name in caps, a faint rule to the edge */
 h2, .body h1, .hero h1 {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--gap);
-  margin: 32px 0 16px; padding: 4px 8px 4px 0;
-  border: 1px solid var(--faint); border-left: 2px solid var(--rasp);
-  background: var(--row); font-size: 1em; font-weight: 400;
-  line-height: 1.4; text-transform: uppercase; letter-spacing: .04em;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .2rem var(--gap); margin: 2.25rem 0 .7rem; padding: 0;
+  color: var(--ink); font-size: 1em; font-weight: 400; line-height: 1.3; text-transform: uppercase; letter-spacing: .06em;
 }
-h2::before, .body h1::before, .hero h1::before { content: ""; flex: 0 0 calc(var(--key) - 2px); }
-h2 .state { margin-left: auto; letter-spacing: 0; }
+h2::before, .body h1::before, .hero h1::before { content: ""; flex: 0 0 var(--key); height: 2px; background: var(--rasp); }
+h2::after, .body h1::after, .hero h1::after { content: ""; order: 1; flex: 1 1 2ch; height: 2px; background: var(--faint); }
+h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
+
 .hero h1 { margin-top: 0; }
 .meta { margin-bottom: 24px; }
 .meta dd { color: var(--dim); }
@@ -193,14 +190,12 @@ h2 .state { margin-left: auto; letter-spacing: 0; }
 /* Narrow displays keep the content order; only the columns collapse. */
 @media (max-width: 42em) {
   :root { --key: 6ch; --pad: 16px; }
-  html { font-size: 20px; }
-  .site-header { gap: 8px 16px; padding: 16px 0; }
-  .logo { width: 41px; height: 46px; }
-  .release { font-size: .9em; }
-  .qr img { width: 66px; height: 66px; }
+  html { font-size: 18px; }
+  .site-header { --hh: 69px; column-gap: 1ch; padding: 1rem 0; }
+  .site-header .diag { font-size: .85em; }
+  .site-header .diag div { grid-template-columns: 6.5ch minmax(0, 1fr); }
+  .release { font-size: .78em; }
   .qr span { display: none; }
-  .site-header .diag div { grid-template-columns: 5ch minmax(0, 1fr); }
-  .site-header nav a { padding-inline: .6ch; }
   main { padding-top: 16px; }
   h1 { padding-left: 0; font-size: 1.3em; }
   h2::before, .body h1::before, .hero h1::before { flex-basis: 2ch; }
@@ -223,16 +218,8 @@ h2 .state { margin-left: auto; letter-spacing: 0; }
   .entries li { grid-template-columns: var(--key) minmax(0, 1fr); }
   .entries li::after { content: none; }
 }
-@media (max-width: 24em) {
-  .site-header { grid-template-columns: auto minmax(0, 1fr); }
-  .qr { grid-column: 1; grid-row: 2; align-self: start; }
-  .qr img { width: 66px; height: 66px; }
-  .logo { grid-row: 1; justify-self: center; }
-  .release { align-self: center; }
-  .site-header .diag { grid-row: 2; }
-}
 @media (pointer: coarse) {
-  .site-header nav a { min-height: 44px; line-height: 41px; }
+  .site-header nav a { display: inline-block; padding-block: 8px; }
   .site-footer a { display: inline-block; padding-block: 8px; }
   .entries li { min-height: 44px; }
 }
