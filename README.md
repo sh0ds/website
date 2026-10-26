@@ -4,7 +4,7 @@ My website, the static site generator that builds it, and (soon) everything I le
 
 ## Description
 
-This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by 3sgc, a little static site generator I wrote in C (it lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written and shows the Pi's live stats.
+This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by [3sgc](https://github.com/sh0ds/3sgc), a little static site generator I wrote in C (a local copy lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written and shows the Pi's live stats.
 
 This repo is also my learning project. Over the next months I'm working through Bash, SQL, C, ARM64 assembly, Haskell, Pharo and Erlang, and every language ends up building a piece of this site. That work happens on the `next` branch:
 

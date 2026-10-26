@@ -26,4 +26,4 @@ Lists, inline formatting, syntax highlighting classes. Missing on purpose, they'
 
 # Source
 
-In the website repo under src/, at github.com/sh0ds/website.
+The source repository is https://github.com/sh0ds/3sgc. This website repository keeps a local copy of the generator in src/ for its build.
