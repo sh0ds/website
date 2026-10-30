@@ -4,7 +4,7 @@ My website, the static site generator that builds it, and (soon) everything I le
 
 ## Description
 
-This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by 3sgc, a little static site generator I wrote in C (it lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written and shows the Pi's live stats.
+This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by [3sgc](https://github.com/sh0ds/3sgc), a little static site generator I wrote in C (a local copy lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written and shows the Pi's live stats.
 
 This repo is also my learning project. Over the next months I'm working through Bash, SQL, C, ARM64 assembly, Haskell, Pharo and Erlang, and every language ends up building a piece of this site. That work happens on the `next` branch:
 
@@ -12,6 +12,19 @@ This repo is also my learning project. Over the next months I'm working through 
 - `next` is the rebuilt site, plus the tools I write for it under `tools/` and `LOG.md`, where I write down what I did, what broke and what I learned every session
 
 You can watch it at [sh0ds.dev/next](https://sh0ds.dev/next/) while it's in progress. When it's done, `next` becomes `main`.
+
+## Appearance
+
+The original Pi header and open ruled headings frame the desktop's flat meters,
+one-pixel separators and keyboard focus markers. The Pi palette stays raspberry
+pink and leaf green, with amber warnings and sky-blue pipeline labels. The logo,
+QR, diagnostic columns, section order and routes retain their original layout.
+
+The same Terminess Nerd Font Mono family as the desktop is self-hosted at 18 px.
+The bundled WOFF2 keeps the upstream letterforms; font source and license are in
+[fonts/README.md](fonts/README.md). Colour transitions take 120 ms and respect
+reduced-motion preferences. Narrow screens collapse content columns, and keyboard
+users can skip the header and see focus on links and complete file rows.
 
 ## Getting Started
 
