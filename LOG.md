@@ -35,3 +35,5 @@ Stuck: floating point division with 2 decimal places
 Learned: division by 1.0 instead of 1, round() lets you decide decimal places
 Redo: nothing
 Next: Day 5, staging at /next/
+
+## SQL Placement · indexes
