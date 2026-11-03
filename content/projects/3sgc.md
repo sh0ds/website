@@ -22,7 +22,7 @@ build      -Wall -Wextra,
 
 # Not yet
 
-Lists, inline formatting, syntax highlighting classes. Missing on purpose, they're next.
+Lists, inline formatting, links, tables. They come with md, a Markdown parser I'm writing in Haskell: 3sgc will pipe every post through it, and markdown.c stays as the fallback.
 
 # Source
 
