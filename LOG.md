@@ -1,5 +1,23 @@
 # LOG
 
+What I did, what broke and what I learned, one entry per step. The plan has three tracks: E (CHIP-8), P (PICO-8 and Picotron), M (`md` and 3sgc), plus L (`lift`) on the side.
+
+Entry headings: `## E1 · title`, `## P2 · title`, `## M3 · title`, `## L1 · title`. A second sitting on the same step adds to its entry. Ships: `## Ship · E·1 · name`. Every sitting ends with a commit. New entries go at the bottom.
+
+```
+## E1 · The machine on paper
+
+Did:
+Stuck:
+Learned:
+Redo:
+Next:
+```
+
+Open: snprintf truncation warning in src/index.c:56 (fix for real in M6).
+
+# Setup, under the old plan
+
 ## C placement · refresher needed
 
 Pointers, strings, fgets + strtol.
@@ -22,19 +40,19 @@ Next: Day 3, LOG.md and the log helper.
 
 ## Day 3 · week 0
 
-Did: log helper added, creates new entry when typing 'log' in kitty
-Stuck: permissions for the file missing, mixed up repo and local dotfiles
-Learned: always edit local dotfiles, not repo; chmod 777 helpers
-Redo: delete the log helper, get running again from memory
-Next: Day 4, SQL placement
+Did: log helper added, creates a new entry when typing `log` in kitty.
+Stuck: permissions for the file missing, mixed up repo and local dotfiles.
+Learned: always edit the local dotfiles, not the repo; a helper needs the execute bit (chmod +x, 755), not 777.
+Redo: delete the log helper, get it running again from memory.
+Next: Day 4, SQL placement.
 
 ## Day 4 · week 0
 
-Did: last 3 SQLBolt exercises, 5 pgexercises aggregation problems
-Stuck: floating point division with 2 decimal places
-Learned: division by 1.0 instead of 1, round() lets you decide decimal places
-Redo: nothing
-Next: Day 5, staging at /next/
+Did: last 3 SQLBolt exercises, 5 pgexercises aggregation problems.
+Stuck: floating point division with 2 decimal places.
+Learned: divide by 1.0 instead of 1, round() lets you decide decimal places.
+Redo: nothing.
+Next: Day 5, staging at /next/.
 
 ## SQL placement · indexes
 
@@ -44,5 +62,13 @@ Did: read site-deploy, staging worktree /srv/repo-next live (67da649), site-stag
 Stuck: didn't get the worktree setup at first; HDD unmounted for a week without me noticing.
 Learned: site-deploy compares origin/<branch> with the hash in deployed-<branch>, deleting that file forces a rebuild. -x build.sh picks build.sh over make + 3sgc. /next/ is excluded from main's rsync, otherwise --delete wipes staging. Subshells because bash ignores set -e inside if/||.
 Redo: the three site-deploy facts from memory, without the walkthrough.
-Next: Day 6, staging you can trust.
-Links: every link escapes /next/ (all hrefs start with /). snprintf truncation warning in index.c:56 (Day 55).
+Next: the plan change.
+
+---
+
+# Three tracks
+
+## Plan change · consoles, md, lift on the side
+
+Did: dropped the 315-day plan after Day 5. New plan: CHIP-8 in C, ARM64 and the browser; PICO-8 and Picotron in Lua; a Markdown parser in Haskell for 3sgc; lift as a side project. Staging stays as it was. Templates, homepage and stylesheet use relative links now, so /next/ stays inside /next/. Pharo, Erlang and the live server are gone from the Pi.
+Next: Step 0 (log helper takes the step, sh0ds/chip8 repo), then E1.
