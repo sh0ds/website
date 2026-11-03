@@ -183,8 +183,10 @@ h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
 .parts tr:has(.learning) td:first-child { box-shadow: inset 2px 0 var(--amber); }
 .parts tbody tr:hover { background: var(--row); }
 
-/* V2 Screen: everything about the games sits on one console screen,
- * the Pi and the stack stay outside it. The marker sits on the next cart. */
+/* Boot screen: everything about the games sits on one console screen.
+ * Save files are the three big games the plan heads for; each line flips
+ * from -- to OK (class "done") when that step ships. Carts are the small
+ * games; the marker (class "sel") sits on the next one. Nothing moves. */
 .screen {
   margin: 8px 0 0; padding: 22px 28px 20px; background: var(--p0);
   border: 2px solid var(--p2); outline: 1px solid var(--p2); outline-offset: 5px;
@@ -213,14 +215,29 @@ h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
 .post dt { overflow: hidden; white-space: nowrap; color: var(--sky); }
 .post dt::after { content: " ............"; color: var(--faint); }
 .post dd { margin: 0; min-width: 0; }
-.menu { margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--p2); }
-.menu h2 { margin: 0 0 10px; }
-.menu h2::before, .menu h2::after { content: none; }
+.block { margin-top: 26px; padding-top: 16px; border-top: 1px dashed var(--p2); }
+.block h2 { margin: 0 0 14px; }
+.block h2::before, .block h2::after { content: none; }
+.block h2 span { margin-left: auto; color: var(--faint); text-transform: none; letter-spacing: 0; }
+
+/* Save files: three slots side by side, like a file select. */
+.files { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.file { display: grid; align-content: start; padding: 12px 14px 14px; border: 1px solid var(--p2); background: var(--p1); }
+.file .no { margin: 0; display: flex; justify-content: space-between; color: var(--rasp); text-transform: uppercase; font-size: .85em; }
+.file .no span { color: var(--faint); }
+.file h3 { margin: 6px 0 2px; font-family: "VT323", var(--mono); font-weight: 400; font-size: 2em; line-height: 1; color: var(--p15); }
+.file .line { margin: 0 0 12px; color: var(--dim); font-size: .9em; line-height: 1.35; }
+.steps { list-style: none; margin: auto 0 0; padding: 8px 0 0; border-top: 1px solid var(--p2); display: grid; row-gap: 2px; font-size: .9em; }
+.steps li { display: grid; grid-template-columns: 6ch minmax(0, 1fr) auto; column-gap: var(--gap); }
+.steps .k { color: var(--sky); }
+.steps .v { color: var(--dim); }
+.steps .ok { color: var(--faint); }
+.steps .done .ok { color: var(--leaf); }
+.steps .done .v { color: var(--ink); }
+
+/* Cart select: the small games, one row per Ship. */
 .carts { list-style: none; margin: 0; padding: 0; }
-.carts li {
-  position: relative; display: grid; grid-template-columns: 3ch 5ch minmax(0, 1fr) 19ch 7ch;
-  column-gap: var(--gap); padding: 4px 0;
-}
+.carts li { display: grid; grid-template-columns: 3ch 5ch minmax(0, 1fr) 19ch 7ch; column-gap: var(--gap); padding: 4px 0; }
 .carts li::before { content: ""; }
 .carts li.sel::before { content: "\25B6"; color: var(--p8); }
 .carts li.sel { background: var(--p1); }
@@ -239,6 +256,8 @@ h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
   .screen { padding: 16px 14px; outline-offset: 3px; }
   .screen h1 { font-size: 2.6em; }
   .post div { grid-template-columns: 7ch minmax(0, 1fr); }
+  .block h2 span { display: none; }
+  .files { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .carts li { grid-template-columns: 2ch 4ch minmax(0, 1fr) auto; row-gap: 0; }
   .carts .tool { grid-column: 3; grid-row: 2; }
   .carts .flag { grid-column: 4; grid-row: 1; }

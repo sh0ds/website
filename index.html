@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>sh0ds@devblog</title>
-    <meta name="description" content="sh0ds.dev: small games in PICO-8, Godot and an engine of my own, served from a Raspberry Pi 5.">
+    <meta name="description" content="sh0ds.dev: small games in PICO-8, Picotron and Godot, on the way to a Zelda-like, a horror game and a metroidvania.">
     <link rel="icon" href="images/raspberry.svg" type="image/svg+xml">
     <link rel="stylesheet" href="stylesheets/styles.css">
 </head>
@@ -24,22 +24,48 @@
         <section class="screen" aria-labelledby="hero-title">
             <div class="palette" aria-hidden="true"><i class="c0"></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="c6"></i><i class="c7"></i><i class="c8"></i><i class="c9"></i><i class="c10"></i><i class="c11"></i><i class="c12"></i><i class="c13"></i><i class="c14"></i><i class="c15"></i></div>
             <h1 id="hero-title">sh0ds/16</h1>
-            <p class="rev">fantasy console · rev 0 · 0 of 6 carts</p>
+            <p class="rev">fantasy console · rev 0 · small games first</p>
             <dl class="post">
-                <div><dt>games</dt><dd>small ones, PICO-8 first, then Godot and an engine of my own</dd></div>
-                <div><dt>goal</dt><dd>a Zelda-like and a metroidvania</dd></div>
-                <div><dt>jams</dt><dd>0 entered, the next one from <a href="https://itch.io/jams">itch.io/jams</a></dd></div>
+                <div><dt>carts</dt><dd>0 of 7 shipped</dd></div>
+                <div><dt>jams</dt><dd>0 of 9, the next one from <a href="https://itch.io/jams">itch.io/jams</a></dd></div>
+                <div><dt>tiny</dt><dd>0 weekend games</dd></div>
                 <div><dt>link</dt><dd id="req-timing">HTTPS</dd></div>
             </dl>
-            <div class="menu" aria-labelledby="carts-title">
-                <h2 id="carts-title">select cart</h2>
+
+            <div class="block" aria-labelledby="carts-title">
+                <h2 id="carts-title">select cart <span>small games, now</span></h2>
                 <ol class="carts">
                     <li class="empty sel"><span class="slot">s01</span><span class="name">first cart</span><span class="tool">PICO-8 · P6</span><span class="flag">empty</span></li>
                     <li class="empty"><span class="slot">s02</span><span class="name">tiny Zelda-like</span><span class="tool">PICO-8 · P8</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s03</span><span class="name">a game on the bigger machine</span><span class="tool">Picotron · T4</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s04</span><span class="name">the Zelda-like, grown up</span><span class="tool">Godot · G8</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s05</span><span class="name">metroidvania, vertical slice</span><span class="tool">Godot · G11</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s06</span><span class="name">my own fantasy console</span><span class="tool">C, SDL3, Lua · X8</span><span class="flag">empty</span></li>
+                    <li class="empty"><span class="slot">s03</span><span class="name">tiny horror</span><span class="tool">Picotron · T4</span><span class="flag">empty</span></li>
+                    <li class="empty"><span class="slot">s04</span><span class="name">Zelda-like slice</span><span class="tool">Godot · G8</span><span class="flag">empty</span></li>
+                    <li class="empty"><span class="slot">s05</span><span class="name">metroidvania slice</span><span class="tool">Godot · G11</span><span class="flag">empty</span></li>
+                    <li class="empty"><span class="slot">s06</span><span class="name">horror slice</span><span class="tool">Godot · G12</span><span class="flag">empty</span></li>
+                    <li class="empty"><span class="slot">s07</span><span class="name">my own fantasy console</span><span class="tool">C, SDL3, Lua · X8</span><span class="flag">empty</span></li>
+                </ol>
+            </div>
+
+            <div class="block" aria-labelledby="files-title">
+                <h2 id="files-title">save files <span>three big games, later</span></h2>
+                <ol class="files">
+                    <li class="file">
+                        <p class="no">file 1 <span>0/2</span></p>
+                        <h3>Zelda-like</h3>
+                        <p class="line">top-down, rooms, items that open new paths</p>
+                        <ol class="steps"><li><span class="k">tiny</span><span class="v">PICO-8 · P8</span><span class="ok">--</span></li><li><span class="k">slice</span><span class="v">Godot · G8</span><span class="ok">--</span></li></ol>
+                    </li>
+                    <li class="file">
+                        <p class="no">file 2 <span>0/3</span></p>
+                        <h3>Horror</h3>
+                        <p class="line">dread, not jump scares: dark, sound, a hunter</p>
+                        <ol class="steps"><li><span class="k">tiny</span><span class="v">Picotron · T3</span><span class="ok">--</span></li><li><span class="k">jam</span><span class="v">Godot · J5</span><span class="ok">--</span></li><li><span class="k">slice</span><span class="v">Godot · G12</span><span class="ok">--</span></li></ol>
+                    </li>
+                    <li class="file">
+                        <p class="no">file 3 <span>0/2</span></p>
+                        <h3>Metroidvania</h3>
+                        <p class="line">one connected map, abilities that gate it</p>
+                        <ol class="steps"><li><span class="k">body</span><span class="v">Godot · G2</span><span class="ok">--</span></li><li><span class="k">slice</span><span class="v">Godot · G11</span><span class="ok">--</span></li></ol>
+                    </li>
                 </ol>
             </div>
             <p class="ready">ready. carts play here and on <a href="https://sh0ds.itch.io/">itch.io</a> once they ship.</p>
@@ -51,7 +77,7 @@
                 <thead><tr><th>port</th><th>lang</th><th>used for</th><th>flag</th></tr></thead>
                 <tbody>
                     <tr><td>p01</td><td>Lua</td><td>PICO-8, Picotron, carts for my engine, Hyprland config</td><td class="learning">learning</td></tr>
-                    <tr><td>p02</td><td>GDScript</td><td>Godot: the Zelda-like grown up, the metroidvania</td><td class="next">next</td></tr>
+                    <tr><td>p02</td><td>GDScript</td><td>Godot: three slices, the Zelda-like, the horror game, the metroidvania</td><td class="next">next</td></tr>
                     <tr><td>p03</td><td>C</td><td>3sgc, my engine with SDL3 underneath and Lua inside</td><td class="using">using</td></tr>
                     <tr><td>p04</td><td>HTML, CSS</td><td>this site, itch.io pages, web builds</td><td class="using">using</td></tr>
                     <tr><td>p05</td><td>Bash</td><td>deploy, build and upload scripts</td><td class="using">using</td></tr>
