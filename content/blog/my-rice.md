@@ -38,7 +38,7 @@ attn     #d99f66   amber
 error    #d9786c   coral
 ```
 
-Windows get 10 px squircle corners, a 2 px violet gradient border and a soft shadow, with 4 px between tiles and 12 px at the screen edge. A window alone on its workspace goes edge to edge. Unfocused windows dim by 8 % with a short fade, except games, video and picture-in-picture. Shell controls use 8 px radii, panels 14 px. Surfaces are opaque: no blur, no glow, no colour cycling.
+Windows get 10 px squircle corners, a 2 px violet gradient border and a soft shadow, with 4 px between tiles and 12 px at the screen edge. A window alone on its workspace goes edge to edge. Unfocused windows dim by 8 % with a short fade, except games, video, image viewers and picture-in-picture. Shell controls use 8 px radii, panels 14 px. Surfaces are opaque: no blur, no glow, no colour cycling.
 
 The focused window's border also says what the desktop is doing: violet is normal, amber means notifications are held back, coral means I'm recording or sharing the screen.
 
@@ -56,7 +56,7 @@ right   rec/share · now playing with cava bars · sys stats
         inbox · session
 ```
 
-Notifications are its own D-Bus server: plain text, actions, a quiet mode and a small inbox on SUPER+N. Toasts slide out when they're done, and screen sharing holds them back. The network cell opens a Wi-Fi picker, right-click for settings; keep awake stops the screen from locking during a long render or a playtest. The session menu asks before logging out, rebooting or powering off, and suspend waits until hyprlock really locked.
+Notifications are its own D-Bus server: plain text, actions, a quiet mode and a small inbox on SUPER+N. Toasts slide out when they're done, and screen sharing holds them back. The network cell opens a Wi-Fi picker, right-click for settings, and turns coral when offline; keep awake stops the screen from locking during a long render or a playtest. The session menu asks before logging out, rebooting or powering off, and suspend waits until hyprlock really locked.
 
 # Making games
 
