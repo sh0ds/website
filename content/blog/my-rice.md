@@ -38,7 +38,7 @@ attn     #d99f66   amber
 error    #d9786c   coral
 ```
 
-Windows get 10 px squircle corners, a 2 px violet gradient border and a soft shadow, with 4 px between tiles and 12 px at the screen edge. Shell controls use 8 px radii, panels 14 px. Surfaces are opaque: no blur, no glow, no colour cycling.
+Windows get 10 px squircle corners, a 2 px violet gradient border and a soft shadow, with 4 px between tiles and 12 px at the screen edge. A window alone on its workspace goes edge to edge. Unfocused windows dim by 8 % with a short fade, except games, video and picture-in-picture. Shell controls use 8 px radii, panels 14 px. Surfaces are opaque: no blur, no glow, no colour cycling.
 
 The focused window's border also says what the desktop is doing: violet is normal, amber means notifications are held back, coral means I'm recording or sharing the screen.
 
@@ -49,13 +49,14 @@ Motion: colour changes take 200 ms, things that move take a 320 ms ease-out, and
 Waybar, SwayNC and wlogout are gone. Afterhours draws a floating rounded rail on every monitor:
 
 ```
-left    apps · workspaces 1-0 with a gliding pill · window title
-centre  clock island, month calendar on click
-right   now playing with cava bars · sound · rec/share · tray
-        inbox · sys stats · a raspberry for the Pi · session
+left    apps button · workspaces 1-0 · focused window title
+centre  clock, click for the month
+right   rec/share · now playing with cava bars · sys stats
+        the Pi · network · keep awake · sound · tray
+        inbox · session
 ```
 
-Notifications are its own D-Bus server: plain text, actions, a quiet mode and a small inbox on SUPER+N. Screen sharing holds toasts back. The session menu asks before logging out, rebooting or powering off, and suspend waits until hyprlock really locked.
+Notifications are its own D-Bus server: plain text, actions, a quiet mode and a small inbox on SUPER+N. Toasts slide out when they're done, and screen sharing holds them back. The network cell opens a Wi-Fi picker, right-click for settings; keep awake stops the screen from locking during a long render or a playtest. The session menu asks before logging out, rebooting or powering off, and suspend waits until hyprlock really locked.
 
 # Making games
 
@@ -71,9 +72,9 @@ bitwig            music, at 128 frames for live MIDI
 
 # Terminal and editors
 
-kitty with a thin steady cursor and Starship drawn like the rail: a bracket holding two lines, the Arch mark, the path with the repo's folder bright, branch in violet, changes in amber, a dotted rule to the clock. The arrow turns coral after a failed command. No tmux anymore.
+kitty with a 3 px violet beam cursor that keeps its shape when unfocused, and Starship drawn like the rail: a bracket holding two lines, the Arch mark, the path with the repo's folder bright, branch in violet, changes in amber, a dotted rule to the clock. The arrow turns coral after a failed command. No tmux anymore.
 
-Zed is the editor for projects, with the theme to match and AI features and telemetry off. Helix is $EDITOR. eza, btop, bat, Thunar, GTK, Qt, Firefox and Obsidian all follow the palette.
+Zed is the editor for projects, with the theme to match and AI features and telemetry off. Helix is $EDITOR. eza, btop, bat, GTK, Qt, Firefox and Obsidian all follow the palette. Thunar has the rail's look, icons are Papirus-Dark with violet folders, and the cursor is Posy's black one.
 
 # Music
 
