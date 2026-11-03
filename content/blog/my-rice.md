@@ -59,7 +59,15 @@ Notifications are its own D-Bus server: plain text, actions, a quiet mode and a 
 
 # Making games
 
-SUPER+Space searches every app. PICO-8 and Picotron live in ~/.local/opt, carts go to ~/code/pico8. ALT+Print takes a region screenshot framed for devlogs, with a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
+SUPER+Space searches every app. The game tools each have a small wrapper that starts them or jumps to them:
+
+```
+pico8, picotron   from ~/.local/opt, carts in ~/code/pico8
+aseprite          pixel art (Steam), batch export for builds
+sfx               jsfxr or ChipTone for sound effects
+bitwig            music, at 128 frames for live MIDI
+```
+ ALT+Print takes a region screenshot framed for devlogs, with a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
 
 # Terminal and editors
 
