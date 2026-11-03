@@ -15,7 +15,7 @@ You can watch it at [sh0ds.dev/next](https://sh0ds.dev/next/) while it's in prog
 
 ## Appearance
 
-Plain for now: one small stylesheet, system font, light or dark following the system. No logo, no theme. I'll design the real look myself once the art steps of my game plan are done.
+Plain for now: one small stylesheet, system font, dark, a few colours from my desktop. No logo, no theme. I'll design the real look myself once the art steps of my game plan are done.
 
 ## Getting Started
 
