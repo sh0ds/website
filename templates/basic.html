@@ -3,45 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ title }} · sh0ds@devblog</title>
-    <link rel="icon" href="../images/raspberry.svg" type="image/svg+xml">
+    <title>{{ title }} · sh0ds</title>
+    <meta name="description" content="sh0ds makes small games: PICO-8, Picotron, Godot.">
     <link rel="stylesheet" href="../stylesheets/styles.css">
 </head>
 <body>
-    <a class="skip-link" href="#main">skip to content</a>
-    <header class="site-header">
-        <img class="logo" src="../images/raspberry.svg" alt="" width="41" height="46">
-        <p class="release">sh0ds · small games, jams, devlogs</p>
-        <dl class="diag">
-            <div><dt>board</dt><dd><a class="brand" href="../" aria-label="sh0ds@devblog, home">sh0ds@devblog</a></dd></div>
-            <div><dt>menu</dt><dd><nav aria-label="Main"><ul><li><a href="../blog/index.html">/blog</a></li><li><a href="../projects/index.html">/projects</a></li></ul></nav></dd></div>
-        </dl>
-        <a class="qr" href="https://github.com/sh0ds/website"><img src="../images/qr-repo.svg" alt="QR code for github.com/sh0ds/website" width="99" height="99"><span>sh0ds/website</span></a>
+    <header>
+        <a class="name" href="../">sh0ds</a>
+        <nav aria-label="Main"><a href="../blog/index.html">devlog</a> <a href="../projects/index.html">projects</a> <a href="https://sh0ds.itch.io/">itch.io</a></nav>
     </header>
 
-    <main id="main">
+    <main>
         <article>
             <h1>{{ title }}</h1>
-            <dl class="diag meta">
-                <div><dt>date</dt><dd>{{ date }}</dd></div>
-                <div><dt>by</dt><dd>{{ author }}</dd></div>
-                <div><dt>msg</dt><dd>{{ summary }}</dd></div>
-            </dl>
-            <div class="body">
-                {{ content }}
-            </div>
-            <p class="eof">EOF · <a href="index.html">cd ..</a></p>
+            <p class="meta"><time>{{ date }}</time></p>
+            {{ content }}
         </article>
+        <p class="back"><a href="index.html">Back to the list</a></p>
     </main>
 
-    <footer class="site-footer">
-        <dl class="diag">
-            <div><dt>net</dt><dd><ul><li><a href="https://sh0ds.itch.io/">itch.io</a></li><li><a href="https://github.com/sh0ds">github</a></li><li><a href="mailto:mail@sh0ds.dev">mail</a></li></ul></dd></div>
-            <div><dt>src</dt><dd><a href="https://github.com/sh0ds/website">sh0ds/website</a>, built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></dd></div>
-            <div><dt>info</dt><dd>© 2026 sh0ds</dd></div>
-        </dl>
+    <footer>
+        <p><a href="https://sh0ds.itch.io/">itch.io</a> · <a href="https://github.com/sh0ds">github</a> · <a href="mailto:mail@sh0ds.dev">mail</a></p>
+        <p>Built with <a href="https://github.com/sh0ds/3sgc">3sgc</a>, served from a Raspberry Pi 5 on my desk. Source: <a href="https://github.com/sh0ds/website">sh0ds/website</a>.</p>
     </footer>
-
-    <script src="../main.js" defer></script>
 </body>
 </html>
