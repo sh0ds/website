@@ -36,4 +36,13 @@ Learned: division by 1.0 instead of 1, round() lets you decide decimal places
 Redo: nothing
 Next: Day 5, staging at /next/
 
-## SQL Placement · indexes
+## SQL placement · indexes
+
+## Day 5 · week 0
+
+Did: read site-deploy, staging worktree /srv/repo-next live (67da649), site-stage installed, rebuilds next only. Detour: backup HDD had dropped off USB on 27 Oct, e2fsck + remount, backup rerun, x-systemd.automount in fstab.
+Stuck: didn't get the worktree setup at first; HDD unmounted for a week without me noticing.
+Learned: site-deploy compares origin/<branch> with the hash in deployed-<branch>, deleting that file forces a rebuild. -x build.sh picks build.sh over make + 3sgc. /next/ is excluded from main's rsync, otherwise --delete wipes staging. Subshells because bash ignores set -e inside if/||.
+Redo: the three site-deploy facts from memory, without the walkthrough.
+Next: Day 6, staging you can trust.
+Links: every link escapes /next/ (all hrefs start with /). snprintf truncation warning in index.c:56 (Day 55).
