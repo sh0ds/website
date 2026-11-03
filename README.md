@@ -6,7 +6,7 @@ My website, the static site generator that builds it, and (soon) everything I le
 
 This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by [3sgc](https://github.com/sh0ds/3sgc), a little static site generator I wrote in C (a local copy lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written and shows the Pi's live stats.
 
-This repo is also my learning project. Over the next months I'm working through Bash, SQL, C, ARM64 assembly, Haskell, Pharo and Erlang, and every language ends up building a piece of this site. That work happens on the `next` branch:
+This repo is also where I learn. Right now that's a CHIP-8 emulator in C that ends up playable here, games and tools for PICO-8 and Picotron in Lua, and `md`, a Markdown parser in Haskell that 3sgc will send every post through. On the side, `lift`, a training tracker for my phone. The site side of that happens on the `next` branch:
 
 - `main` is what's live right now
 - `next` is the rebuilt site, plus the tools I write for it under `tools/` and `LOG.md`, where I write down what I did, what broke and what I learned every session
