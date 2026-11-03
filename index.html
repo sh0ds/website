@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>sh0ds@devblog</title>
-    <meta name="description" content="sh0ds.dev: small games in PICO-8, Godot and an engine of my own. Static site, served from a Raspberry Pi 5.">
+    <meta name="description" content="sh0ds.dev: small games in PICO-8, Godot and an engine of my own, served from a Raspberry Pi 5.">
     <link rel="icon" href="images/raspberry.svg" type="image/svg+xml">
     <link rel="stylesheet" href="stylesheets/styles.css">
 </head>
@@ -12,7 +12,7 @@
     <a class="skip-link" href="#main">skip to content</a>
     <header class="site-header">
         <img class="logo" src="images/raspberry.svg" alt="" width="41" height="46">
-        <p class="release">sh0ds/16 · small games, jams, devlogs</p>
+        <p class="release">sh0ds · small games, jams, devlogs</p>
         <dl class="diag">
             <div><dt>board</dt><dd><a class="brand" href="./" aria-label="sh0ds@devblog, home">sh0ds@devblog</a></dd></div>
             <div><dt>menu</dt><dd><nav aria-label="Main"><ul><li><a href="blog/index.html">/blog</a></li><li><a href="projects/index.html">/projects</a></li></ul></nav></dd></div>
@@ -21,53 +21,32 @@
     </header>
 
     <main id="main">
-        <section class="screen" aria-labelledby="hero-title">
-            <div class="palette" aria-hidden="true"><i class="c0"></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="c6"></i><i class="c7"></i><i class="c8"></i><i class="c9"></i><i class="c10"></i><i class="c11"></i><i class="c12"></i><i class="c13"></i><i class="c14"></i><i class="c15"></i></div>
-            <h1 id="hero-title">sh0ds/16 <span>fantasy console, rev 0</span></h1>
-            <dl class="post">
-                <div><dt>games</dt><dd>small ones, PICO-8 first, then Godot and an engine of my own</dd></div>
-                <div><dt>goal</dt><dd>a Zelda-like and a metroidvania</dd></div>
-                <div><dt>carts</dt><dd>0 of 6 shipped</dd></div>
-                <div><dt>jams</dt><dd>0 entered, next one from <a href="https://itch.io/jams">itch.io/jams</a></dd></div>
-                <div><dt>now</dt><dd>P1, Lua in my own rice · <a href="https://github.com/sh0ds/website/blob/next/LOG.md">LOG.md</a></dd></div>
-                <div><dt>link</dt><dd id="req-timing">HTTPS</dd></div>
+        <section class="hero" aria-labelledby="hero-title">
+            <h1 id="hero-title">sh0ds.dev</h1>
+            <dl class="diag">
+                <div><dt>what</dt><dd>static site, served from a Raspberry Pi 5 on my desk</dd></div>
+                <div><dt>goal</dt><dd>write every tool behind this site myself</dd></div>
+                <div><dt>wip</dt><dd>CHIP-8 in C · PICO-8 and Picotron in Lua · md, a Markdown parser in Haskell</dd></div>
+                <div><dt>next</dt><dd><a href="/next/">/next</a>, the rebuild in progress</dd></div>
             </dl>
-            <p class="ready">ready.</p>
         </section>
 
-        <section aria-labelledby="carts-title">
-            <h2 id="carts-title">cart slots <span class="state">0/6 shipped</span></h2>
-            <ol class="carts">
-                <li class="empty"><span class="label" aria-hidden="true"></span><span class="slot">s01</span><span class="name">first cart</span><span class="tool">PICO-8 · P6</span><span class="flag">empty</span></li>
-                <li class="empty"><span class="label" aria-hidden="true"></span><span class="slot">s02</span><span class="name">tiny Zelda-like</span><span class="tool">PICO-8 · P8</span><span class="flag">empty</span></li>
-                <li class="empty"><span class="label" aria-hidden="true"></span><span class="slot">s03</span><span class="name">a game on the bigger machine</span><span class="tool">Picotron · T4</span><span class="flag">empty</span></li>
-                <li class="empty"><span class="label" aria-hidden="true"></span><span class="slot">s04</span><span class="name">the Zelda-like, grown up</span><span class="tool">Godot · G8</span><span class="flag">empty</span></li>
-                <li class="empty"><span class="label" aria-hidden="true"></span><span class="slot">s05</span><span class="name">metroidvania, vertical slice</span><span class="tool">Godot · G11</span><span class="flag">empty</span></li>
-                <li class="empty"><span class="label" aria-hidden="true"></span><span class="slot">s06</span><span class="name">my own fantasy console</span><span class="tool">C, SDL3, Lua · X8</span><span class="flag">empty</span></li>
-            </ol>
-            <p class="hint">every cart ends up playable here and on <a href="https://sh0ds.itch.io/">itch.io</a>, in the browser</p>
-        </section>
-
-        <section aria-labelledby="stack-title">
-            <h2 id="stack-title">spec</h2>
-            <table class="parts">
-                <thead><tr><th>port</th><th>lang</th><th>used for</th><th>flag</th></tr></thead>
-                <tbody>
-                    <tr><td>p01</td><td>Lua</td><td>PICO-8, Picotron, carts for my engine, Hyprland config</td><td class="learning">learning</td></tr>
-                    <tr><td>p02</td><td>GDScript</td><td>Godot: the Zelda-like grown up, the metroidvania</td><td class="next">next</td></tr>
-                    <tr><td>p03</td><td>C</td><td>3sgc, my engine with SDL3 underneath and Lua inside</td><td class="using">using</td></tr>
-                    <tr><td>p04</td><td>HTML, CSS</td><td>this site, itch.io pages, web builds</td><td class="using">using</td></tr>
-                    <tr><td>p05</td><td>Bash</td><td>deploy, build and upload scripts</td><td class="using">using</td></tr>
-                </tbody>
-            </table>
+        <section aria-labelledby="hw-title">
+            <h2 id="hw-title">hardware</h2>
+            <dl class="diag">
+                <div><dt>host</dt><dd>raspberry-pizian</dd></div>
+                <div><dt>soc</dt><dd>BCM2712, 4× Cortex-A76 @ 2.4 GHz</dd></div>
+                <div><dt>ram</dt><dd>8 GB LPDDR4X</dd></div>
+                <div><dt>root</dt><dd>NVMe SSD</dd></div>
+                <div><dt>bak</dt><dd>restic 03:30, local HDD + Hetzner Storage Box</dd></div>
+                <div><dt>os</dt><dd>Raspberry Pi OS Lite, arm64</dd></div>
+                <div><dt>httpd</dt><dd>Caddy 2.11</dd></div>
+                <div><dt>build</dt><dd><a href="https://github.com/sh0ds/3sgc">3sgc</a>, C11</dd></div>
+            </dl>
         </section>
 
         <section class="telemetry" aria-labelledby="telemetry-title">
-            <h2 id="telemetry-title">host <span class="state" id="stat-state">connecting</span></h2>
-            <dl class="diag hw">
-                <div><dt>board</dt><dd>Raspberry Pi 5, 8 GB, on my desk</dd></div>
-                <div><dt>serve</dt><dd>Caddy 2.11, built by <a href="https://github.com/sh0ds/3sgc">3sgc</a>, deployed every 2 min from <code>main</code></dd></div>
-            </dl>
+            <h2 id="telemetry-title">live stats <span class="state" id="stat-state">connecting</span></h2>
             <div class="meters">
                 <div class="meter" id="meter-temp">
                     <div class="lbl">temp</div>
@@ -93,6 +72,35 @@
             <dl class="diag source">
                 <div><dt>src</dt><dd><code>/ramdisk/pistats.json</code>, polled every 10 s, <span id="stat-age">waiting for the first sample</span></dd></div>
             </dl>
+        </section>
+
+        <section aria-labelledby="stack-title">
+            <h2 id="stack-title">partitions</h2>
+            <table class="parts">
+                <thead><tr><th>part</th><th>label</th><th>used for</th><th>flag</th></tr></thead>
+                <tbody>
+                    <tr><td>p01</td><td>Linux</td><td>Caddy, AdGuard Home, systemd timers, restic</td><td class="using">using</td></tr>
+                    <tr><td>p02</td><td>Bash</td><td>deploy script, timers, backups</td><td class="using">using</td></tr>
+                    <tr><td>p03</td><td>C</td><td>3sgc, CHIP-8 emulator</td><td class="using">using</td></tr>
+                    <tr><td>p04</td><td>Lua</td><td>PICO-8 games, Picotron apps</td><td class="learning">learning</td></tr>
+                    <tr><td>p05</td><td>Haskell</td><td>md: Markdown parser for 3sgc, CHIP-8 assembler</td><td class="learning">learning</td></tr>
+                    <tr><td>p06</td><td>ARM64</td><td>CHIP-8 draw routine on the Pi</td><td class="next">next</td></tr>
+                    <tr><td>p07</td><td>TypeScript</td><td>CHIP-8 in the browser, lift: training tracker for the phone</td><td class="next">next</td></tr>
+                    <tr><td>p08</td><td>SQL</td><td>SQLite behind lift</td><td class="next">next</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section aria-labelledby="pipeline-title">
+            <h2 id="pipeline-title">boot sequence</h2>
+            <ol class="pipeline">
+                <li><span class="step">push</span><span class="what">commit to <code>main</code></span><span class="res">OK</span></li>
+                <li><span class="step">pull</span><span class="what"><code>site-deploy.timer</code> polls GitHub every 2 min</span><span class="res">OK</span></li>
+                <li><span class="step">make</span><span class="what"><code>cc -std=c11 -Wall -Wextra</code> → <code>build/3sgc</code></span><span class="res">OK</span></li>
+                <li><span class="step">3sgc</span><span class="what"><code>content/*.md</code> → <code>blog/</code>, <code>projects/</code></span><span class="res">OK</span></li>
+                <li><span class="step">rsync</span><span class="what">output → <code>/srv/www</code></span><span class="res">OK</span></li>
+                <li><span class="step">you</span><span class="what" id="req-timing">HTTPS</span><span class="res">BOOT</span></li>
+            </ol>
         </section>
     </main>
 

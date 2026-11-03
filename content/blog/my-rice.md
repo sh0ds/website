@@ -5,7 +5,7 @@ date: 2026-10-23
 summary: Arch + Hyprland in Diag: black, cool greys, Arch blue and Terminess.
 ---
 
-Updated 2026-10-26.
+Updated 2026-11-03.
 
 This started with Catppuccin Mocha, then went through a violet Amethyst version. The current setup is Diag: the diagnostic layout of this site in Arch Linux blue. Black surfaces, precise labels and colour where it tells me something. The site keeps its Raspberry Pi pink and green; the desktop uses the same visual language with a different accent. Both now use Terminess.
 
@@ -38,9 +38,9 @@ error   #e5484d
 
 A 4 px spacing unit: 8 px between neighbouring tiles and at the screen edge, square corners, 2 px window frames and 1 px separators inside apps. The focused window gets the blue frame. Tabs use a blue label or underline on a quiet row. Surfaces are opaque, without shadows, blur or glow.
 
-Windows use a critically damped spring, configured to settle without bouncing. Entry scales from 98%, exit to 99%, and workspace travel is 4%. Entry and focus fades take 120 ms; layer and exit fades take 80 ms. Menus fade at their normal text size, and the bar stays still. These are the configured values, not measured frame timings.
+Two rules for motion: anything that moves is a critically damped spring, anything that fades is an ease-out. Windows settle in about 220 ms, workspaces drift over in about 270 ms, exits take 120 ms. Fades, layers and every colour change take 200 ms, and the bar, menus and notifications use the same 200 ms ease-out in their CSS. Nothing bounces. These are the configured values, not measured frame timings.
 
-kitty, tmux, Neovim, GTK, Qt and the terminal tools share the palette. Firefox, Obsidian and Vesktop follow it where their theme support allows. App controls share the styling; websites, documents, artwork and video keep their content colours. The wallpaper is black with a faint dot grid and a dim pixel Arch mark.
+kitty, tmux, Helix, Zed, GTK, Qt and the terminal tools share the palette. Firefox, Obsidian and Vesktop follow it where their theme support allows. App controls share the styling; websites, documents, artwork and video keep their content colours. The wallpaper is black with a faint dot grid and a dim pixel Arch mark.
 
 # Bar
 
@@ -70,19 +70,27 @@ Things I need for a few seconds are normal tiled windows with one key each:
 SUPER+S             SoundCloud PWA
 SUPER+U             rmpc
 SUPER+I             WhatsApp in nchat
-SUPER+SHIFT+I       mail in aerc
+SUPER+E             Thunar
 CTRL+SHIFT+Escape   btop
 ```
 
-The key starts the app beside what I'm doing. Press it again to hide it; the next press brings it back tiled on the current workspace. Mail starts hidden at login so notifications work from the start. Obsidian is on SUPER+O, and the DJ VM is on SUPER+SHIFT+M.
+The key starts the app beside what I'm doing. Press it again to hide it; the next press brings it back tiled on the current workspace. Obsidian is on SUPER+O, and the DJ VM is on SUPER+SHIFT+M.
 
 # Terminal
 
-kitty and tmux, bash with a two-line Starship prompt, Neovim with LazyVim, yazi and lazygit. The prompt puts directory, Git state, language, elapsed time and clock above a blue input marker. A few Nerd Font icons act as landmarks; a failed command turns the marker red.
+kitty and tmux, bash with a two-line Starship prompt, Helix as $EDITOR and lazygit. The prompt puts directory, Git state, language, elapsed time and clock above a blue input marker. A few Nerd Font icons act as landmarks; a failed command turns the marker red.
 
 eza handles ls, ll and lt with its own Diag theme: blue directories, grey files and metadata, green executables and red broken links. Its colour mappings override inherited palettes, so listings no longer fall back to Mocha. New terminals greet me with fastfetch. Some joke commands remain in bashrc; try claer.
 
-SUPER+A opens site-dev: tmux windows for the editor, builds, a REPL and the Pi. It starts the detached session at the calling terminal's size, so the Pi's fastfetch greeting does not first render into an 80-column window and break when I attach. The remote Pi shell keeps its own pink and green configuration.
+SUPER+A opens site-dev: tmux windows for Zed, builds, a REPL and the Pi. It starts the detached session at the calling terminal's size, so the Pi's fastfetch greeting does not first render into an 80-column window and break when I attach. The remote Pi shell keeps its own pink and green configuration.
+
+# Editors
+
+Zed is the editor for projects, with a Diag theme where each syntax role has its own colour, and AI features and telemetry off. Helix is $EDITOR for everything quick in the terminal. Neovim is gone.
+
+# Games
+
+PICO-8 and Picotron sit in ~/.local/opt, outside the repo. The pico8 and picotron wrappers start them from the launcher, or jump to them if they're already open, and they tile like any other window. Carts live in ~/code/pico8; screenshots and GIFs land in ~/Pictures/pico-8.
 
 # Music
 

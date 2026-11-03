@@ -22,7 +22,7 @@ build      -Wall -Wextra,
 
 # Not yet
 
-Lists, inline formatting, links, tables. They come with md, a Markdown parser I'm writing in Haskell: 3sgc will pipe every post through it, and markdown.c stays as the fallback.
+Lists, inline formatting, links, tables. markdown.c grows when a page needs something, and the next pages are the games pages and devlogs: a GIF, a play link and a postmortem per game.
 
 # Source
 

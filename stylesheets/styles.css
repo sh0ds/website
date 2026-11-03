@@ -1,13 +1,6 @@
 /* Diag: desktop typography and controls in the original Pi diagnostic layout.
  * Terminess is self-hosted; see fonts/Terminess-LICENSE.txt. */
 @font-face {
-  font-family: "VT323";
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  src: url("../fonts/vt323-latin-400-normal.woff2") format("woff2");
-}
-@font-face {
   font-family: "Terminess Nerd Font Mono";
   font-weight: 400;
   font-style: normal;
@@ -22,11 +15,6 @@
   color-scheme: dark;
   --bg: #000000; --ink: #e8e8e8; --dim: #8c8c8c; --faint: #4a4a4a; --row: #141414;
   --rasp: #e0306a; --leaf: #75c94d; --amber: #ffb000; --sky: #6ec6ff;
-  /* sh0ds/16: the console's palette, built from the site and desktop colours */
-  --p0: #000000; --p1: #141414; --p2: #4a4a4a; --p3: #8c8c8c;
-  --p4: #e8e8e8; --p5: #8a1f45; --p6: #e0306a; --p7: #ff8a5c;
-  --p8: #ffb000; --p9: #c8a46e; --p10: #2f6b2a; --p11: #75c94d;
-  --p12: #23305e; --p13: #1793d1; --p14: #6ec6ff; --p15: #ffffff;
   --mono: "Terminess Nerd Font Mono", ui-monospace, monospace;
   --unit: 4px;
   --key: 9ch; --gap: 1ch; --kw: calc(var(--key) + var(--gap));
@@ -183,77 +171,6 @@ h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
 .parts tr:has(.learning) td:first-child { box-shadow: inset 2px 0 var(--amber); }
 .parts tbody tr:hover { background: var(--row); }
 
-/* Boot screen: the sh0ds/16 console starts up. A framed screen, the
- * palette across the top, POST lines with dot leaders. Nothing blinks. */
-.screen {
-  position: relative; margin: 8px 0 0; padding: 20px 24px 16px;
-  border: 2px solid var(--p2); background: var(--p1);
-  box-shadow: inset 0 0 0 6px var(--bg), inset 0 0 0 7px var(--p2);
-}
-.palette { display: grid; grid-template-columns: repeat(16, 1fr); height: 14px; margin: 4px 0 20px; border: 1px solid var(--p2); background: var(--p0); }
-.palette .c0 { background: var(--p0); }
-.palette .c1 { background: var(--p1); }
-.palette .c2 { background: var(--p2); }
-.palette .c3 { background: var(--p3); }
-.palette .c4 { background: var(--p4); }
-.palette .c5 { background: var(--p5); }
-.palette .c6 { background: var(--p6); }
-.palette .c7 { background: var(--p7); }
-.palette .c8 { background: var(--p8); }
-.palette .c9 { background: var(--p9); }
-.palette .c10 { background: var(--p10); }
-.palette .c11 { background: var(--p11); }
-.palette .c12 { background: var(--p12); }
-.palette .c13 { background: var(--p13); }
-.palette .c14 { background: var(--p14); }
-.palette .c15 { background: var(--p15); }
-.screen h1 {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 2ch;
-  margin: 0 0 16px; padding: 0; font-family: "VT323", var(--mono); font-size: 3em; line-height: 1;
-  color: var(--p15); text-transform: none; letter-spacing: 0;
-}
-.screen h1::before, .screen h1::after { content: none; }
-.screen h1 span { font-family: var(--mono); font-size: .4em; color: var(--p3); }
-.post { margin: 0; display: grid; row-gap: 2px; }
-.post div { display: grid; grid-template-columns: 10ch minmax(0, 1fr); column-gap: var(--gap); }
-.post dt { overflow: hidden; white-space: nowrap; color: var(--p13); }
-.post dt::after { content: " ........................"; color: var(--p2); }
-.post dd { margin: 0; min-width: 0; }
-.ready { margin: 16px 0 0; color: var(--p11); text-transform: uppercase; }
-
-/* Cart slots: one cartridge per planned Ship. The label takes a pixel
- * screenshot once the cart ships (style="--shot: url(...)"); until then
- * it is a hatched empty slot. */
-.carts {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;
-}
-.carts li {
-  position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 2px;
-  padding: 18px 12px 12px; background: var(--p1); border: 1px solid var(--p2);
-  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 0 100%);
-}
-.carts li::before {  /* the grip ridges on top of the cart */
-  content: ""; position: absolute; top: 6px; left: 12px; width: 5ch; height: 5px;
-  background: repeating-linear-gradient(180deg, var(--p2) 0 1px, transparent 1px 3px);
-}
-.carts .label {
-  aspect-ratio: 16 / 10; margin-bottom: 8px; border: 1px solid var(--p2);
-  background: var(--shot, none) center / cover; image-rendering: pixelated;
-}
-.carts .empty .label { background: repeating-linear-gradient(135deg, var(--p0) 0 4px, var(--p1) 4px 8px); }
-.carts .slot { position: absolute; top: 2px; right: 20px; color: var(--rasp); font-size: .85em; }
-.carts .name { color: var(--ink); line-height: 1.25; }
-.carts .empty .name { color: var(--dim); }
-.carts .tool { color: var(--sky); font-size: .9em; }
-.carts .flag { margin-top: 6px; text-transform: uppercase; color: var(--faint); font-size: .9em; }
-.carts .wip .flag { color: var(--amber); }
-.carts .ship .flag { color: var(--leaf); }
-.carts .ship { border-color: var(--leaf); }
-.carts li:hover { border-color: var(--dim); }
-.hint { margin: 12px 0 0; color: var(--dim); }
-.hw { margin-bottom: 16px; }
-
 /* Boot sequence keeps its original order and diagnostic vocabulary. */
 .pipeline { counter-reset: step; }
 .pipeline li {
@@ -295,10 +212,6 @@ h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
   .parts td { padding: 0; border: 0; width: auto !important; }
   .parts td:nth-child(3) { grid-column: 2 / -1; grid-row: 2; }
   .parts td:last-child { grid-column: 3; grid-row: 1; }
-  .screen { padding: 14px 14px 12px; }
-  .screen h1 { font-size: 2.4em; }
-  .post div { grid-template-columns: 7ch minmax(0, 1fr); }
-  .carts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .pipeline li { grid-template-columns: 3ch minmax(0, 1fr) auto; }
   .pipeline .what { grid-column: 2 / -1; grid-row: 2; }
   .pipeline .res { grid-column: 3; grid-row: 1; }

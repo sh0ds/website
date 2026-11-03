@@ -31,7 +31,7 @@ Old way: GitHub logged into the Pi over SSH on every push, so SSH had to be open
 
 # Backups and alerts
 
-restic runs at 03:30 and writes two copies, one to the HDD and one to a Hetzner Storage Box. A health script runs every 5 minutes: DNS answers, site loads, certificate valid, disks fine. Then it pings healthchecks.io. If a check fails, or the Pi stops pinging, my phone gets a push.
+restic runs at 03:30 and writes two copies, one to the HDD and one to a Hetzner Storage Box. On 27 October the HDD dropped off USB and the local copy failed for a week before I noticed; it now mounts through x-systemd.automount, so it comes back by itself when the disk reappears. A health script runs every 5 minutes: DNS answers, site loads, certificate valid, disks fine. Then it pings healthchecks.io. If a check fails, or the Pi stops pinging, my phone gets a push.
 
 # Live stats
 
@@ -40,6 +40,10 @@ A timer writes temp, load, memory and uptime to /ramdisk/pistats.json every minu
 # pi
 
 One command over SSH that prints services, last health check, last backup, certificate expiry, last deploy, disks and pending updates on one screen. Green is fine. No service names to remember.
+
+# Since then
+
+On 3 November I removed what an old learning plan had put on the Pi: Erlang, Pharo, a live service and their Caddy routes. Next to move in: browser builds of my games under /games/.
 
 # Takeaway
 
