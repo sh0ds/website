@@ -1,6 +1,13 @@
 /* Diag: desktop typography and controls in the original Pi diagnostic layout.
  * Terminess is self-hosted; see fonts/Terminess-LICENSE.txt. */
 @font-face {
+  font-family: "VT323";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/vt323-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
   font-family: "Terminess Nerd Font Mono";
   font-weight: 400;
   font-style: normal;
@@ -15,6 +22,11 @@
   color-scheme: dark;
   --bg: #000000; --ink: #e8e8e8; --dim: #8c8c8c; --faint: #4a4a4a; --row: #141414;
   --rasp: #e0306a; --leaf: #75c94d; --amber: #ffb000; --sky: #6ec6ff;
+  /* sh0ds/16: the console palette, built from the site and desktop colours */
+  --p0: #000000; --p1: #141414; --p2: #4a4a4a; --p3: #8c8c8c;
+  --p4: #e8e8e8; --p5: #8a1f45; --p6: #e0306a; --p7: #ff8a5c;
+  --p8: #ffb000; --p9: #c8a46e; --p10: #2f6b2a; --p11: #75c94d;
+  --p12: #23305e; --p13: #1793d1; --p14: #6ec6ff; --p15: #ffffff;
   --mono: "Terminess Nerd Font Mono", ui-monospace, monospace;
   --unit: 4px;
   --key: 9ch; --gap: 1ch; --kw: calc(var(--key) + var(--gap));
@@ -170,6 +182,67 @@ h2 .state { order: 2; margin-left: auto; letter-spacing: 0; }
 .parts tr:has(.using) td:first-child { box-shadow: inset 2px 0 var(--leaf); }
 .parts tr:has(.learning) td:first-child { box-shadow: inset 2px 0 var(--amber); }
 .parts tbody tr:hover { background: var(--row); }
+
+/* V2 Screen: everything about the games sits on one console screen,
+ * the Pi and the stack stay outside it. The marker sits on the next cart. */
+.screen {
+  margin: 8px 0 0; padding: 22px 28px 20px; background: var(--p0);
+  border: 2px solid var(--p2); outline: 1px solid var(--p2); outline-offset: 5px;
+}
+.palette { display: grid; grid-template-columns: repeat(16, 1fr); height: 10px; margin: 0 0 22px; border: 1px solid var(--p2); }
+.palette .c0 { background: var(--p0); }
+.palette .c1 { background: var(--p1); }
+.palette .c2 { background: var(--p2); }
+.palette .c3 { background: var(--p3); }
+.palette .c4 { background: var(--p4); }
+.palette .c5 { background: var(--p5); }
+.palette .c6 { background: var(--p6); }
+.palette .c7 { background: var(--p7); }
+.palette .c8 { background: var(--p8); }
+.palette .c9 { background: var(--p9); }
+.palette .c10 { background: var(--p10); }
+.palette .c11 { background: var(--p11); }
+.palette .c12 { background: var(--p12); }
+.palette .c13 { background: var(--p13); }
+.palette .c14 { background: var(--p14); }
+.palette .c15 { background: var(--p15); }
+.screen h1 { margin: 0; padding: 0; font-family: "VT323", var(--mono); font-size: 3.4em; line-height: 1; color: var(--p15); }
+.rev { margin: 4px 0 20px; color: var(--dim); }
+.post { margin: 0; display: grid; row-gap: 4px; }
+.post div { display: grid; grid-template-columns: 11ch minmax(0, 1fr); column-gap: var(--gap); }
+.post dt { overflow: hidden; white-space: nowrap; color: var(--sky); }
+.post dt::after { content: " ............"; color: var(--faint); }
+.post dd { margin: 0; min-width: 0; }
+.menu { margin-top: 24px; padding-top: 16px; border-top: 1px dashed var(--p2); }
+.menu h2 { margin: 0 0 10px; }
+.menu h2::before, .menu h2::after { content: none; }
+.carts { list-style: none; margin: 0; padding: 0; }
+.carts li {
+  position: relative; display: grid; grid-template-columns: 3ch 5ch minmax(0, 1fr) 19ch 7ch;
+  column-gap: var(--gap); padding: 4px 0;
+}
+.carts li::before { content: ""; }
+.carts li.sel::before { content: "\25B6"; color: var(--p8); }
+.carts li.sel { background: var(--p1); }
+.carts .slot { color: var(--rasp); }
+.carts .name { color: var(--ink); }
+.carts .empty .name { color: var(--p3); }
+.carts .sel .name { color: var(--p15); }
+.carts .tool { color: var(--sky); }
+.carts .flag { text-align: right; text-transform: uppercase; color: var(--faint); padding-right: 1ch; }
+.carts .wip .flag { color: var(--amber); }
+.carts .ship .flag { color: var(--leaf); }
+.ready { margin: 20px 0 0; color: var(--leaf); }
+.ready a { color: var(--leaf); text-decoration: underline; }
+.hw { margin-bottom: 16px; }
+@media (max-width: 42em) {
+  .screen { padding: 16px 14px; outline-offset: 3px; }
+  .screen h1 { font-size: 2.6em; }
+  .post div { grid-template-columns: 7ch minmax(0, 1fr); }
+  .carts li { grid-template-columns: 2ch 4ch minmax(0, 1fr) auto; row-gap: 0; }
+  .carts .tool { grid-column: 3; grid-row: 2; }
+  .carts .flag { grid-column: 4; grid-row: 1; }
+}
 
 /* Boot sequence keeps its original order and diagnostic vocabulary. */
 .pipeline { counter-reset: step; }
