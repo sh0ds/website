@@ -57,9 +57,9 @@ right   now playing with cava bars · sound · rec/share · tray
 
 Notifications are its own D-Bus server: plain text, actions, a quiet mode and a small inbox on SUPER+N. Screen sharing holds toasts back. The session menu asks before logging out, rebooting or powering off, and suspend waits until hyprlock really locked.
 
-# Make, Play, Ship
+# Making games
 
-SUPER+CTRL+G opens the launchpad: eight entries tied to my game plan, each with its track letter, under the motto SHOW UP / SHIP SMALL. SUPER+Space searches every app.
+SUPER+Space searches every app. For the game tools there are a few small helpers:
 
 ```
 game-dev plan       the plan, in the terminal
