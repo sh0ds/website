@@ -33,7 +33,7 @@ fi
 
 section "Network (DNS must work before anything downloads)"
 check "resolve hackage.haskell.org" getent hosts hackage.haskell.org
-check "resolve hex.pm" getent hosts hex.pm
+check "resolve registry.npmjs.org" getent hosts registry.npmjs.org
 
 section "C"
 printf 'int main(void){return 0;}\n' >"$tmp/t.c"
@@ -80,23 +80,22 @@ if [ "$arch" != "aarch64" ]; then
   check "haskell-language-server" haskell-language-server-wrapper --version
 fi
 
-section "Erlang"
-check "erl" erl -noshell -eval 'halt().'
-check "OTP 27 or newer" erl -noshell -eval \
-  'R = list_to_integer(erlang:system_info(otp_release)), halt(if R >= 27 -> 0; true -> 1 end).'
-check "built-in json module" erl -noshell -eval \
-  'try json:encode(#{a => 1}) of _ -> halt(0) catch _:_ -> halt(1) end.'
-check "rebar3" rebar3 version
+section "Web and WebAssembly"
+if [ "$arch" != "aarch64" ]; then
+  printf 'int add(int a, int b) { return a + b; }\n' >"$tmp/w.c"
+  check "clang targets wasm32" clang --target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-all -o "$tmp/w.wasm" "$tmp/w.c"
+  if command -v node >/dev/null; then
+    check "node" node --version
+    check "npm" npm --version
+  else
+    echo "  skip  node and npm (install them for E12 or lift)"
+  fi
+fi
 
-section "Pharo"
-if [ "$arch" = "aarch64" ]; then pdir=/opt/pharo; else pdir=$HOME/pharo; fi
-if [ "$arch" = "aarch64" ] && ! command -v pharo >/dev/null; then
-  echo "  skip  Pharo (no VM for 64-bit ARM yet, Day 181)"
-else
-  cp "$pdir"/Pharo.image "$pdir"/Pharo.changes "$pdir"/*.sources "$tmp"/ 2>/dev/null
-  check "pharo on PATH" command -v pharo
-  check "pharo evaluates" sh -c '[ "$(pharo "$1/Pharo.image" eval "3 + 4")" = 7 ]' _ "$tmp"
-  check "Pharo 13" sh -c '[ "$(pharo "$1/Pharo.image" eval "SystemVersion current major")" = 13 ]' _ "$tmp"
+section "Lua and fantasy consoles"
+if [ "$arch" != "aarch64" ]; then
+  check "pico-8" test -x "$HOME/.local/opt/pico-8/pico8"
+  check "picotron" test -x "$HOME/.local/opt/picotron/picotron"
 fi
 
 section "SQL, shell, misc"
