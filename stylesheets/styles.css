@@ -5,7 +5,7 @@
   font-weight: 400;
   font-style: normal;
   font-display: swap;
-  src: url("/fonts/terminess-nerd-font-mono-regular.woff2") format("woff2");
+  src: url("../fonts/terminess-nerd-font-mono-regular.woff2") format("woff2");
 }
 
 /* Keep the diagnostic key column aligned across heading font sizes. */
