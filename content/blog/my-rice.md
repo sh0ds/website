@@ -59,19 +59,7 @@ Notifications are its own D-Bus server: plain text, actions, a quiet mode and a 
 
 # Making games
 
-SUPER+Space searches every app. For the game tools there are a few small helpers:
-
-```
-game-dev plan       the plan, in the terminal
-game-dev pico       PICO-8, pixel-perfect
-game-dev godot      Godot's project manager
-game-dev check      which plan tools are installed
-aseprite            pixel art (Steam), batch export for builds
-sfx                 jsfxr or ChipTone for sound effects
-bitwig              music, at 128 frames for live MIDI
-```
-
-PICO-8 and Picotron live in ~/.local/opt. Carts go to ~/code/pico8. ALT+Print takes a region screenshot framed for devlogs, with a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
+SUPER+Space searches every app. PICO-8 and Picotron live in ~/.local/opt, carts go to ~/code/pico8. ALT+Print takes a region screenshot framed for devlogs, with a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
 
 # Terminal and editors
 
