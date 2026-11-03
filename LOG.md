@@ -4,16 +4,6 @@ What I did, what broke and what I learned, one entry per step. The plan has thre
 
 Entry headings: `## E1 · title`, `## P2 · title`, `## M3 · title`, `## L1 · title`. A second sitting on the same step adds to its entry. Ships: `## Ship · E·1 · name`. Every sitting ends with a commit. New entries go at the bottom.
 
-```
-## E1 · The machine on paper
-
-Did:
-Stuck:
-Learned:
-Redo:
-Next:
-```
-
 Open: snprintf truncation warning in src/index.c:56 (fix for real in M6).
 
 # Setup, under the old plan
