@@ -70,5 +70,5 @@ Next: the plan change.
 
 ## Plan change · consoles, md, lift on the side
 
-Did: dropped the 315-day plan after Day 5. New plan: CHIP-8 in C, ARM64 and the browser; PICO-8 and Picotron in Lua; a Markdown parser in Haskell for 3sgc; lift as a side project. Staging stays as it was. Templates, homepage and stylesheet use relative links now, so /next/ stays inside /next/. Pharo, Erlang and the live server are gone from the Pi.
+Did: dropped the 315-day plan after Day 5, focusing on things now that I really wanna do. New plan: CHIP-8 in C, ARM64 and the browser; PICO-8 and Picotron in Lua; a Markdown parser in Haskell for 3sgc; lift as a side project. Staging stays as it was. Templates, homepage and stylesheet use relative links now, so /next/ stays inside /next/. Pharo, Erlang and the live server are gone from the Pi.
 Next: Step 0 (log helper takes the step, sh0ds/chip8 repo), then E1.
