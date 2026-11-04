@@ -47,10 +47,10 @@ int main(int argc, char *argv[])
      *   <root>/content/     markdown sources
      *   <root>/templates/   template files
      *   <root>/static/      optional verbatim assets
-     *   <root>/blog/, <root>/projects/   GENERATED output
+     *   <root>/blog/, projects/, log/   GENERATED output
      *
      * Generated dirs must never be committed; root files (index.html,
-     * main.js, stylesheets/) are tracked in git and deployed by rsync.
+     * 404.html, favicon, stylesheets/) are tracked in git and deployed by rsync.
      */
     if (snprintf(c_path, sizeof(c_path), "%s/content", argv[1]) >= (int)sizeof(c_path) ||
         snprintf(s_path, sizeof(s_path), "%s/static", argv[1]) >= (int)sizeof(s_path) ||

@@ -1,10 +1,11 @@
-# LOG
+---
+title: Log
+author: sh0ds
+date: 2026-11-04
+summary: What I did, what broke and what I learned, one entry per sitting.
+---
 
-What I did, what broke and what I learned, one entry per step. The plan has three tracks: E (CHIP-8), P (PICO-8 and Picotron), M (`md` and 3sgc), plus L (`lift`) on the side.
-
-Entry headings: `## E1 · title`, `## P2 · title`, `## M3 · title`, `## L1 · title`. A second sitting on the same step adds to its entry. Ships: `## Ship · E·1 · name`. Every sitting ends with a commit. New entries go at the bottom.
-
-Open: snprintf truncation warning in src/index.c:56 (fix for real in M6).
+What I did, what broke and what I learned while learning to make games. One entry per step of my plan, newest at the bottom. Each entry: Did, Stuck, Learned, Redo, Next.
 
 # Setup, under the old plan
 

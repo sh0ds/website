@@ -103,8 +103,14 @@ static int add_md_file(PostStore *ps, const char *root,
     if (replace_ext(e.rel_url, sizeof(e.rel_url), tmp, ".html") == -1)
         return -1;
 
-    /* convention: files under content/blog/ are blog posts */
-    e.is_blog = (strncmp(rel, "blog/", 5) == 0);
+    /* convention: content/blog/ = blog list, content/projects/ = projects
+       list, anything else (log/) is a page that no list shows */
+    if (strncmp(rel, "blog/", 5) == 0)
+        e.is_blog = 1;
+    else if (strncmp(rel, "projects/", 9) == 0)
+        e.is_blog = 0;
+    else
+        e.is_blog = -1;
 
     return post_store_add(ps, &e);
 }

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# build.sh: how this branch builds. site-deploy runs it on the Pi (as user deploy);
-# you run it on the desktop. SAN=1 ./build.sh builds 3sgc with sanitizers (week 7).
+# build.sh: how the site builds. site-deploy runs it on the Pi (as user deploy);
+# you run it on the desktop before pushing. The Makefile always builds with ASan/UBSan.
 set -euo pipefail
 cd "$(dirname "$0")"
 make clean
-make ${SAN:+SAN=1}
-rm -rf blog projects
+make
+rm -rf blog projects log
 ./build/3sgc "$PWD" build

@@ -2,6 +2,7 @@
 /build/
 /blog/
 /projects/
+/log/
 
 # editor / OS noise
 *.o

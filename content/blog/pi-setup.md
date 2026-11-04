@@ -35,7 +35,7 @@ restic runs at 03:30 and writes two copies, one to the HDD and one to a Hetzner 
 
 # Live stats
 
-A timer writes temp, load, memory and uptime to /ramdisk/pistats.json every minute. RAM disk, so the SSD isn't written all day. The homepage polls the file every 10 seconds.
+A timer writes temp, load, memory and uptime to /ramdisk/pistats.json every minute. RAM disk, so the SSD isn't written all day. The old homepage showed them live; the plain one doesn't yet.
 
 # pi
 
