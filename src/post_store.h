@@ -10,7 +10,7 @@ typedef struct {
     char md_path[PATH_MAX];
     char html_path[PATH_MAX];
     char rel_url[PATH_MAX];   /* e.g. blog/my-post.html */
-    int is_blog;            /* 1 = blog, 0 = projects, -1 = in no list */
+    int is_blog;
 } PostEntry;
 
 typedef struct {
