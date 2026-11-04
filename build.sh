@@ -5,5 +5,5 @@ set -euo pipefail
 cd "$(dirname "$0")"
 make clean
 make
-rm -rf blog projects log
+rm -rf blog projects
 ./build/3sgc "$PWD" build

@@ -44,11 +44,6 @@ pre code { color: var(--text); }
 footer { border-top: 1px solid var(--line); padding: 16px 0 44px; color: var(--muted); font-size: .85rem; }
 footer p { margin: 4px 0; }
 
-/* the log: Did/Stuck/Learned lines stay on their own lines until markdown.c learns lists (W1) */
-main[data-page="Log"] article p { white-space: pre-line; }
-main[data-page="Log"] .back, main[data-page="Log"] .meta { display: none; }
-body:has(main[data-page="Log"]) header nav a[href="../log/index.html"] { color: var(--text); }
-body:has(main[data-page="Log"]) header nav a[href="../log/index.html"]::before { content: "/"; color: var(--accent); }
 
 /* a list with no entries yet (the devlog before the first game) */
 .posts:not(:has(li)) { border: 0; }

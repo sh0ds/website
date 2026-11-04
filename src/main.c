@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
      *   <root>/content/     markdown sources
      *   <root>/templates/   template files
      *   <root>/static/      optional verbatim assets
-     *   <root>/blog/, projects/, log/   GENERATED output
+     *   <root>/blog/, <root>/projects/   GENERATED output
      *
      * Generated dirs must never be committed; root files (index.html,
      * 404.html, favicon, stylesheets/) are tracked in git and deployed by rsync.
