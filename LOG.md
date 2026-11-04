@@ -56,9 +56,17 @@ Next: the plan change.
 
 ---
 
-# Three tracks
+## Plan change · indie and jam games
 
-## Plan change · consoles, md, lift on the side
+2026-11-03: dropped the CHIP-8 / md plan the same day I wrote it. Making games is what I want most, so it's now indie and jam games: PICO-8 and Picotron first, jams every 4 to 6 weeks, then Godot and a small engine of my own in C, and a portfolio on itch.io and sh0ds.dev/games/. The three end goals are a Zelda-like, a horror game and a metroidvania, each one tiny first, then as a slice in Godot. lift and md are out, and 3sgc keeps markdown.c (track W). The old plan lives in the guides history.
 
-Did: dropped the 315-day plan after Day 5, focusing on things now that I really wanna do. New plan: CHIP-8 in C, ARM64 and the browser; PICO-8 and Picotron in Lua; a Markdown parser in Haskell for 3sgc; lift as a side project. Staging stays as it was. Templates, homepage and stylesheet use relative links now, so /next/ stays inside /next/. Pharo, Erlang and the live server are gone from the Pi.
-Next: Step 0 (log helper takes the step, sh0ds/chip8 repo), then E1.
+## P1 · Lua in my own rice
+Did: PiL ch. 1-5 with the lua REPL open. Answered the four P1 questions.
+Stuck: thought # stops at the first nil. Running it showed otherwise.
+Learned:
+- #t returns *a* border, not the first one. With holes the result depends on how the table was built ({1,2,nil,4} gives 4). Never trust # on a list with holes. Remove with table.remove (del/deli in PICO-8).
+- obj:f() passes obj as the first argument. function obj:f() names it self. Calling obj.f() leaves self nil: "attempt to index a nil value (local 'self')".
+- Plain x is global, visible everywhere. local x lives only in its block. A for-loop variable is always local.
+- The free online PiL is Lua 5.0 and has no #. Use the 5.4 manual for that.
+Redo: explain borders and #, and the : sugar, from memory without the REPL.
+Next: P1 part 2, read rice.lua line by line, make one change of my own.
