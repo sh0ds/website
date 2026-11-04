@@ -49,3 +49,7 @@ main[data-page="Log"] article p { white-space: pre-line; }
 main[data-page="Log"] .back, main[data-page="Log"] .meta { display: none; }
 body:has(main[data-page="Log"]) header nav a[href="../log/index.html"] { color: var(--text); }
 body:has(main[data-page="Log"]) header nav a[href="../log/index.html"]::before { content: "/"; color: var(--accent); }
+
+/* a list with no entries yet (the devlog before the first game) */
+.posts:not(:has(li)) { border: 0; }
+.posts:not(:has(li))::before { content: "Nothing yet. The first post comes with the first game."; color: var(--muted); }
