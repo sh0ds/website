@@ -1,7 +1,6 @@
 ---
 title: How my Raspberry Pi 5 runs sh0ds.dev
 author: sh0ds
-date: 2026-10-20
 summary: Rebuild from scratch: NVMe boot, AdGuard Home, Caddy, pull-based deploys, restic backups.
 ---
 

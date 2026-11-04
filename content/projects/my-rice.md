@@ -1,7 +1,6 @@
 ---
 title: My rice
 author: sh0ds
-date: 2026-11-03
 summary: Afterhours: Arch, Hyprland and my own Quickshell shell, built for making games.
 ---
 
