@@ -1,114 +1,99 @@
 ---
 title: My rice
 author: sh0ds
-date: 2026-10-23
-summary: Arch + Hyprland in Diag: black, cool greys, Arch blue and Terminess.
+date: 2026-11-03
+summary: Afterhours: Arch, Hyprland and my own Quickshell shell, built for making games.
 ---
 
 Updated 2026-11-03.
 
-This started with Catppuccin Mocha, then went through a violet Amethyst version. The current setup is Diag: the diagnostic layout of this site in Arch Linux blue. Black surfaces, precise labels and colour where it tells me something. The site keeps its Raspberry Pi pink and green; the desktop uses the same visual language with a different accent. Both now use Terminess.
+This started with Catppuccin Mocha, went through a violet Amethyst phase and then Diag, the diagnostic look this site had. Today it became Afterhours: a desktop for making games instead of a dashboard. Near-black charcoal with a violet cast, violet for focus, amber for attention, coral for recording and errors. One font everywhere. Games and artwork keep their own colours.
 
 # Base
 
 ```
 os      Arch, plain
 wm      Hyprland 0.56, Lua config
-login   SDDM
-font    Terminess Nerd Font Mono, 13.5 pt in kitty
-screens two 1080p displays
+shell   Quickshell, my own QML (afterhours)
+login   SDDM with an Afterhours theme, Plymouth at boot
+font    JetBrains Mono Nerd Font, everywhere
+screens two, DP-4 is the main one at 180 Hz
 gpu     NVIDIA
 config  hyprland.lua base, rice.lua look + rules + keys
 ```
 
-hyprland.lua loads rice.lua through a protected call. If the rice module fails to load, the base configuration stays usable.
+hyprland.lua is plain defaults with no animations. rice.lua layers the look on top through a protected call, so if it breaks the base still works.
 
 # Look
 
 ```
-bg      #000000
-rule    #3f4650
-mid     #8a929c
-fg      #c4c9ce
-ink     #e6e8ea
-accent  #1793d1
-warn    #ffb000
-error   #e5484d
+bg       #0d0c10
+panel    #131218
+raised   #1b1a22
+line     #35323f
+muted    #948fa3
+text     #e0dde8
+accent   #b49cf0   violet
+attn     #d99f66   amber
+error    #d9786c   coral
 ```
 
-A 4 px spacing unit: 8 px between neighbouring tiles and at the screen edge, square corners, 2 px window frames and 1 px separators inside apps. The focused window gets the blue frame. Tabs use a blue label or underline on a quiet row. Surfaces are opaque, without shadows, blur or glow.
+Windows get 10 px squircle corners, a 2 px violet gradient border and a soft shadow, with 4 px between tiles and 12 px at the screen edge. A window alone on its workspace goes edge to edge. Unfocused windows dim by 8 % with a short fade, except games, video, image viewers and picture-in-picture. Shell controls use 8 px radii, panels 14 px. Surfaces are opaque: no blur, no glow, no colour cycling.
 
-Two rules for motion: anything that moves is a critically damped spring, anything that fades is an ease-out. Windows settle in about 220 ms, workspaces drift over in about 270 ms, exits take 120 ms. Fades, layers and every colour change take 200 ms, and the bar, menus and notifications use the same 200 ms ease-out in their CSS. Nothing bounces. These are the configured values, not measured frame timings.
+The focused window's border also says what the desktop is doing: violet is normal, amber means notifications are held back, coral means I'm recording or sharing the screen.
 
-kitty, tmux, Helix, Zed, GTK, Qt and the terminal tools share the palette. Firefox, Obsidian and Vesktop follow it where their theme support allows. App controls share the styling; websites, documents, artwork and video keep their content colours. The wallpaper is black with a faint dot grid and a dim pixel Arch mark.
+Motion: colour changes take 200 ms, things that move take a 320 ms ease-out, and Hyprland's window and workspace springs are tuned to the same pace.
 
-# Bar
+# The rail
 
-Waybar is a slim rail across the top:
-
-```
-left    1 2 3 4 5 | LIVE / REC when active | play artist / title
-centre  18:25
-right   sys | pi: up | vol 64% | msg 0 | tray | [exit]
-```
-
-The active workspace has a blue underline. Music titles have a fixed length so they cannot push the clock around. Click sys to expand CPU, memory and temperature; GPU and network detail stay in its tooltip. Right-click opens btop.
-
-The Pi label has its own identity: red pi, green colon, neutral up or red down. Clicking it opens an SSH session. The clock shows the date and a native calendar on hover; clicking switches between month and year. The Proton Calendar helper and keybinding are removed.
-
-# Session and notifications
-
-[exit] opens a text-only wlogout console: five numbered rows for lock, end session, suspend, reboot and power off, each with a visible hotkey. No logos or power icons. The helper adjusts its layout for screen size, scale and rotation.
-
-SwayNC uses the same flat surfaces and borders. Its music widget shows small real artwork when available, the track details and square playback controls. No blurred cover behind the title or oversized application logo. Quick settings and the volume slider sit in the same panel. SUPER+N opens it.
-
-# Quick apps
-
-Things I need for a few seconds are normal tiled windows with one key each:
+Waybar, SwayNC and wlogout are gone. Afterhours draws a floating rounded rail on every monitor:
 
 ```
-SUPER+S             SoundCloud PWA
-SUPER+U             rmpc
-SUPER+I             WhatsApp in nchat
-SUPER+E             Thunar
-CTRL+SHIFT+Escape   btop
+left    apps button · workspaces 1-0 · focused window title
+centre  clock, click for the month
+right   rec/share · now playing with cava bars · sys stats
+        the Pi · network · keep awake · sound · tray
+        inbox · session
 ```
 
-The key starts the app beside what I'm doing. Press it again to hide it; the next press brings it back tiled on the current workspace. Obsidian is on SUPER+O, and the DJ VM is on SUPER+SHIFT+M.
+Notifications are its own D-Bus server: plain text, actions, a quiet mode and a small inbox on SUPER+N. Toasts slide out when they're done, and screen sharing holds them back. The network cell opens a Wi-Fi picker, right-click for settings, and turns coral when offline; keep awake stops the screen from locking during a long render or a playtest. The session menu asks before logging out, rebooting or powering off, and suspend waits until hyprlock really locked.
 
-# Terminal
+# Making games
 
-kitty and tmux, bash with a two-line Starship prompt, Helix as $EDITOR and lazygit. The prompt puts directory, Git state, language, elapsed time and clock above a blue input marker. A few Nerd Font icons act as landmarks; a failed command turns the marker red.
+SUPER+Space searches every app. The game tools each have a small wrapper that starts them or jumps to them:
 
-eza handles ls, ll and lt with its own Diag theme: blue directories, grey files and metadata, green executables and red broken links. Its colour mappings override inherited palettes, so listings no longer fall back to Mocha. New terminals greet me with fastfetch. Some joke commands remain in bashrc; try claer.
+```
+pico8, picotron   from ~/.local/opt, carts in ~/code/pico8
+aseprite          pixel art (Steam), batch export for builds
+sfx               jsfxr or ChipTone for sound effects
+bitwig            music, at 128 frames for live MIDI
+```
+ ALT+Print takes a region screenshot framed for devlogs, with a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
 
-SUPER+A opens site-dev: tmux windows for Zed, builds, a REPL and the Pi. It starts the detached session at the calling terminal's size, so the Pi's fastfetch greeting does not first render into an 80-column window and break when I attach. The remote Pi shell keeps its own pink and green configuration.
+# Terminal and editors
 
-# Editors
+kitty with a 3 px violet beam cursor that keeps its shape when unfocused, and Starship drawn like the rail: a bracket holding two lines, the Arch mark, the path with the repo's folder bright, branch in violet, changes in amber, a dotted rule to the clock. The arrow turns coral after a failed command. No tmux anymore.
 
-Zed is the editor for projects, with a Diag theme where each syntax role has its own colour, and AI features and telemetry off. Helix is $EDITOR for everything quick in the terminal. Neovim is gone.
-
-# Games
-
-PICO-8 and Picotron sit in ~/.local/opt, outside the repo. The pico8 and picotron wrappers start them from the launcher, or jump to them if they're already open, and they tile like any other window. Carts live in ~/code/pico8; screenshots and GIFs land in ~/Pictures/pico-8.
+Zed is the editor for projects, with the theme to match and AI features and telemetry off. Helix is $EDITOR. eza, btop, bat, GTK, Qt, Firefox and Obsidian all follow the palette. Thunar has the rail's look, icons are Papirus-Dark with violet folders, and the cursor is Posy's black one.
 
 # Music
 
-mpd and rmpc play my files from ~/Music, including the DJ library under ~/Music/DJ. The bar, media keys, lock screen and notification panel pick up playback through the media controls. PipeWire is configured to follow the track's sample rate, and Easy Effects corrects my Corsair Virtuoso XT towards the Harman curve with a limiter after it.
+mpd and rmpc play my files from ~/Music, including the DJ library under ~/Music/DJ. The rail, media keys and lock screen pick up playback through the media controls. PipeWire is configured to follow the track's sample rate, and Easy Effects corrects my Corsair Virtuoso XT towards the Harman curve with a limiter after it.
 
 Lexicon, rekordbox, Traktor and Audacity live in the Windows DJ VM. Songs in ~/Music/DJ appear there as Z:. djvm starts or shows it on workspace 7; djvm off requests a clean shutdown.
 
-Installer ISOs now belong in ~/.local/share/djvm/isos, outside Downloads. djvm setup copies existing media there, downloads missing VirtIO drivers and repairs the VM's CD-ROM paths after backing up its definition. It leaves the Windows disk and shared music alone. Once Windows is installed, djvm eject can remove the installer CD attachments while keeping the ISO files. If Windows does not shut down within 90 seconds, the helper reports the problem and the power menu cancels the host power action instead of forcing the VM off.
+Installer ISOs now belong in ~/.local/share/djvm/isos, outside Downloads. djvm setup copies existing media there, downloads missing VirtIO drivers and repairs the VM's CD-ROM paths after backing up its definition. It leaves the Windows disk and shared music alone. Once Windows is installed, djvm eject can remove the installer CD attachments while keeping the ISO files. If Windows does not shut down within 90 seconds, the helper reports the problem and the session menu cancels the host power action instead of forcing the VM off.
 
 # Getting it
 
-github.com/sh0ds/dotfiles has the configs, current screenshots, dependency list and setup guides. Clone it and run the installer:
+github.com/sh0ds/dotfiles has the configs, screenshots, the dependency list and setup guides. Clone it, look at the preview install first, then install:
 
 ```
 git clone https://github.com/sh0ds/dotfiles.git ~/code/dotfiles
+bash ~/code/dotfiles/install-dotfiles.sh --target /tmp/afterhours-preview
 bash ~/code/dotfiles/install-dotfiles.sh
 ```
 
-The installer backs up replaced files under ~/.dotfiles-backup first. Most configs are linked; Qt's palette path is generated for the local home directory, while btop and nchat get writable copies. Close those two apps before installing.
+The installer backs up replaced files under ~/.dotfiles-backup first. Most configs are linked into the checkout; Qt, btop, nchat and Zed get writable copies.
 
-This is set up for my machine. Check the monitor, keyboard, NVIDIA and Pi settings, and follow the audio and DJ VM guides before using those parts.
+This is set up for my machine. Check the monitor (DP-4), the German keyboard layout and the NVIDIA settings in hyprland.lua, and follow the audio and DJ VM guides before using those parts. You need Quickshell 0.3.2 or newer and Hyprland 0.56.

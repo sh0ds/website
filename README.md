@@ -4,7 +4,7 @@ My website, the static site generator that builds it, and (soon) everything I le
 
 ## Description
 
-This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by [3sgc](https://github.com/sh0ds/3sgc), a little static site generator I wrote in C (a local copy lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written and shows the Pi's live stats.
+This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by [3sgc](https://github.com/sh0ds/3sgc), a little static site generator I wrote in C (a local copy lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written.
 
 This repo is also where I learn. Right now that's a CHIP-8 emulator in C that ends up playable here, games and tools for PICO-8 and Picotron in Lua, and `md`, a Markdown parser in Haskell that 3sgc will send every post through. On the side, `lift`, a training tracker for my phone. The site side of that happens on the `next` branch:
 
@@ -15,16 +15,7 @@ You can watch it at [sh0ds.dev/next](https://sh0ds.dev/next/) while it's in prog
 
 ## Appearance
 
-The original Pi header and open ruled headings frame the desktop's flat meters,
-one-pixel separators and keyboard focus markers. The Pi palette stays raspberry
-pink and leaf green, with amber warnings and sky-blue pipeline labels. The logo,
-QR, diagnostic columns, section order and routes retain their original layout.
-
-The same Terminess Nerd Font Mono family as the desktop is self-hosted at 18 px.
-The bundled WOFF2 keeps the upstream letterforms; font source and license are in
-[fonts/README.md](fonts/README.md). Colour transitions take 120 ms and respect
-reduced-motion preferences. Narrow screens collapse content columns, and keyboard
-users can skip the header and see focus on links and complete file rows.
+Plain for now: one small stylesheet, system font, dark, a few colours from my desktop. No logo, no theme. I'll design the real look myself once the art steps of my game plan are done.
 
 ## Getting Started
 

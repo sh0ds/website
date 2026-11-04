@@ -3,89 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>sh0ds@devblog</title>
-    <meta name="description" content="sh0ds.dev: small games in PICO-8, Godot and an engine of my own, served from a Raspberry Pi 5.">
-    <link rel="icon" href="images/raspberry.svg" type="image/svg+xml">
+    <title>sh0ds</title>
+    <meta name="description" content="sh0ds makes small games: PICO-8, Picotron, Godot.">
     <link rel="stylesheet" href="stylesheets/styles.css">
 </head>
-<body class="home">
-    <a class="skip-link" href="#main">skip to content</a>
-    <header class="site-header">
-        <img class="logo" src="images/raspberry.svg" alt="" width="41" height="46">
-        <p class="release">sh0ds · small games, jams, devlogs</p>
-        <dl class="diag">
-            <div><dt>board</dt><dd><a class="brand" href="./" aria-label="sh0ds@devblog, home">sh0ds@devblog</a></dd></div>
-            <div><dt>menu</dt><dd><nav aria-label="Main"><ul><li><a href="blog/index.html">/blog</a></li><li><a href="projects/index.html">/projects</a></li></ul></nav></dd></div>
-        </dl>
-        <a class="qr" href="https://github.com/sh0ds/website"><img src="images/qr-repo.svg" alt="QR code for github.com/sh0ds/website" width="99" height="99"><span>sh0ds/website</span></a>
+<body>
+    <header>
+        <a class="name" href="./">sh0ds</a>
+        <nav aria-label="Main"><a href="blog/index.html">devlog</a> <a href="projects/index.html">projects</a></nav>
     </header>
 
-    <main id="main">
-        <section class="screen" aria-labelledby="hero-title">
-            <div class="palette" aria-hidden="true"><i class="c0"></i><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><i class="c5"></i><i class="c6"></i><i class="c7"></i><i class="c8"></i><i class="c9"></i><i class="c10"></i><i class="c11"></i><i class="c12"></i><i class="c13"></i><i class="c14"></i><i class="c15"></i></div>
-            <h1 id="hero-title">sh0ds/16</h1>
-            <p class="rev">fantasy console · rev 0 · 0 of 6 carts</p>
-            <dl class="post">
-                <div><dt>games</dt><dd>small ones, PICO-8 first, then Godot and an engine of my own</dd></div>
-                <div><dt>goal</dt><dd>a Zelda-like and a metroidvania</dd></div>
-                <div><dt>jams</dt><dd>0 entered, the next one from <a href="https://itch.io/jams">itch.io/jams</a></dd></div>
-                <div><dt>now</dt><dd>P1, Lua in my own rice · <a href="https://github.com/sh0ds/website/blob/next/LOG.md">LOG.md</a></dd></div>
-                <div><dt>link</dt><dd id="req-timing">HTTPS</dd></div>
-            </dl>
-            <div class="menu" aria-labelledby="carts-title">
-                <h2 id="carts-title">select cart</h2>
-                <ol class="carts">
-                    <li class="empty sel"><span class="slot">s01</span><span class="name">first cart</span><span class="tool">PICO-8 · P6</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s02</span><span class="name">tiny Zelda-like</span><span class="tool">PICO-8 · P8</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s03</span><span class="name">a game on the bigger machine</span><span class="tool">Picotron · T4</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s04</span><span class="name">the Zelda-like, grown up</span><span class="tool">Godot · G8</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s05</span><span class="name">metroidvania, vertical slice</span><span class="tool">Godot · G11</span><span class="flag">empty</span></li>
-                    <li class="empty"><span class="slot">s06</span><span class="name">my own fantasy console</span><span class="tool">C, SDL3, Lua · X8</span><span class="flag">empty</span></li>
-                </ol>
-            </div>
-            <p class="ready">ready. carts play here and on <a href="https://sh0ds.itch.io/">itch.io</a> once they ship.</p>
-        </section>
+    <main>
+        <h1>I make small games.</h1>
+        <p class="lead">PICO-8 and Picotron first, Godot after that, and some day my own little engine. Most of it starts at game jams.</p>
 
-        <section aria-labelledby="stack-title">
-            <h2 id="stack-title">spec</h2>
-            <table class="parts">
-                <thead><tr><th>port</th><th>lang</th><th>used for</th><th>flag</th></tr></thead>
-                <tbody>
-                    <tr><td>p01</td><td>Lua</td><td>PICO-8, Picotron, carts for my engine, Hyprland config</td><td class="learning">learning</td></tr>
-                    <tr><td>p02</td><td>GDScript</td><td>Godot: the Zelda-like grown up, the metroidvania</td><td class="next">next</td></tr>
-                    <tr><td>p03</td><td>C</td><td>3sgc, my engine with SDL3 underneath and Lua inside</td><td class="using">using</td></tr>
-                    <tr><td>p04</td><td>HTML, CSS</td><td>this site, itch.io pages, web builds</td><td class="using">using</td></tr>
-                    <tr><td>p05</td><td>Bash</td><td>deploy, build and upload scripts</td><td class="using">using</td></tr>
-                </tbody>
-            </table>
-        </section>
+        <h2>Games</h2>
+        <p>Nothing out yet. The first one is a PICO-8 cart, and it'll be playable right here and on <a href="https://sh0ds.itch.io/">itch.io</a>.</p>
 
-        <section class="telemetry" aria-labelledby="telemetry-title">
-            <h2 id="telemetry-title">host <span class="state" id="stat-state">connecting</span></h2>
-            <dl class="diag hw">
-                <div><dt>board</dt><dd>Raspberry Pi 5, 8 GB, on my desk</dd></div>
-                <div><dt>serve</dt><dd>Caddy 2.11, built by <a href="https://github.com/sh0ds/3sgc">3sgc</a>, pulled from <code>main</code> every 2 min</dd></div>
-            </dl>
-            <div class="meters">
-                <div class="meter" id="meter-temp"><div class="lbl">temp</div><div class="val" id="stat-temp">—</div><div class="bar" aria-hidden="true"><i></i></div></div>
-                <div class="meter" id="meter-load"><div class="lbl">load</div><div class="val" id="stat-load">—</div><div class="bar" aria-hidden="true"><i></i></div></div>
-                <div class="meter" id="meter-mem"><div class="lbl">mem</div><div class="val" id="stat-mem">—</div><div class="bar" aria-hidden="true"><i></i></div></div>
-                <div class="meter"><div class="lbl">up</div><div class="val" id="stat-uptime">—</div><div class="note">since last boot</div></div>
-            </div>
-            <dl class="diag source">
-                <div><dt>src</dt><dd><code>/ramdisk/pistats.json</code>, polled every 10 s, <span id="stat-age">waiting for the first sample</span></dd></div>
-            </dl>
-        </section>
+        <h2>Devlog</h2>
+        <ul class="posts">
+            <li><a href="blog/my-rice.html">My rice</a> <time>2026-11-03</time></li>
+            <li><a href="blog/pi-setup.html">How my Raspberry Pi 5 runs sh0ds.dev</a> <time>2026-10-20</time></li>
+        </ul>
+        <p><a href="blog/index.html">All posts</a></p>
     </main>
 
-    <footer class="site-footer">
-        <dl class="diag">
-            <div><dt>net</dt><dd><ul><li><a href="https://sh0ds.itch.io/">itch.io</a></li><li><a href="https://github.com/sh0ds">github</a></li><li><a href="mailto:mail@sh0ds.dev">mail</a></li></ul></dd></div>
-            <div><dt>src</dt><dd><a href="https://github.com/sh0ds/website">sh0ds/website</a>, built with <a href="https://github.com/sh0ds/3sgc">3sgc</a></dd></div>
-            <div><dt>info</dt><dd>© 2026 sh0ds</dd></div>
-        </dl>
+    <footer>
+        <p><a href="https://sh0ds.itch.io/">itch.io</a> · <a href="https://github.com/sh0ds">github</a> · <a href="mailto:mail@sh0ds.dev">mail</a></p>
+        <p>Built with <a href="https://github.com/sh0ds/3sgc">3sgc</a>, served from a Raspberry Pi 5 on my desk. Source: <a href="https://github.com/sh0ds/website">sh0ds/website</a>.</p>
     </footer>
-
-    <script src="main.js" defer></script>
 </body>
 </html>
