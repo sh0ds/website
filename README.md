@@ -6,7 +6,7 @@ My website, the static site generator that builds it, and what I learn along the
 
 This is the source of [sh0ds.dev](https://sh0ds.dev). The site runs on a Raspberry Pi 5 on my desk and gets built by [3sgc](https://github.com/sh0ds/3sgc), a little static site generator I wrote in C (a local copy lives in `src/`). Posts are Markdown files in `content/`, 3sgc turns them into HTML with the templates in `templates/`. The homepage is hand-written.
 
-This repo is also where I learn. I'm learning to make games (PICO-8 and Picotron first, later Godot and a small engine of my own in C), and the site grows with that: game pages under `games/`, write-ups in `content/projects/`, and devlogs in `content/blog/`.
+This repo is also where I learn. I'm learning to make games (PICO-8 and Picotron first, then Godot, a small engine of my own in C and a Game Boy game in assembly), and the site grows with that: game pages under `games/`, write-ups in `content/projects/`, and devlogs in `content/blog/`.
 
 There's one branch. `main` is what's live, and I look at a change locally before I push it.
 
