@@ -42,10 +42,6 @@ Every minute a timer writes temp, load, memory and uptime to /ramdisk/pistats.js
 
 One command over SSH that shows me the services, the last health check, last backup, when the certificate runs out, the last deploy, the disks and pending updates, all on one screen. Green means fine, and I don't have to remember any service names.
 
-# Since then
-
-On 3 November I removed the stuff an old learning plan had put on the Pi: Erlang, Pharo, a live service and their Caddy routes. What comes next are browser builds of my games under /games/.
-
 # Takeaway
 
 Most bugs on the old setup were leftovers from earlier fixes. Now there are fewer parts, each with one job, so when something breaks I know where to look.
