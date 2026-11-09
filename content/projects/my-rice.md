@@ -1,14 +1,10 @@
 ---
-title: My rice
+title: Afterhours, my rice
 author: sh0ds
-summary: Afterhours, my desktop: Arch, Hyprland and my own little Quickshell shell, made for making games.
+summary: Arch, Hyprland and my own little Quickshell shell, made for making and playing games and music.
 ---
 
-Updated 2026-11-09.
-
-I started with Catppuccin Mocha, then had a violet Amethyst phase and then Diag, the diagnostic look this site used to have. Now it's Afterhours, a desktop I actually make games on instead of one that just looks like a dashboard. Almost black with a bit of violet in it, violet for focus, amber when something wants my attention and coral for recording and errors. One font for everything, and games and art keep their own colours.
-
-Since 2026-11-09 it's notched, so nothing is rounded anymore and the corners get cut at 45 degrees instead.
+Tbh, the rice was made with big help of Claude (I know, sacrilegious), but the fact that Hyprland's configs are all in Lua has had me dabbling in them more lately.
 
 # Base
 
@@ -49,7 +45,7 @@ For motion, colour changes take 200 ms and everything that moves uses the same s
 
 # The rail
 
-Waybar, SwayNC and wlogout are gone. Afterhours draws three glass pieces on every monitor instead:
+Afterhours draws three glass pieces on every monitor:
 
 ```
 left    apps · workspaces 1-0 · focused window title
@@ -82,13 +78,13 @@ I write PICO-8 and Picotron code in Zed, with their APIs in the Lua language ser
 
 kitty, see-through with solid text and a 3 px violet beam cursor with a short trail. The Starship prompt looks like the rail: a square bracket around two lines, the Arch logo, the path with the repo folder bright, the branch in violet, changes in amber and a dotted line to the clock. The arrow turns coral when a command fails. No tmux.
 
-Zed is my editor and $EDITOR, with a matching theme and AI features and telemetry turned off. eza, btop, bat, lazygit, GTK, Qt, Firefox, Vesktop and Obsidian all use the same colours and square corners. Icons are Papirus-Dark with violet folders, and the cursor is Posy's black one.
+Zed is my editor and $EDITOR, with a matching theme and AI features and telemetry turned off. eza, btop, bat, GTK, Qt, Firefox, Vesktop and Obsidian all use the same colours and square corners. Icons are Papirus-Dark with violet folders, and the cursor is Posy's black one.
 
 # Music
 
 mpd and rmpc play my music from ~/Music, my DJ library in ~/Music/DJ included. The rail, the media keys and the lock screen all pick up what's playing. PipeWire follows the sample rate of the track, and Easy Effects tunes my Corsair Virtuoso XT towards the Harman curve with a limiter after it.
 
-Lexicon, rekordbox, Traktor and Audacity run in a Windows VM. My songs from ~/Music/DJ show up there as Z:. djvm starts it or shows it on workspace 7, and djvm off shuts it down cleanly.
+Lexicon, rekordbox, Traktor and Engine DJ run in a Windows VM. My songs from ~/Music/DJ show up there as Z:. 'djvm' starts it or shows it on workspace 7, and 'djvm off' shuts it down cleanly.
 
 # Getting it
 
