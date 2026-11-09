@@ -1,14 +1,14 @@
 ---
 title: My rice
 author: sh0ds
-summary: Afterhours: Arch, Hyprland and my own Quickshell shell, notched glass, built for making games.
+summary: Afterhours, my desktop: Arch, Hyprland and my own little Quickshell shell, made for making games.
 ---
 
 Updated 2026-11-09.
 
-This started with Catppuccin Mocha, went through a violet Amethyst phase and then Diag, the diagnostic look this site had. Now it's Afterhours: a desktop for making games instead of a dashboard. Near-black charcoal with a violet cast, violet for focus, amber for attention, coral for recording and errors. One font everywhere. Games and artwork keep their own colours.
+I started with Catppuccin Mocha, then had a violet Amethyst phase and then Diag, the diagnostic look this site used to have. Now it's Afterhours, a desktop I actually make games on instead of one that just looks like a dashboard. Almost black with a bit of violet in it, violet for focus, amber when something wants my attention and coral for recording and errors. One font for everything, and games and art keep their own colours.
 
-Since 2026-11-09 it's notched: nothing is rounded anymore, the shell cuts its corners at 45 degrees instead.
+Since 2026-11-09 it's notched, so nothing is rounded anymore and the corners get cut at 45 degrees instead.
 
 # Base
 
@@ -23,7 +23,7 @@ gpu     NVIDIA
 config  hyprland.lua base, rice.lua look + rules + keys
 ```
 
-hyprland.lua is plain defaults with no animations. rice.lua layers the look on top through a protected call, so if it breaks the base still works.
+hyprland.lua is just the plain defaults without animations. rice.lua puts the look on top in a protected call, so if I break it the base still works.
 
 # Look
 
@@ -39,17 +39,17 @@ attn     #d99f66   amber
 error    #d9786c   coral
 ```
 
-Everything that floats is frosted glass with its corners cut at 45 degrees: the rail, the cards under it, the launcher, toasts and the lock screen's password field. Buttons cut two opposite corners, mirrored on the right side of the rail. Windows are square with a 2 px violet gradient border, 6 px between tiles and 12 px at the screen edge, lined up with the rail. A lone window keeps its gaps.
+Everything that floats is frosted glass with cut corners: the rail, the cards under it, the launcher, toasts and the password field on the lock screen. Buttons cut two opposite corners, and on the right side of the rail it's mirrored. Windows stay square with a 2 px violet gradient border, 6 px between them and 12 px at the screen edge so they line up with the rail. A single window keeps its gaps too.
 
-Every window is see-through over the blurred wallpaper, a little more when it isn't focused. Games, video, art tools and fullscreen stay solid, and unfocused windows dim by 8 %. The wallpaper is a violet haze with soft clouds and never moves.
+Every window is a bit see-through over the blurred wallpaper, a bit more when it's not focused. Games, video, art tools and fullscreen stay solid, and unfocused windows get 8 % darker. The wallpaper is a violet haze with soft clouds, and it never moves.
 
-Violet shows a state as a fill or a thin underline, never as an outline: the active workspace, a toggle that's on, the open clock. The focused window's border says what the desktop is doing: violet is normal, amber means notifications are held back, coral means I'm recording or sharing the screen.
+Violet shows that something is on, as a fill or a thin underline but never as an outline: the active workspace, a toggle, the open clock. The border of the focused window tells me what's going on: violet is normal, amber means notifications are held back and coral means I'm recording or sharing my screen.
 
-Motion: colour changes take 200 ms, and everything that moves shares one spring. Popups grow out of what you clicked and the workspace marker stretches like a drop.
+For motion, colour changes take 200 ms and everything that moves uses the same spring. Popups grow out of whatever you clicked and the workspace marker stretches like a drop.
 
 # The rail
 
-Waybar, SwayNC and wlogout are gone. Afterhours draws three glass pieces on every monitor:
+Waybar, SwayNC and wlogout are gone. Afterhours draws three glass pieces on every monitor instead:
 
 ```
 left    apps · workspaces 1-0 · focused window title
@@ -58,15 +58,15 @@ right   now playing with cava bars · keep awake · the Pi
         network · sound · inbox · tray · session
 ```
 
-The island is the clock. It stretches into the volume bar when the volume changes and into a notification when one lands, then shrinks back to the time. Click the clock for Today: the month, cpu, gpu and memory graphs, the disks, the Pi with its ping and what's playing.
+The island is the clock. When I change the volume it stretches into a volume bar, when a notification comes in it turns into that, and then it shrinks back to the time. Clicking the clock opens Today with the month, cpu, gpu and memory graphs, the disks, my Pi with its ping and what's playing.
 
-Notifications are the shell's own D-Bus server: plain text, actions, a quiet mode and an inbox on SUPER+N. Toasts show how long they stay with a line that runs out along the bottom. Screen sharing holds them back. Sound and the network icon open the control centre with outputs, the mic, a volume per app, Wi-Fi and toggles for night light, quiet, keep awake and game mode. The session menu asks twice before logging out, rebooting or powering off.
+Notifications run on the shell's own D-Bus server, with plain text, actions, a quiet mode and an inbox on SUPER+N. A line at the bottom of each toast runs out so you see how long it stays, and while I share my screen they're held back. The sound and network icons open the control centre: outputs, the mic, volume per app, Wi-Fi and toggles for night light, quiet, keep awake and game mode. The session menu asks twice before logging out, rebooting or shutting down.
 
-Game mode turns on by itself when a game goes fullscreen: the rail hides on that monitor and animations, dimming and shadows go off.
+Game mode turns on by itself when a game goes fullscreen. The rail hides on that monitor and animations, dimming and shadows turn off.
 
 # Making games
 
-SUPER+Space opens the launcher: type to find an app, = for maths, > for commands, / for open windows and : for emoji. The game tools each have a small wrapper that starts them or jumps to them:
+SUPER+Space opens the launcher. Just type to find an app, = for maths, > for commands, / for open windows and : for emoji. Every game tool has a little wrapper that starts it or jumps to it if it's already open:
 
 ```
 pico8, picotron   from ~/.local/opt, carts in ~/code/pico8
@@ -76,23 +76,23 @@ bitwig            music, at 128 frames for live MIDI
 gba               Game Boy games in mGBA
 ```
 
-PICO-8 and Picotron code lives in Zed, with their APIs in the Lua language server, F5 to rerun the cart and F7 to count tokens. ALT+Print takes a region screenshot framed for devlogs, with a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
+I write PICO-8 and Picotron code in Zed, with their APIs in the Lua language server, F5 to rerun the cart and F7 to count tokens. ALT+Print takes a screenshot of a region with a frame for devlogs, a caption, the date and sh0ds.dev in the corner. SUPER+SHIFT+R records a region.
 
 # Terminal and editors
 
-kitty with a 3 px violet beam cursor with a short trail, see-through with solid text, and Starship drawn like the rail: a square bracket holding two lines, the Arch mark, the path with the repo's folder bright, branch in violet, changes in amber, a dotted rule to the clock. The arrow turns coral after a failed command. No tmux.
+kitty, see-through with solid text and a 3 px violet beam cursor with a short trail. The Starship prompt looks like the rail: a square bracket around two lines, the Arch logo, the path with the repo folder bright, the branch in violet, changes in amber and a dotted line to the clock. The arrow turns coral when a command fails. No tmux.
 
-Zed is the editor and $EDITOR, with the theme to match and AI features and telemetry off. eza, btop, bat, lazygit, GTK, Qt, Firefox, Vesktop and Obsidian all follow the palette and the square corners. Icons are Papirus-Dark with violet folders, and the cursor is Posy's black one.
+Zed is my editor and $EDITOR, with a matching theme and AI features and telemetry turned off. eza, btop, bat, lazygit, GTK, Qt, Firefox, Vesktop and Obsidian all use the same colours and square corners. Icons are Papirus-Dark with violet folders, and the cursor is Posy's black one.
 
 # Music
 
-mpd and rmpc play my files from ~/Music, including the DJ library under ~/Music/DJ. The rail, media keys and lock screen pick up playback through the media controls. PipeWire follows the track's sample rate, and Easy Effects corrects my Corsair Virtuoso XT towards the Harman curve with a limiter after it.
+mpd and rmpc play my music from ~/Music, my DJ library in ~/Music/DJ included. The rail, the media keys and the lock screen all pick up what's playing. PipeWire follows the sample rate of the track, and Easy Effects tunes my Corsair Virtuoso XT towards the Harman curve with a limiter after it.
 
-Lexicon, rekordbox, Traktor and Audacity live in a Windows VM. Songs in ~/Music/DJ appear there as Z:. djvm starts or shows it on workspace 7, djvm off asks it to shut down cleanly.
+Lexicon, rekordbox, Traktor and Audacity run in a Windows VM. My songs from ~/Music/DJ show up there as Z:. djvm starts it or shows it on workspace 7, and djvm off shuts it down cleanly.
 
 # Getting it
 
-github.com/sh0ds/dotfiles has the configs, screenshots, the dependency list and setup guides. Clone it, look at the preview install first, then install:
+Everything is in github.com/sh0ds/dotfiles: the configs, screenshots, what you need to install and some setup guides. Clone it, try the preview install first and then install it for real:
 
 ```
 git clone https://github.com/sh0ds/dotfiles.git ~/code/dotfiles
@@ -100,6 +100,6 @@ bash ~/code/dotfiles/install-dotfiles.sh --target /tmp/afterhours-preview
 bash ~/code/dotfiles/install-dotfiles.sh
 ```
 
-The installer backs up replaced files under ~/.dotfiles-backup first. Most configs are linked into the checkout; Qt, btop, nchat and Zed get writable copies.
+The installer backs up every file it replaces to ~/.dotfiles-backup first. Most configs are linked to the repo, only Qt, btop, nchat and Zed get copies they can write to.
 
-This is set up for my machine. Check the monitor (DP-4), the German keyboard layout and the NVIDIA settings in hyprland.lua, and follow the audio and DJ VM guides before using those parts. You need Quickshell 0.3.2 or newer and Hyprland 0.56 or newer.
+Keep in mind it's set up for my machine. Check the monitor (DP-4), the German keyboard layout and the NVIDIA settings in hyprland.lua, and read the audio and DJ VM guides before you use those parts. You need Quickshell 0.3.2 or newer and Hyprland 0.56 or newer.
