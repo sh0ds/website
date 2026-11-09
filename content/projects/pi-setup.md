@@ -26,7 +26,7 @@ No Docker, no tunnel. The router only forwards 80 and 443, and SSH only works fr
 
 # Deploys
 
-Before, GitHub logged into the Pi over SSH on every push, so SSH had to be open to the internet. Now the Pi pulls instead. A systemd timer checks every 2 minutes if main changed, and if it did, it pulls, builds with 3sgc and swaps the new output into /srv/www.
+Before, GitHub logged into the Pi over SSH on every push, so SSH had to be open to the internet. Now the Pi pulls instead. A systemd timer checks every 2 minutes if main changed, and if it did, it pulls, builds with 3sgc and swaps the new output into /srv/www. I can also force it with a small "pi deploy" helper I wrote.
 
 # Backups and alerts
 
