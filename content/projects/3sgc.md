@@ -3,11 +3,11 @@ title: 3sgc, static site generator in C
 summary: Static site generator in C11, libc and POSIX only. Builds this site.
 ---
 
-3sgc builds this site. About 1,000 lines of C11, no dependencies beyond libc and POSIX.
+My first little C project, simple but helpful for generating the posts for this site. I wanted to have 0 dependencies, so it's just the standard C library and POSIX.
 
 # Pipeline
 
-Walks content/, parses the front matter of each Markdown file, sorts posts by date, renders them through the HTML templates and writes the blog and project index pages. A push to main is live within 2 minutes.
+Walks everything in the content folder, parses the front matter at the top and sorts the posts by date. Then renders the pages through the HTML templates and creates the blog and project index pages.
 
 # Supported
 
@@ -22,7 +22,7 @@ build      -Wall -Wextra,
 
 # Not yet
 
-Lists, inline formatting, links, tables. markdown.c grows when a page needs something, and the next pages are the games pages and devlogs: a GIF, a play link and a postmortem per game.
+Lists, inline formatting, links, tables. I plan to extend the markdown converter step by step, but I kept it simple first so I finish the project and don't spend all my time on the md converter.
 
 # Source
 
