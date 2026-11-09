@@ -7,7 +7,7 @@ My first little C project, simple but helpful for generating the posts for this 
 
 # Pipeline
 
-Walks everything in the content folder, parses the front matter at the top and sorts the posts by date. Then renders the pages through the HTML templates and creates the blog and project index pages.
+Walks everything in the content/ folder, parses the front matter at the top and sorts the posts by date. Then renders the pages through the HTML templates and creates the blog and project index pages.
 
 # Supported
 
@@ -26,4 +26,4 @@ Lists, inline formatting, links, tables. I plan to extend the markdown converter
 
 # Source
 
-The source repository is https://github.com/sh0ds/3sgc. This website repository keeps a local copy of the generator in src/ for its build.
+All on my GitHub, link is in the footer. The website also has a tweaked version in the src/ folder.
