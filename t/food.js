@@ -128,68 +128,78 @@ function shopState(id, date) {
 // ---------- shopping lists ----------
 
 const HAVE = 'Schon im Schrank, nur prüfen';
+// Prices from the Nahkauf receipt of 2026-11-10; a leading ~ marks a guess. An item ends with ' | price'.
+const PR = { skyr: 1.99, quark: 1.19, huette: 1.29, huhn: 6.79, banane: 0.37, apfel: 0.45, gurke: 1.15, brot: 1.99, milch: 0.85, eier: 2.29,
+  spinat: 2.99, hafer: 0.69, nuss: 2.49, mark: 0.89, kokos: 2.99 };
+const eur = n => (Math.round(n * 100) / 100).toFixed(2);
+const itemText = it => it.split(' | ')[0];
+const itemPrice = it => { const p = it.split(' | ')[1]; return p ? { n: parseFloat(p.replace('~', '')), guess: p[0] === '~' } : null; };
+const SOMETIMES = 'Nur wenn leer';
+
 // Startkauf: only what is needed until the first Hauptkauf.
 function startList() {
   const S = foodStart(), A = firstShop(), n = dayNum(A) - dayNum(S);
   const days = Array.from({ length: n }, (_, i) => addDays(S, i + 1));          // S+1 .. A: breakfasts and lunches
   const oats = days.filter(d => wd(d) !== 'Fr' || urlaub(d)).length, brote = days.filter(d => wd(d) !== 'Do').length;
-  const notfall = Math.max(0, n - 3), pot = n >= 2;
-  const cool = [`Magerquark, ${Math.ceil(n / 2)} × 500 g · Snacks`, `Hüttenkäse, ${brote + notfall} × 200 g · Mittag` + (notfall ? ' und Notfall-Abend' : '')];
-  if (oats) cool.unshift(`Skyr natur, ${Math.ceil(oats / 2)} × 500 g · Oats`);
-  if (pot) cool.push('Hähnchenbrustfilet, eine Packung (500–600 g) · heute kochen');
+  const notfall = Math.max(0, n - 3), pot = n >= 2, q = Math.ceil(n / 2), h = brote + notfall, ban = Math.max(oats, 1), l = Math.ceil(n / 2) + 1;
+  const cool = [`Magerquark, ${q} × 500 g · Snacks | ${eur(q * PR.quark)}`, `Hüttenkäse, ${h} × 200 g · Mittag` + (notfall ? ' und Notfall-Abend' : '') + ` | ${eur(h * PR.huette)}`];
+  if (oats) cool.unshift(`Skyr natur, ${Math.ceil(oats / 2)} × 500 g · Oats | ${eur(Math.ceil(oats / 2) * PR.skyr)}`);
+  if (pot) cool.push(`Hähnchenbrustfilet, 600 g · heute kochen | ${eur(PR.huhn)}`);
   const groups = [
     ['Kühlregal', cool],
-    ['Obst und Gemüse', [`Bananen, ${Math.max(oats, 1)} · Oats`, `Äpfel, ${n} · Snacks`, 'Gurke, 1 · Mittag']],
-    ['Regal', ['Haferflocken, 500 g', 'Vollkornbrot, 750 g · was nach 3 Tagen übrig ist, einfrieren', `H-Milch 1,5 %, ${Math.ceil(n / 2) + 1} l`, 'Erdnüsse ungesalzen oder Nüsse, 200 g']],
+    ['Obst und Gemüse', [`Bananen, ${ban} · Oats | ${eur(ban * PR.banane)}`, `Äpfel, ${n} · Snacks | ~${eur(n * PR.apfel)}`, `Gurke, 1 · Mittag | ${eur(PR.gurke)}`]],
+    ['Regal', [`Haferflocken, 500 g | ${eur(PR.hafer)}`, `Vollkornbrot, 750 g · was nach 3 Tagen übrig ist, einfrieren | ${eur(PR.brot)}`, `H-Milch 1,5 %, ${l} l | ${eur(l * PR.milch)}`,
+      `Erdnüsse, 200 g | ${eur(PR.nuss)}`, `Tomatenmark, 1 Tube · hält Wochen | ${eur(PR.mark)}`, 'Zimt, Senf, Paprika edelsüß · einmal, hält Monate | 2.33']],
   ];
-  if (pot) groups.push(['Tiefkühl', ['TK-Blattspinat, portionierbar, 750 g · Curry, der Rest hält']]);
-  groups[2][1].push('Tomatenmark, 1 Tube · hält Wochen', 'Zimt, Senf, Paprika edelsüß · einmal, hält Monate');
+  if (pot) groups.push(['Tiefkühl', [`TK-Blattspinat, 500 g · Curry, der Rest hält | ${eur(PR.spinat)}`]]);
   groups.push([HAVE, (pot ? ['Kokosmilch, 1 Dose · Curry', 'Reis, 250 g · Curry', 'Rote Zwiebel · Curry', 'Currypulver · sonst mitnehmen'] : []).concat([`Eier, ${2 * brote + 3 * notfall} Stück · Mittag`, 'Honig, Öl, Salz, Pfeffer'])]);
-  return { id: 'erst', cost: `${18 + 4 * n} €`, groups,
-    intro: `Reicht bis zum Hauptkauf (${dayDate(A)}).` + (pot ? ' Abends gleich das Curry kochen, das sind 3 Abendessen.' : '') + ' Etwa' };
+  return { id: 'erst', groups, intro: `Reicht bis zum Hauptkauf (${dayDate(A)}).` + (pot ? ' Abends gleich das Curry kochen, das sind 3 Abendessen.' : '') };
 }
 function hauptList(c) {
-  const chili = c.rw === 'chili', tr = trainingOn();
-  return { id: 'haupt', cost: 'ca. 40–45 €',
+  const chili = c.rw === 'chili', tr = trainingOn(), ban = tr ? 9 : 7;
+  return { id: 'haupt',
     intro: `Reicht 7 Tage. Morgen ${SHORT[c.a]} kochen.` + (c.i < 2 ? ' Die Dosen hast du schon: prüfen und abhaken.' : ''),
     groups: [
       ['Obst und Gemüse', [
-        tr ? 'Bananen, 8–9, ein paar noch grün · Oats und vor dem Training' : 'Bananen, 6–7, ein paar noch grün · Oats',
-        'Gurke, 1 · Mittag', chili ? 'Zwiebeln, 2 · Chili und Hähnchen-Nudeln' : 'Zwiebeln, 2 · Möhren, 2 · Bolognese und Curry',
+        (tr ? 'Bananen, 8–9, ein paar noch grün · Oats und vor dem Training' : 'Bananen, 6–7, ein paar noch grün · Oats') + ` | ${eur(ban * PR.banane)}`,
+        `Gurke, 1 · Mittag | ${eur(PR.gurke)}`, chili ? 'Zwiebeln, 2 · Chili und Hähnchen-Nudeln | ~0.40' : 'Zwiebeln, 2 · Möhren, 2 · Bolognese und Curry | ~0.70',
       ]],
       ['Kühlregal', [
-        'Skyr natur, 3 × 500 g · Oats · im Urlaub 4 × 500 g',
-        'Magerquark, 4 × 500 g · Snacks',
-        'Hüttenkäse, 7 × 200 g · Mittag und Notfall-Abend',
-        'Eier, 2 × 10 Stück · Mittag und Notfall-Abend',
-        `Hackfleisch gemischt, 500 g · morgen kochen, Verbrauchsdatum prüfen`,
+        `Skyr natur, 3 × 500 g · Oats · im Urlaub 4 × 500 g | ${eur(3 * PR.skyr)}`,
+        `Magerquark, 4 × 500 g · Snacks | ${eur(4 * PR.quark)}`,
+        `Hüttenkäse, 7 × 200 g · Mittag und Notfall-Abend | ${eur(7 * PR.huette)}`,
+        `Eier, 2 × 10 Stück · Mittag und Notfall-Abend | ${eur(2 * PR.eier)}`,
+        'Hackfleisch gemischt, 500 g · morgen kochen, Verbrauchsdatum prüfen | ~4.49',
       ]],
-      ['Dosen und Regal', chili
-        ? ['Passierte oder gehackte Tomaten, 2 × · Chili und Hähnchen-Nudeln', 'Kidneybohnen, 1 Dose · Mais, 1 Dose', 'H-Milch 1,5 %, auf 4 l auffüllen']
-        : ['Passierte oder gehackte Tomaten, 1 × · Bolognese', 'Kokosmilch, 1 Dose · Curry', 'H-Milch 1,5 %, auf 4 l auffüllen']],
-      ['Nur wenn leer', [
-        chili ? 'Reis, 500 g (Chili braucht 375 g)' : 'Reis, 500 g (Curry braucht 250 g)',
-        'Haferflocken, 500 g (600 g pro Woche)',
-        chili ? 'Vollkornnudeln, 500 g (330 g für die Hähnchen-Nudeln)' : 'Vollkornspaghetti, 500 g (375 g für die Bolognese)',
-        'Erdnüsse ungesalzen oder Nüsse, 200 g',
-        'TK-Blattspinat, portionierbar, 750 g (300 g pro Woche)',
-        'Tomatenmark, 1 Tube',
+      ['Dosen und Regal', (chili
+        ? ['Passierte oder gehackte Tomaten, 2 × · Chili und Hähnchen-Nudeln | ~1.98', 'Kidneybohnen, 1 Dose · Mais, 1 Dose | ~1.98']
+        : ['Passierte oder gehackte Tomaten, 1 × · Bolognese | ~0.99', `Kokosmilch, 1 Dose (500 ml) · Curry | ${eur(PR.kokos)}`])
+        .concat([`H-Milch 1,5 %, auf 4 l auffüllen | ~${eur(4 * PR.milch)}`])],
+      [SOMETIMES, [
+        (chili ? 'Reis, 500 g (Chili braucht 375 g)' : 'Reis, 500 g (Curry braucht 250 g)') + ' | ~1.49',
+        `Haferflocken, 500 g (600 g pro Woche) | ${eur(PR.hafer)}`,
+        (chili ? 'Vollkornnudeln, 500 g (330 g für die Hähnchen-Nudeln)' : 'Vollkornspaghetti, 500 g (375 g für die Bolognese)') + ' | ~1.29',
+        `Erdnüsse, 200 g | ${eur(PR.nuss)}`,
+        `TK-Blattspinat, 500 g (250 g pro Woche) | ${eur(PR.spinat)}`,
+        `Tomatenmark, 1 Tube | ${eur(PR.mark)}`,
         'Honig, Öl, Salz, Pfeffer, Senf',
         'Gewürze, einmal für Monate: Paprika edelsüß, Italienische Kräuter, Zimt, ' + (chili ? 'Kreuzkümmel, Backkakao' : 'Currypulver'),
       ]],
     ] };
 }
 function nachList(c) {
-  return { id: 'nach', cost: 'ca. 13–15 €',
+  return { id: 'nach',
     intro: `Danach direkt ${SHORT[c.b]} kochen, das sind 3 Abendessen.`,
     groups: [['', [
-      'Hähnchenbrustfilet, eine Packung (500–600 g) · heute kochen',
-      'Vollkornbrot, 2 × 750 g · eins sofort einfrieren, in 2 Tagen in den Kühlschrank',
-      'Äpfel, 8 · Snacks',
-      'Gurke, 1 · Mittag',
+      `Hähnchenbrustfilet, 600 g · heute kochen | ${eur(PR.huhn)}`,
+      `Vollkornbrot, 2 × 750 g · eins sofort einfrieren, in 2 Tagen in den Kühlschrank | ${eur(2 * PR.brot)}`,
+      `Äpfel, 8 · Snacks | ~${eur(8 * PR.apfel)}`,
+      `Gurke, 1 · Mittag | ${eur(PR.gurke)}`,
       'Milch, wenn alle',
     ]]] };
 }
+// What a list costs: the sum of its priced items, without the pantry groups.
+const listCost = l => l.groups.filter(g => g[0] !== SOMETIMES && g[0] !== HAVE).reduce((a, g) => a + g[1].reduce((x, it) => x + ((itemPrice(it) || {}).n || 0), 0), 0);
 
 // ---------- recipes ----------
 
@@ -227,16 +237,16 @@ const RECIPES = [
   {
     id: 'quark', title: 'Quark-Snack', when: '3 min',
     items: ['250 g Magerquark, 1 Apfel, 1 TL Honig, ½ TL Zimt'],
-    text: 'Quark mit einem Schluck Milch cremig rühren, Honig und Zimt rein, Apfel klein schneiden und unterheben.',
+    text: 'Quark mit einem Schluck Milch cremig rühren, Honig und Zimt rein. Einen halben Apfel klein schneiden und unterheben, die andere Hälfte so dazu essen.',
     vary: [
-      ['Schoko', '1 TL Backkakao und 2 TL Honig statt Zimt, Apfel oder Banane dazu'],
+      ['Schoko', '1 TL Backkakao und 2 TL Honig statt Zimt, Apfel dazu'],
       ['Erdnuss-Honig', 'ein paar Erdnüsse gehackt und Honig oben drauf, Apfel dazu'],
     ],
   },
   {
     id: 'haehnchen', title: 'Hähnchen-Nudeln mit Spinat', when: '3 Portionen, 35 min', batch: true,
     text: 'Pro Portion ca. 720 kcal, 60 g Eiweiß.',
-    items: ['1 Packung Hähnchenbrustfilet (500–600 g)', '330 g Vollkornnudeln oder -spaghetti', '300 g TK-Blattspinat', '1 Zwiebel', '1 EL Tomatenmark', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '1 EL Öl', '2 TL Paprika edelsüß, 1 TL Knoblauchpulver, 2 TL Italienische Kräuter, 1 TL Honig, Chilisalz'],
+    items: ['600 g Hähnchenbrustfilet', '330 g Vollkornnudeln oder -spaghetti', '250 g TK-Blattspinat (eine halbe Packung)', '1 Zwiebel', '1 EL Tomatenmark', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '1 EL Öl', '2 TL Paprika edelsüß, 1 TL Knoblauchpulver, 2 TL Italienische Kräuter, 1 TL Honig, Chilisalz'],
     steps: [
       '<b>Wasser:</b> großen Topf mit 3 l Wasser aufsetzen. Zwiebel würfeln.',
       '<b>Würzen:</b> Hähnchen in Streifen schneiden, mit Paprika, Knoblauchpulver und 1 TL Salz mischen. Danach Brett, Messer und Hände waschen.',
@@ -261,7 +271,7 @@ const RECIPES = [
   {
     id: 'curry', title: 'Hähnchen-Curry mit Reis', when: '3 Portionen, 35 min', batch: true,
     text: 'Pro Portion ca. 720 kcal, 50 g Eiweiß.',
-    items: ['1 Packung Hähnchenbrustfilet (500–600 g)', '1 Zwiebel (die rote geht)', '1 Dose Kokosmilch (400 ml)', '1 EL Tomatenmark', '300 g TK-Blattspinat', '250 g Reis', '1 EL Öl (Wok-Öl)', '2 EL Currypulver, 1 TL Knoblauchpulver, 1 TL Honig, Salz, zum Schluss ein paar Tropfen Sesamöl'],
+    items: ['600 g Hähnchenbrustfilet', '1 Zwiebel (die rote geht)', '1 Dose Kokosmilch (500 ml)', '1 EL Tomatenmark', '250 g TK-Blattspinat (eine halbe Packung)', '250 g Reis', '1 EL Öl (Wok-Öl)', '2 EL Currypulver, 1 TL Knoblauchpulver, 1 TL Honig, Salz, zum Schluss ein paar Tropfen Sesamöl'],
     steps: [
       '<b>Reis:</b> im zweiten Topf nach Packung kochen. Zwiebel würfeln.',
       '<b>Hähnchen (8 min):</b> in mundgerechte Stücke schneiden, salzen, danach Brett, Messer und Hände waschen. Öl richtig heiß werden lassen, Hähnchen rein und 2 min nicht anfassen, dann rundum braun braten.',

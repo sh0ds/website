@@ -334,21 +334,21 @@ function viewShop() {
   const tab = tabs.includes(shopTab) ? shopTab : tabs[0], date = dates[tab];
   const c = tab === 'haupt' ? cycleOf(date) : tab === 'nach' ? cycleOf(date) : null;
   const l = tab === 'erst' ? startList() : tab === 'haupt' ? hauptList(c) : nachList(c), st = shopState(tab, date);
-  const n = l.groups.reduce((a, g) => a + g[1].length, 0), got = l.groups.reduce((a, g) => a + g[1].filter(it => st[it]).length, 0);
+  const n = l.groups.reduce((a, g) => a + g[1].length, 0), got = l.groups.reduce((a, g) => a + g[1].filter(it => st[itemText(it)]).length, 0);
   let out = `<div class="seg">${tabs.map(id => `<button class="${id === tab ? 'on' : ''}" data-act="shoptab" data-v="${id}">${SHOP_LABEL[id]}</button>`).join('')}</div>`;
-  out += `<div class="card shophead"><div><b>${SHOP_LABEL[tab]} · ${date === t ? 'heute' : dayDate(date)}</b>${tab === 'haupt' ? `<small>${esc(REZEPTWOCHEN[c.rw].name)}</small>` : ''}<small>${esc(l.intro)} ${esc(l.cost).replace(/ €/g, '&nbsp;€')}.</small></div><span class="count">${got}<small>/${n}</small></span></div>${bar(got, n)}`;
+  out += `<div class="card shophead"><div><b>${SHOP_LABEL[tab]} · ${date === t ? 'heute' : dayDate(date)}</b>${tab === 'haupt' ? `<small>${esc(REZEPTWOCHEN[c.rw].name)}</small>` : ''}<small>${esc(l.intro)} Zusammen etwa ${Math.round(listCost(l))}&nbsp;€.</small></div><span class="count">${got}<small>/${n}</small></span></div>${bar(got, n)}`;
   if (closed(date)) out += `<div class="alert warn"><b>Am ${dayDate(date)} haben die Läden zu</b><p>Verschieb den Einkauf unten auf einen anderen Tag.</p></div>`;
   l.groups.forEach(([g, items]) => {
     out += `${g ? `<h3 class="group">${esc(g)}</h3>` : ''}<div class="list checks">` + items.map(it => {
       // a segment after " · " that starts lowercase is a note (für Samstag ...), the rest is what to buy
-      const segs = it.split(' · ');
+      const k = itemText(it), pr = itemPrice(it), segs = k.split(' · ');
       const main = segs.filter((x, i) => i === 0 || !/^[a-zäöü]/.test(x)).join(' · '), rest = segs.filter((x, i) => i > 0 && /^[a-zäöü]/.test(x));
-      return `<label class="check"><input type="checkbox" data-f="shop" data-l="${tab}" data-d="${date}" data-k="${esc(it)}" ${st[it] ? 'checked' : ''}><span class="box">${icon('check')}</span><span class="r-main">${esc(main)}${rest.length ? `<small>${esc(rest.join(' · '))}</small>` : ''}</span></label>`;
+      return `<label class="check"><input type="checkbox" data-f="shop" data-l="${tab}" data-d="${date}" data-k="${esc(k)}" ${st[k] ? 'checked' : ''}><span class="box">${icon('check')}</span><span class="r-main">${esc(main)}${rest.length ? `<small>${esc(rest.join(' · '))}</small>` : ''}</span>${pr ? `<span class="price">${pr.guess ? 'ca. ' : ''}${eur(pr.n).replace('.', ',')}&nbsp;€</span>` : ''}</label>`;
     }).join('') + '</div>';
   });
   const [e, la] = moveTargets(tab, date, t), mv = (to, txt) => `<button class="btn" ${to ? `data-act="shopmove" data-k="${tab}" data-d="${date}" data-to="${to}"` : 'disabled'}>${txt}${to ? ' · ' + dayDate(to) : ''}</button>`;
   out += section('Anderer Tag?', `<div class="inline">${mv(e, 'Früher')}${mv(la, 'Später')}</div>
-    <p class="note">Kochen und Abendessen ziehen mit. Preise sind Schätzungen, Kühlware zuletzt in den Wagen.</p>`);
+    <p class="note">Kochen und Abendessen ziehen mit. Preise vom Kassenzettel 10.11., „ca.“ ist geschätzt. Die Summe zählt ohne „Nur wenn leer“.</p>`);
   out += `<button class="btn text" data-act="shopreset" data-l="${tab}">Liste leeren</button>`;
   return page('Einkauf', 'bei Nahkauf · Kühltasche mit', out);
 }

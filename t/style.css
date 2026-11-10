@@ -281,3 +281,4 @@ body.typing { padding-bottom: 24px; }
 body.typing .timer { bottom: 10px; }
 body.no-training .tabs a[data-tab="training"] { display: none; }
 .btn:disabled { opacity: .35; }
+.check .r-main { flex: 1; } .check .price { flex: none; color: var(--muted, #8a8a94); font-size: .85rem; white-space: nowrap; }
