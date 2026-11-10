@@ -123,16 +123,19 @@ function viewToday() {
 // Ticked rows and rows whose clock time is over 15 min ago fade; the first row left is next.
 // Rows without a clock time (nach der Arbeit, abends) only fade by time once a later clock time has passed.
 const rowKey = r => r.text.replace(/<[^>]+>/g, '');
-const doneToday = () => db.done && db.done.d === today() ? db.done.k : [];
+const ticked = () => db.done && db.done.d === today() ? db.done.k : [];
 function toggleDone(k) {
-  const list = doneToday().slice(), i = list.indexOf(k);
+  const list = ticked().slice(), i = list.indexOf(k);
   if (i < 0) list.push(k); else list.splice(i, 1);
   db.done = { d: today(), k: list };
+  // ticking the shopping row counts as "shopped", so Heute does not ask about it tomorrow
+  const kind = Object.keys(SHOP_LABEL).find(x => SHOP_LABEL[x] === k);
+  if (kind && i < 0) { const st = shopState(kind, today()); st._ok = 1; db.shop[kind] = st; }
   save();
 }
 function markNext(day) {
   if (!day) return day;
-  const clock = r => /^\d+:\d\d$/.test(r.time), done = doneToday();
+  const clock = r => /^\d+:\d\d$/.test(r.time), done = ticked();
   const now = new Date(), m = now.getHours() * 60 + now.getMinutes();
   let last = -1, next = false;
   day.rows.forEach((r, i) => { if (clock(r) && r.k < m - 15) last = i; });
@@ -159,10 +162,7 @@ function viewTodayFood(t) {
       ${rest.length ? `<p class="meta">${esc(rest.join(': '))}</p>` : ''}${btn ? `<a class="btn primary block" href="${nx.href}">${btn}</a>` : ''}
       <button class="btn text block" data-act="tick" data-k="${esc(rowKey(nx))}">Erledigt</button></div>`;
   } else if (day) {
-    const we = ['Sa', 'So'].includes(wd(t)), late = day.rows.some(r => r.cls);
-    out += `<div class="card hero quiet"><p class="eyebrow">Heute</p><h2>${late ? 'Tag geschafft' : we ? 'Wochenende' : 'Heute'}</h2>
-      <p class="meta">${late ? 'Morgen geht es mit dem Frühstück weiter.' : we ? 'Gleiche Mahlzeiten wie unter der Woche, Abstand 3–4 Stunden.' : ''}</p></div>`;
-    if (we) day.foot = day.foot.replace('Wochenende: gleiche Mahlzeiten, Abstand 3–4 Stunden.', '').trim();
+    out += '<div class="card hero quiet"><p class="eyebrow">Heute</p><h2>Tag geschafft</h2><p class="meta">Morgen geht es mit dem Frühstück weiter.</p></div>';
   } else {
     out += `<div class="card hero quiet"><p class="eyebrow">Heute</p><h2>Aus dem Vorrat</h2><p class="meta">Der Essensplan startet ${dayDate(foodStart())} mit dem ersten Einkauf. Bis dahin isst du, was da ist.</p>
       <a class="btn primary block" href="#/r/notfall">Ideen aus dem Vorrat</a><a class="btn text block" href="#/einkauf">Einkaufsliste ansehen</a></div>`;
@@ -180,9 +180,9 @@ const glyph = c => `<span class="glyph" aria-hidden="true">${c}</span>`;
 function missedCard(t) {
   const m = missedShop(t);
   if (!m) return '';
-  const to = openDay(t, 1);
-  return `<div class="alert warn"><b>${SHOP_LABEL[m.kind]} ${dayDate(m.date)} nicht abgehakt</b><p>Noch nicht eingekauft? Dann zieht der Plan mit.</p>
-    <div class="inline"><button class="btn primary" data-act="shopmove" data-k="${m.kind}" data-d="${m.date}" data-to="${to}">${to === t ? 'Heute einkaufen' : 'Am ' + dayDate(to) + ' einkaufen'}</button>
+  const to = openDay(t, 1), can = m.kind !== 'nach' || to < cycleOf(m.date).next;  // a Nachkauf can't move past the next Hauptkauf
+  return `<div class="alert warn"><b>${SHOP_LABEL[m.kind]} ${dayDate(m.date)} nicht abgehakt</b><p>${can ? 'Noch nicht eingekauft? Dann zieht der Plan mit.' : 'Der nächste Hauptkauf steht schon an.'}</p>
+    <div class="two">${can ? `<button class="btn primary" data-act="shopmove" data-k="${m.kind}" data-d="${m.date}" data-to="${to}">${to === t ? 'Heute einkaufen' : dayDate(to) + ' einkaufen'}</button>` : ''}
     <button class="btn" data-act="shopdone" data-k="${m.kind}" data-d="${m.date}">War erledigt</button></div></div>`;
 }
 
@@ -318,11 +318,11 @@ function viewFood() {
     const d = addDays(b, i), f = foodDay(d);
     const what = [f.shop && SHOP_LABEL[f.shop], f.cook && SHORT[f.cook] + ' kochen'].filter(Boolean).join(', ');
     const short = m => m.label.split(',')[0].replace('Brote mit Ei-Aufstrich', 'Brote');
-    return row(`<b>${dayDate(d)}</b>${what ? `<small>${esc(what)}</small>` : ''}`, `${esc(short(f.lunch))}<br><small>abends ${esc(short(f.dinner))}</small>`, '', d === t ? 'now' : '');
-  }).join('')}</div><p class="note">Der Plan hängt an den Einkaufstagen. Rechts steht das Mittag, darunter der Abend. Verschiebst du einen Einkauf, zieht alles mit.</p>`);
+    return row(`<b>${dayDate(d)}${what ? ' · ' + esc(what) : ''}</b><small>mittags ${esc(short(f.lunch))} · abends ${esc(short(f.dinner))}</small>`, '', '', d === t ? 'now' : '');
+  }).join('')}</div><p class="note">Der Plan hängt an den Einkaufstagen. Verschiebst du einen unter Einkauf, zieht alles mit.</p>`);
   out += section('Mahlzeiten', `<div class="list">${MEALS.map(([m, w, k, e, r]) =>
-    row(`<b>${esc(m)}</b><small>${esc(w)}</small>`, `${k} kcal<br><small>${e} Eiweiß</small>`, r ? `#/r/${r}` : '')).join('')}
-    ${row('<b>Gesamt</b>', 'ca. 2.950 kcal<br><small>ca. 195 g Eiweiß</small>')}</div>
+    row(`<b>${esc(m)}</b><small>${esc(w)}</small>`, `<span class="nw">${k} kcal</span><br><small class="nw">${e} Eiweiß</small>`, r ? `#/r/${r}` : '')).join('')}
+    ${row('<b>Gesamt</b>', '<span class="nw">ca. 2.950 kcal</span><br><small class="nw">ca. 195 g Eiweiß</small>')}</div>
     <p class="note">Jeden Tag eine warme und eine Brot-Mahlzeit. Do ist mittags Döner, Fr ersetzen 2 Bockwürste mit Brötchen auf der Arbeit die Oats.</p>`);
   out += section('Nach Gefühl', `<div class="list">${feel().map(([a, b]) => row(`${esc(a)}<small>→ ${esc(b)}</small>`)).join('')}</div>`);
   return page('Essen', 'Ziel ca. 160 g Eiweiß · nach Gefühl, kein Wiegen', out);
@@ -364,8 +364,8 @@ function viewShop() {
       return `<label class="check"><input type="checkbox" data-f="shop" data-l="${tab}" data-d="${date}" data-k="${esc(k)}" ${st[k] ? 'checked' : ''}><span class="box">${icon('check')}</span><span class="r-main">${esc(main)}${rest.length ? `<small>${esc(rest.join(' · '))}</small>` : ''}</span>${pr ? `<span class="price">${pr.guess ? 'ca. ' : ''}${eur(pr.n).replace('.', ',')}&nbsp;€</span>` : ''}</label>`;
     }).join('') + '</div>';
   });
-  const [e, la] = moveTargets(tab, date, t), mv = (to, txt) => `<button class="btn" ${to ? `data-act="shopmove" data-k="${tab}" data-d="${date}" data-to="${to}"` : 'disabled'}>${txt}${to ? ' · ' + dayDate(to) : ''}</button>`;
-  out += section('Anderer Tag?', `<div class="inline">${mv(e, 'Früher')}${mv(la, 'Später')}</div>
+  const [e, la] = moveTargets(tab, date, t), mv = (to, txt) => `<button class="btn" ${to ? `data-act="shopmove" data-k="${tab}" data-d="${date}" data-to="${to}"` : 'disabled'}>${to ? (txt === 'Früher' ? '← ' + dayDate(to) : dayDate(to) + ' →') : txt}</button>`;
+  out += section('Anderer Tag?', `<div class="two">${mv(e, 'Früher')}${mv(la, 'Später')}</div>
     <p class="note">Kochen und Abendessen ziehen mit. Preise vom Kassenzettel 10.11., „ca.“ ist geschätzt. Die Summe zählt ohne „Nur wenn leer“.</p>`);
   out += `<button class="btn text" data-act="shopreset" data-l="${tab}">Liste leeren</button>`;
   return page('Einkauf', 'bei Nahkauf · Kühltasche mit', out);
@@ -433,15 +433,15 @@ function viewData() {
   let out = section('Pi', `<div class="card form"><p id="syncstatus" class="status">${syncText()}</p>
     <div class="field"><label for="pikey">Schlüssel</label><div class="inline"><input id="pikey" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(piKey())}" placeholder="aus sudo cat /var/lib/takt/key"><button class="btn" data-act="sync-now">Sync</button></div></div>
     <p class="small muted">Kopie auf deinem Pi, nur im Heimnetz. Unterwegs speichert das Handy, zu Hause holt es nach.</p></div>${conflictBox()}`);
-  out += section('Backup', `<div class="stats"><div><span>Einheiten</span><b>${done}</b></div><div><span>Backup</span><b class="sm">${db.lastBackup ? dayDate(iso(new Date(db.lastBackup))) : 'nie'}</b></div><div><span>Speicher</span><b class="sm" id="persist">…</b></div></div>
+  out += section('Backup', `<div class="stats${trainingOn() ? '' : ' two-up'}">${trainingOn() ? `<div><span>Einheiten</span><b>${done}</b></div>` : ''}<div><span>Backup</span><b class="sm">${db.lastBackup ? dayDate(iso(new Date(db.lastBackup))) : 'nie'}</b></div><div><span>Speicher</span><b class="sm" id="persist">…</b></div></div>
     <div class="stack"><button class="btn primary block" data-act="export">Backup speichern</button>
     <label class="btn block">Backup laden<input type="file" id="import" accept="application/json,.json" hidden></label>
-    <button class="btn block" data-act="md">Als Markdown für Obsidian</button></div>`);
+    ${trainingOn() ? '<button class="btn block" data-act="md">Training als Markdown</button>' : ''}</div>`);
   out += section('Essensplan', `<div class="card form"><div class="field"><label for="foodstart">Erster Einkauf</label><input type="date" id="foodstart" data-f="foodstart" value="${esc(db.foodMon)}"></div>
     <p class="small muted">Ab hier läuft der Plan, der Hauptkauf ist dann freitags. Einzelne Einkaufstage verschiebst du unter Einkauf.</p></div>`);
   if (trainingOn()) out += section('Start', `<div class="card form"><div class="field"><label for="start">Montag von Woche 1</label><input type="date" id="start" data-f="start" value="${esc(db.start)}"></div>
     <p class="small muted">Bist du krank und alles rutscht eine Woche, hier eine Woche später eintragen.</p></div>`);
-  out += section('Alles löschen', '<button class="btn block danger" data-act="wipe">Log und Einstellungen löschen</button>');
+  out += section('Alles löschen', '<button class="btn block danger" data-act="wipe">Alles auf diesem Handy löschen</button>');
   return page('Daten und Pi', 'Alles liegt in diesem Browser, mit Schlüssel auch auf deinem Pi.', out, ['#/mehr', 'Mehr']);
 }
 
