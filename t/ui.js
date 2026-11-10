@@ -143,9 +143,10 @@ function markNext(day) {
   return day;
 }
 const timeline = day => !day ? '' : section(day.title, (day.note ? `<p class="note warn">${esc(day.note)}</p>` : '') + `<div class="list timeline">${day.rows.map(r =>
-  `<div class="r ${r.cls || ''}"><span class="time">${esc(r.time)}</span><button class="tick" data-act="tick" data-k="${esc(rowKey(r))}" aria-label="${r.done ? 'nicht erledigt' : 'erledigt'}" aria-pressed="${!!r.done}">${icon('check')}</button>` +
+  `<div class="r ${r.cls || ''}"><label class="time${r.moved ? ' moved' : ''}">${esc(r.time) || '<i>Zeit</i>'}<input type="time" data-f="rowtime" data-k="${esc(rowKey(r))}" value="${/^\d+:\d\d$/.test(r.time) ? r.time.padStart(5, '0') : ''}" aria-label="Uhrzeit ändern"></label><button class="tick" data-act="tick" data-k="${esc(rowKey(r))}" aria-label="${r.done ? 'nicht erledigt' : 'erledigt'}" aria-pressed="${!!r.done}">${icon('check')}</button>` +
   (r.href ? `<a class="r-main" href="${r.href}">${r.text}</a>${icon('right', 'chev')}` : `<span class="r-main">${r.text}</span>`) + '</div>').join('')}</div>` +
-  `<p class="note">${day.foot ? esc(day.foot) + ' ' : ''}Tipp auf den Punkt hakt ab.</p>`);
+  `<p class="note">${day.foot ? esc(day.foot) + ' ' : ''}Tipp auf den Punkt hakt ab, Tipp auf die Uhrzeit verschiebt sie für heute.</p>` +
+  (day.moved ? '<button class="btn text" data-act="timereset">Zeiten zurücksetzen</button>' : ''));
 
 // Heute without training: what to eat next, then the day.
 function viewTodayFood(t) {
@@ -196,8 +197,7 @@ function dayPlan(t) {
   rows.push(empty ? R(at('8:45', '8:30'), 'Frühstück: aus dem Vorrat', '#/r/notfall')
     : d === 'Fr' && !u ? R(at('8:45', '8:30'), 'Frühstück: 2 Bockwürste mit Brötchen, auf der Arbeit') : R(at('8:45', '8:30'), 'Frühstück: Oats', '#/r/oats'));
   if (tr && (d === 'Mo' || d === 'Mi')) rows.push(R(at('15:00', '10:30'), 'Banane'));  // before training
-  rows.push(empty ? R(at('12:00', '12:30'), 'Mittag: aus dem Vorrat', '#/r/notfall')
-    : d === 'Do' ? R(at('12:00', '12:30'), 'Mittag: Döner, am besten Hähnchen') : R(at(d === 'Fr' ? '12:45' : '12:00', '12:30'), 'Mittag: Brote mit Ei-Aufstrich', '#/r/brote'));
+  rows.push(R(at(d === 'Fr' ? '12:45' : '12:00', '12:30'), 'Mittag: ' + esc(f.lunch.label), f.lunch.id ? '#/r/' + f.lunch.id : ''));
   if (slot) rows.push(R(at(slot.day === 'Fr' ? '14:00' : '15:30', '11:00'), `<b>Training ${slot.type}</b>`));
   if (f.shop) rows.push(R(at(slot ? 'nach dem Training' : 'nach der Arbeit', '13:30'), SHOP_LABEL[f.shop], '#/einkauf'));
   rows.push(R(at('', '15:30'), 'Quark-Snack', '#/r/quark'));
@@ -205,17 +205,22 @@ function dayPlan(t) {
   rows.push(R(at('18:30', '18:30'), 'Abendessen: ' + esc(f.dinner.label), '#/r/' + f.dinner.id));
   if (d !== 'Do' || u) rows.push(R(at('20:30', '20:30'), 'Milch und Nüsse, Oats für morgen', '#/r/oats'));
   if (!u) {
-    if (['So', 'Mo', 'Di'].includes(d)) rows.push(R('abends', 'Brote für morgen richten', '#/r/brote'));
+    const tm = addDays(t, 1), fm = foodDay(tm);  // what to pack for work tomorrow
+    if (['Mo', 'Di', 'Mi', 'Do'].includes(wd(tm)) && !urlaub(tm) && fm.lunch.id) rows.push(fm.lunch.id === 'brote'
+      ? R('abends', 'Brote für morgen richten', '#/r/brote') : R('abends', 'Portion für morgen bereitstellen'));
     if (tr && ['So', 'Di', 'Do'].includes(d)) rows.push(R('abends', 'Sporttasche packen'));
   }
   const c = f.cycle;
   if (c && c.N && t === addDays(c.N, 2)) rows.push(R('abends', 'Eingefrorenes Brot in den Kühlschrank'));
+  // times moved by hand for today (tap on a time)
+  const ov = db.times && db.times.d === t ? db.times.t : {};
+  rows.forEach(r => { const o = ov[rowKey(r)]; if (o) { r.time = o.replace(/^0/, ''); r.moved = true; } });
   // clock times sort the list; rows without one stay behind the row before them
   let k = 0;
   rows.forEach((r, i) => { const m = /^(\d+):(\d\d)$/.exec(r.time); k = m ? m[1] * 60 + +m[2] : k; r.k = k; r.i = i; });
   rows.sort((a, b) => a.k - b.k || a.i - b.i);
   return {
-    title: 'Tagesplan', rows, note: f.shop && closed(t) ? 'Heute haben die Läden zu. Verschieb den Einkauf unter Einkauf.' : DATE_NOTES[t],
+    title: 'Tagesplan', rows, moved: Object.keys(ov).length > 0, note: f.shop && closed(t) ? 'Heute haben die Läden zu. Verschieb den Einkauf unter Einkauf.' : DATE_NOTES[t],
     foot: [we ? 'Wochenende: gleiche Mahlzeiten, Abstand 3–4 Stunden.' : '', u ? 'Urlaub: Festessen sind Ausnahmen, am nächsten Tag normal weiter.' : ''].filter(Boolean).join(' '),
   };
 }
@@ -312,12 +317,13 @@ function viewFood() {
   out += section('Die nächsten 7 Tage', `<div class="list">${[0, 1, 2, 3, 4, 5, 6].map(i => {
     const d = addDays(b, i), f = foodDay(d);
     const what = [f.shop && SHOP_LABEL[f.shop], f.cook && SHORT[f.cook] + ' kochen'].filter(Boolean).join(', ');
-    return row(`<b>${dayDate(d)}</b>${what ? `<small>${esc(what)}</small>` : ''}`, esc(f.dinner.label), '', d === t ? 'now' : '');
-  }).join('')}</div><p class="note">Der Plan hängt an den Einkaufstagen. Verschiebst du einen unter Einkauf, ziehen Kochen und Abendessen mit.</p>`);
+    const short = m => m.label.split(',')[0].replace('Brote mit Ei-Aufstrich', 'Brote');
+    return row(`<b>${dayDate(d)}</b>${what ? `<small>${esc(what)}</small>` : ''}`, `${esc(short(f.lunch))}<br><small>abends ${esc(short(f.dinner))}</small>`, '', d === t ? 'now' : '');
+  }).join('')}</div><p class="note">Der Plan hängt an den Einkaufstagen. Rechts steht das Mittag, darunter der Abend. Verschiebst du einen Einkauf, zieht alles mit.</p>`);
   out += section('Mahlzeiten', `<div class="list">${MEALS.map(([m, w, k, e, r]) =>
     row(`<b>${esc(m)}</b><small>${esc(w)}</small>`, `${k} kcal<br><small>${e} Eiweiß</small>`, r ? `#/r/${r}` : '')).join('')}
     ${row('<b>Gesamt</b>', 'ca. 2.950 kcal<br><small>ca. 195 g Eiweiß</small>')}</div>
-    <p class="note">Do ersetzt ein Döner das Mittagessen, Fr ersetzen 2 Bockwürste mit Brötchen auf der Arbeit die Oats.</p>`);
+    <p class="note">Jeden Tag eine warme und eine Brot-Mahlzeit. Do ist mittags Döner, Fr ersetzen 2 Bockwürste mit Brötchen auf der Arbeit die Oats.</p>`);
   out += section('Nach Gefühl', `<div class="list">${feel().map(([a, b]) => row(`${esc(a)}<small>→ ${esc(b)}</small>`)).join('')}</div>`);
   return page('Essen', 'Ziel ca. 160 g Eiweiß · nach Gefühl, kein Wiegen', out);
 }
@@ -500,13 +506,14 @@ document.addEventListener('click', ev => {
   else if (act === 'shopreset') { db.shop[b.dataset.l] = {}; save(); keepScroll(route); }
   else if (act === 'shoptab') { shopTab = b.dataset.v; keepScroll(route); }
   else if (act === 'shopmove') { moveShop(b.dataset.k, b.dataset.d, b.dataset.to); shopTab = null; keepScroll(route); }
+  else if (act === 'timereset') { delete db.times; save(); keepScroll(route); }
   else if (act === 'tick') { toggleDone(b.dataset.k); keepScroll(route); }
   else if (act === 'shopdone') { shopDone(b.dataset.k, b.dataset.d); keepScroll(route); }
 });
 
 document.addEventListener('input', ev => {
   const el = ev.target, f = el.dataset.f;
-  if (!f) return;
+  if (!f || f === 'rowtime') return;
   const cur = curSession();
   if ((f === 'w' || f === 'rep') && cur) {
     const plan = planned(cur), p = plan.find(p => p.id === el.dataset.ex), e = entry(cur, p);
@@ -540,6 +547,11 @@ document.addEventListener('input', ev => {
 });
 
 document.addEventListener('change', ev => {
+  if (ev.target.dataset.f === 'rowtime') {  // a time moved for today; empty = back to the plan
+    const t = today(), ov = db.times && db.times.d === t ? db.times.t : {};
+    if (ev.target.value) ov[ev.target.dataset.k] = ev.target.value; else delete ov[ev.target.dataset.k];
+    db.times = { d: t, t: ov }; save(); keepScroll(route); return;
+  }
   if (ev.target.id !== 'import' || !ev.target.files[0]) return;
   const input = ev.target;
   input.files[0].text().then(txt => {

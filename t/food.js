@@ -32,7 +32,7 @@ const REZEPTWOCHEN = {
   bolo: { name: 'Bolo-Woche', a: 'bolo', b: 'curry' },
 };
 const START_POT = 'curry';  // the Kokosmilch is already in the cupboard
-const SHORT = { chili: 'Chili', haehnchen: 'Hähnchen-Nudeln', bolo: 'Bolognese', curry: 'Hähnchen-Curry', notfall: 'Notfall-Abend' };
+const SHORT = { chili: 'Chili', haehnchen: 'Hähnchen-Nudeln', bolo: 'Bolognese', curry: 'Hähnchen-Curry', notfall: 'Abendbrot' };
 
 // The Hauptkauf cycle a day belongs to, or null before the first Hauptkauf.
 function cycleOf(d) {
@@ -60,16 +60,21 @@ function potsNear(d) {
   }
   return out;
 }
-// What happens on day d: { pre, shop: 'erst'|'haupt'|'nach'|null, cook: recipe id|null, dinner: { id, label }, cycle }
+// What happens on day d: { pre, shop: 'erst'|'haupt'|'nach'|null, cook: recipe id|null, lunch, dinner: { id, label }, cycle }
+// A pot is eaten fresh on the evening it is cooked; the two portions left are lunch on the next two days.
+// Thursday lunch is the Döner, so that day's portion moves to the evening. Every other meal is bread.
 function foodDay(d) {
   const S = foodStart(), c = cycleOf(d);
-  if (d < S) return { pre: true, shop: null, cook: null, dinner: { id: 'notfall', label: 'aus dem Vorrat' }, cycle: null };
+  const vorrat = { id: 'notfall', label: 'aus dem Vorrat' }, brote = { id: 'brote', label: 'Brote mit Ei-Aufstrich' }, abend = { id: 'notfall', label: 'Abendbrot' };
+  if (d < S) return { pre: true, shop: null, cook: null, lunch: vorrat, dinner: vorrat, cycle: null };
   const shop = c && c.H === d ? 'haupt' : c && c.N === d ? 'nach' : d === S ? 'erst' : null;
-  // the freshest pot that still has a portion: cooked today, yesterday or the day before
-  const pot = potsNear(d).filter(p => p.date <= d && dayNum(d) - dayNum(p.date) <= 2).sort((x, y) => x.date < y.date ? 1 : -1)[0];
-  const n = pot ? dayNum(d) - dayNum(pot.date) + 1 : 0;
-  return { pre: false, shop, cook: n === 1 ? pot.id : null, cycle: c,
-    dinner: pot ? { id: pot.id, label: `${SHORT[pot.id]} (${n}/3)` } : { id: 'notfall', label: SHORT.notfall } };
+  const pots = potsNear(d).map(p => ({ id: p.id, n: dayNum(d) - dayNum(p.date) + 1 })).sort((x, y) => x.n - y.n);
+  const fresh = pots.find(p => p.n === 1), left = pots.find(p => p.n === 2 || p.n === 3);
+  const meal = p => ({ id: p.id, label: `${SHORT[p.id]} (${p.n}/3)` });
+  const doener = wd(d) === 'Do';
+  const lunch = d === S ? vorrat : doener ? { id: null, label: 'Döner, am besten Hähnchen' } : left ? meal(left) : brote;
+  const dinner = fresh ? meal(fresh) : doener && left ? meal(left) : abend;
+  return { pre: false, shop, cook: fresh ? fresh.id : null, cycle: c, lunch, dinner };
 }
 const SHOP_LABEL = { erst: 'Startkauf', haupt: 'Hauptkauf', nach: 'Nachkauf' };
 
@@ -139,21 +144,22 @@ const SOMETIMES = 'Nur wenn leer';
 // Startkauf: only what is needed until the first Hauptkauf.
 function startList() {
   const S = foodStart(), A = firstShop(), n = dayNum(A) - dayNum(S);
-  const days = Array.from({ length: n }, (_, i) => addDays(S, i + 1));          // S+1 .. A: breakfasts and lunches
-  const oats = days.filter(d => wd(d) !== 'Fr' || urlaub(d)).length, brote = days.filter(d => wd(d) !== 'Do').length;
-  const notfall = Math.max(0, n - 3), pot = n >= 2, q = Math.ceil(n / 2), h = brote + notfall, ban = Math.max(oats, 1), l = Math.ceil(n / 2) + 1;
-  const cool = [`Magerquark, ${q} × 500 g · Snacks | ${eur(q * PR.quark)}`, `Hüttenkäse, ${h} × 200 g · Mittag` + (notfall ? ' und Notfall-Abend' : '') + ` | ${eur(h * PR.huette)}`];
+  const days = Array.from({ length: n + 1 }, (_, i) => addDays(S, i));          // S .. A
+  const oats = days.slice(1).filter(d => wd(d) !== 'Fr' || urlaub(d)).length;
+  const brote = days.slice(1).filter(d => foodDay(d).lunch.id === 'brote').length, notfall = days.slice(0, n).filter(d => foodDay(d).dinner.label === 'Abendbrot').length;
+  const pot = n >= 2, q = Math.ceil(n / 2), h = brote + notfall, ban = Math.max(oats, 1), l = Math.ceil(n / 2) + 1;
+  const cool = [`Magerquark, ${q} × 500 g · Snacks | ${eur(q * PR.quark)}`, `Hüttenkäse, ${h} × 200 g · Brote | ${eur(h * PR.huette)}`];
   if (oats) cool.unshift(`Skyr natur, ${Math.ceil(oats / 2)} × 500 g · Oats | ${eur(Math.ceil(oats / 2) * PR.skyr)}`);
   if (pot) cool.push(`Hähnchenbrustfilet, 600 g · heute kochen | ${eur(PR.huhn)}`);
   const groups = [
     ['Kühlregal', cool],
-    ['Obst und Gemüse', [`Bananen, ${ban} · Oats | ${eur(ban * PR.banane)}`, `Äpfel, ${n} · Snacks | ~${eur(n * PR.apfel)}`, `Gurke, 1 · Mittag | ${eur(PR.gurke)}`]],
+    ['Obst und Gemüse', [`Bananen, ${ban} · Oats | ${eur(ban * PR.banane)}`, `Äpfel, ${n} · Snacks | ~${eur(n * PR.apfel)}`, `Gurke, 1 · Brote | ${eur(PR.gurke)}`]],
     ['Regal', [`Haferflocken, 500 g | ${eur(PR.hafer)}`, `Vollkornbrot, 750 g · was nach 3 Tagen übrig ist, einfrieren | ${eur(PR.brot)}`, `H-Milch 1,5 %, ${l} l | ${eur(l * PR.milch)}`,
       `Erdnüsse, 200 g | ${eur(PR.nuss)}`, `Tomatenmark, 1 Tube · hält Wochen | ${eur(PR.mark)}`, 'Zimt, Senf, Paprika edelsüß · einmal, hält Monate | 2.33']],
   ];
   if (pot) groups.push(['Tiefkühl', [`TK-Blattspinat, 500 g · Curry, der Rest hält | ${eur(PR.spinat)}`]]);
-  groups.push([HAVE, (pot ? ['Kokosmilch, 1 Dose · Curry', 'Reis, 250 g · Curry', 'Rote Zwiebel · Curry', 'Currypulver · sonst mitnehmen'] : []).concat([`Eier, ${2 * brote + 3 * notfall} Stück · Mittag`, 'Honig, Öl, Salz, Pfeffer'])]);
-  return { id: 'erst', groups, intro: `Reicht bis zum Hauptkauf (${dayDate(A)}).` + (pot ? ' Abends gleich das Curry kochen, das sind 3 Abendessen.' : '') };
+  groups.push([HAVE, (pot ? ['Kokosmilch, 1 Dose · Curry', 'Reis, 250 g · Curry', 'Rote Zwiebel · Curry', 'Currypulver · sonst mitnehmen'] : []).concat([`Eier, ${2 * brote + 3 * notfall} Stück · Brote`, 'Honig, Öl, Salz, Pfeffer'])]);
+  return { id: 'erst', groups, intro: `Reicht bis zum Hauptkauf (${dayDate(A)}).` + (pot ? ' Abends gleich das Curry kochen: eine Portion frisch, zwei fürs Mittag.' : '') };
 }
 function hauptList(c) {
   const chili = c.rw === 'chili', tr = trainingOn(), ban = tr ? 9 : 7;
@@ -162,13 +168,13 @@ function hauptList(c) {
     groups: [
       ['Obst und Gemüse', [
         (tr ? 'Bananen, 8–9, ein paar noch grün · Oats und vor dem Training' : 'Bananen, 6–7, ein paar noch grün · Oats') + ` | ${eur(ban * PR.banane)}`,
-        `Gurke, 1 · Mittag | ${eur(PR.gurke)}`, chili ? 'Zwiebeln, 2 · Chili und Hähnchen-Nudeln | ~0.40' : 'Zwiebeln, 2 · Möhren, 2 · Bolognese und Curry | ~0.70',
+        `Gurke, 1 · Brote | ${eur(PR.gurke)}`, chili ? 'Zwiebeln, 2 · Chili und Hähnchen-Nudeln | ~0.40' : 'Zwiebeln, 2 · Möhren, 2 · Bolognese und Curry | ~0.70',
       ]],
       ['Kühlregal', [
         `Skyr natur, 3 × 500 g · Oats · im Urlaub 4 × 500 g | ${eur(3 * PR.skyr)}`,
         `Magerquark, 4 × 500 g · Snacks | ${eur(4 * PR.quark)}`,
-        `Hüttenkäse, 7 × 200 g · Mittag und Notfall-Abend | ${eur(7 * PR.huette)}`,
-        `Eier, 2 × 10 Stück · Mittag und Notfall-Abend | ${eur(2 * PR.eier)}`,
+        `Hüttenkäse, 7 × 200 g · Brote mittags und abends | ${eur(7 * PR.huette)}`,
+        `Eier, 2 × 10 Stück · Brote mittags und abends | ${eur(2 * PR.eier)}`,
         'Hackfleisch gemischt, 500 g · morgen kochen, Verbrauchsdatum prüfen | ~4.49',
       ]],
       ['Dosen und Regal', (chili
@@ -189,12 +195,12 @@ function hauptList(c) {
 }
 function nachList(c) {
   return { id: 'nach',
-    intro: `Danach direkt ${SHORT[c.b]} kochen, das sind 3 Abendessen.`,
+    intro: `Danach direkt ${SHORT[c.b]} kochen: eine Portion frisch, zwei fürs Mittag.`,
     groups: [['', [
       `Hähnchenbrustfilet, 600 g · heute kochen | ${eur(PR.huhn)}`,
       `Vollkornbrot, 2 × 750 g · eins sofort einfrieren, in 2 Tagen in den Kühlschrank | ${eur(2 * PR.brot)}`,
       `Äpfel, 8 · Snacks | ~${eur(8 * PR.apfel)}`,
-      `Gurke, 1 · Mittag | ${eur(PR.gurke)}`,
+      `Gurke, 1 · Brote | ${eur(PR.gurke)}`,
       'Milch, wenn alle',
     ]]] };
 }
@@ -203,7 +209,7 @@ const listCost = l => l.groups.filter(g => g[0] !== SOMETIMES && g[0] !== HAVE).
 
 // ---------- recipes ----------
 
-const RECIPES_INTRO = 'Nach dem Kochen etwa 30 min abdampfen lassen, dann zu und in den Kühlschrank. Hält 3 Tage. Aufwärmen in der Mikrowelle, Deckel locker drauf, nach der Hälfte umrühren, bis es dampft.';
+const RECIPES_INTRO = 'Eine Portion isst du frisch, die anderen zwei sind das Mittag der nächsten beiden Tage (Do abends, weil mittags der Döner dran ist). Nach dem Kochen etwa 30 min abdampfen lassen, dann zu und in den Kühlschrank. Hält 3 Tage. Aufwärmen in der Mikrowelle, Deckel locker drauf, nach der Hälfte umrühren, bis es dampft.';
 
 const RECIPES = [
   {
@@ -221,7 +227,7 @@ const RECIPES = [
     ],
   },
   {
-    id: 'brote', title: 'Brote mit Ei-Aufstrich', when: 'am Vorabend, 5 min',
+    id: 'brote', title: 'Brote mit Ei-Aufstrich', when: '5 min',
     items: ['4 Scheiben Vollkornbrot', '2 gekochte Eier', '200 g Hüttenkäse (ein Becher)', '1 TL Senf, Salz, Pfeffer, 1 Prise Paprika edelsüß', '½ Gurke'],
     steps: [
       '<b>Eier, einmal für mehrere Tage:</b> beim Kochen 8 Eier 10 min mitkochen, kalt abschrecken, ungeschält in den Kühlschrank. Sie halten eine Woche.',
@@ -293,7 +299,7 @@ const RECIPES = [
     ],
   },
   {
-    id: 'notfall', title: 'Notfall-Abend', when: '5–10 min',
+    id: 'notfall', title: 'Abendbrot', when: '5–10 min',
     items: ['3 Scheiben Vollkornbrot', '3 Eier', '200 g Hüttenkäse', 'Wok-Öl, Chilisalz, Pfeffer', '½ Gurke'],
     text: 'Rührei-Brot: Eier in der Pfanne mit etwas Wok-Öl bei mittlerer Hitze stocken lassen, dabei nur langsam schieben. Hüttenkäse aufs Brot, Rührei drauf, Chilisalz und Pfeffer drüber, Gurke dazu.',
     vary: [
@@ -310,9 +316,9 @@ const RECIPES = [
 
 const MEALS = [
   ['Frühstück', 'Oats: 100 g Haferflocken, 250 g Skyr, 200 ml Milch, 1 Banane', '725', '48 g', 'oats'],
-  ['Mittag', '4 Scheiben Vollkornbrot, Aufstrich aus 2 Eiern und 200 g Hüttenkäse, Gurke', '790', '54 g', 'brote'],
+  ['Warm', 'Portion aus dem Topf: am Kochabend frisch, sonst mittags', '850', '50 g'],
+  ['Brot', '3–4 Scheiben Vollkornbrot, 2–3 Eier, 200 g Hüttenkäse, Gurke', '790', '54 g', 'brote'],
   ['Snack', '250 g Magerquark, 1 Apfel, 1 TL Honig, Zimt', '280', '30 g', 'quark'],
-  ['Abend', 'vorgekochte Portion', '850', '50 g'],
   ['Extra', '300 ml Milch, 30 g Nüsse', '320', '16 g'],
 ];
 const FEEL = [

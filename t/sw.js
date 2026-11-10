@@ -1,5 +1,5 @@
 // Offline cache. Bump VERSION with every change so phones pick up the new files.
-const VERSION = 'takt-20';
+const VERSION = 'takt-21';
 const FILES = ['./', 'index.html', 'app.js', 'food.js', 'sync.js', 'ui.js', 'style.css', 'takt.webmanifest', 'takt-icon.svg', 'takt-icon-192.png', 'takt-icon-512.png',
   'fonts/unbounded-latin-500-normal.woff2', 'fonts/unbounded-latin-700-normal.woff2', 'fonts/manrope-latin-400-normal.woff2', 'fonts/manrope-latin-600-normal.woff2', 'fonts/manrope-latin-700-normal.woff2'];
 
