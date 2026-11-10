@@ -120,21 +120,32 @@ function viewToday() {
   return page(DAYS_LONG[parse(t).getDay()], sub, out);
 }
 
-// Rows up to the last clock time that is over 15 min ago fade; the row after it is next.
-// Rows without a clock time (nach der Arbeit, abends) only fade once a later clock time has passed.
+// Ticked rows and rows whose clock time is over 15 min ago fade; the first row left is next.
+// Rows without a clock time (nach der Arbeit, abends) only fade by time once a later clock time has passed.
+const rowKey = r => r.text.replace(/<[^>]+>/g, '');
+const doneToday = () => db.done && db.done.d === today() ? db.done.k : [];
+function toggleDone(k) {
+  const list = doneToday().slice(), i = list.indexOf(k);
+  if (i < 0) list.push(k); else list.splice(i, 1);
+  db.done = { d: today(), k: list };
+  save();
+}
 function markNext(day) {
-  const clock = r => /^\d+:\d\d$/.test(r.time);
-  if (day && day.rows.some(clock)) {
-    const now = new Date(), m = now.getHours() * 60 + now.getMinutes();
-    let last = -1;
-    day.rows.forEach((r, i) => { if (clock(r) && r.k < m - 15) last = i; });
-    day.rows.forEach((r, i) => { r.cls = i <= last ? 'past' : i === last + 1 ? 'next' : ''; });
-  }
+  if (!day) return day;
+  const clock = r => /^\d+:\d\d$/.test(r.time), done = doneToday();
+  const now = new Date(), m = now.getHours() * 60 + now.getMinutes();
+  let last = -1, next = false;
+  day.rows.forEach((r, i) => { if (clock(r) && r.k < m - 15) last = i; });
+  day.rows.forEach((r, i) => {
+    r.done = done.includes(rowKey(r));
+    r.cls = r.done ? 'past done' : i <= last ? 'past' : next ? '' : (next = true, 'next');
+  });
   return day;
 }
 const timeline = day => !day ? '' : section(day.title, (day.note ? `<p class="note warn">${esc(day.note)}</p>` : '') + `<div class="list timeline">${day.rows.map(r =>
-  (r.href ? `<a class="r ${r.cls || ''}" href="${r.href}">` : `<div class="r ${r.cls || ''}">`) + `<span class="time">${esc(r.time)}</span><span class="r-main">${r.text}</span>${r.href ? icon('right', 'chev') + '</a>' : '</div>'}`).join('')}</div>` +
-  (day.foot ? `<p class="note">${esc(day.foot)}</p>` : ''));
+  `<div class="r ${r.cls || ''}"><span class="time">${esc(r.time)}</span><button class="tick" data-act="tick" data-k="${esc(rowKey(r))}" aria-label="${r.done ? 'nicht erledigt' : 'erledigt'}" aria-pressed="${!!r.done}">${icon('check')}</button>` +
+  (r.href ? `<a class="r-main" href="${r.href}">${r.text}</a>${icon('right', 'chev')}` : `<span class="r-main">${r.text}</span>`) + '</div>').join('')}</div>` +
+  `<p class="note">${day.foot ? esc(day.foot) + ' ' : ''}Tipp auf den Punkt hakt ab.</p>`);
 
 // Heute without training: what to eat next, then the day.
 function viewTodayFood(t) {
@@ -144,7 +155,8 @@ function viewTodayFood(t) {
     const [title, ...rest] = nx.text.replace(/<[^>]+>/g, '').split(': '), hour = /^(\d+):/.exec(nx.time);
     const btn = !nx.href ? '' : nx.href === '#/einkauf' ? 'Einkaufsliste' : 'Rezept';
     out += `<div class="card hero">${hour ? glyph(hour[1]) : ''}<p class="eyebrow">Als Nächstes${nx.time ? ' · ' + esc(nx.time) : ''}</p><h2>${esc(title)}</h2>
-      ${rest.length ? `<p class="meta">${esc(rest.join(': '))}</p>` : ''}${btn ? `<a class="btn primary block" href="${nx.href}">${btn}</a>` : ''}</div>`;
+      ${rest.length ? `<p class="meta">${esc(rest.join(': '))}</p>` : ''}${btn ? `<a class="btn primary block" href="${nx.href}">${btn}</a>` : ''}
+      <button class="btn text block" data-act="tick" data-k="${esc(rowKey(nx))}">Erledigt</button></div>`;
   } else if (day) {
     const we = ['Sa', 'So'].includes(wd(t)), late = day.rows.some(r => r.cls);
     out += `<div class="card hero quiet"><p class="eyebrow">Heute</p><h2>${late ? 'Tag geschafft' : we ? 'Wochenende' : 'Heute'}</h2>
@@ -488,6 +500,7 @@ document.addEventListener('click', ev => {
   else if (act === 'shopreset') { db.shop[b.dataset.l] = {}; save(); keepScroll(route); }
   else if (act === 'shoptab') { shopTab = b.dataset.v; keepScroll(route); }
   else if (act === 'shopmove') { moveShop(b.dataset.k, b.dataset.d, b.dataset.to); shopTab = null; keepScroll(route); }
+  else if (act === 'tick') { toggleDone(b.dataset.k); keepScroll(route); }
   else if (act === 'shopdone') { shopDone(b.dataset.k, b.dataset.d); keepScroll(route); }
 });
 
