@@ -185,7 +185,7 @@ function dayPlan(t) {
     : d === 'Fr' && !u ? R(at('8:45', '8:30'), 'Frühstück: 2 Bockwürste mit Brötchen, auf der Arbeit') : R(at('8:45', '8:30'), 'Frühstück: Oats', '#/r/oats'));
   if (tr && (d === 'Mo' || d === 'Mi')) rows.push(R(at('15:00', '10:30'), 'Banane'));  // before training
   rows.push(empty ? R(at('12:00', '12:30'), 'Mittag: aus dem Vorrat', '#/r/notfall')
-    : d === 'Do' ? R(at('12:00', '12:30'), 'Mittag: Döner, am besten Hähnchen') : R(at(d === 'Fr' ? '12:45' : '12:00', '12:30'), 'Mittag: Brote mit Ei und Hüttenkäse', '#/r/brote'));
+    : d === 'Do' ? R(at('12:00', '12:30'), 'Mittag: Döner, am besten Hähnchen') : R(at(d === 'Fr' ? '12:45' : '12:00', '12:30'), 'Mittag: Brote mit Ei-Aufstrich', '#/r/brote'));
   if (slot) rows.push(R(at(slot.day === 'Fr' ? '14:00' : '15:30', '11:00'), `<b>Training ${slot.type}</b>`));
   if (f.shop) rows.push(R(at(slot ? 'nach dem Training' : 'nach der Arbeit', '13:30'), SHOP_LABEL[f.shop], '#/einkauf'));
   rows.push(R(at('', '15:30'), 'Quark-Snack', '#/r/quark'));

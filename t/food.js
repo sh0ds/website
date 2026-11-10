@@ -143,8 +143,9 @@ function startList() {
     ['Regal', ['Haferflocken, 500 g', 'Vollkornbrot, 750 g · was nach 3 Tagen übrig ist, einfrieren', `H-Milch 1,5 %, ${Math.ceil(n / 2) + 1} l`, 'Erdnüsse ungesalzen oder Nüsse, 200 g']],
   ];
   if (pot) groups.push(['Tiefkühl', ['TK-Blattspinat, portionierbar, 750 g · Curry, der Rest hält']]);
-  groups.push([HAVE, (pot ? ['Kokosmilch, 1 Dose · Curry', 'Reis, 250 g · Curry', 'Currypulver · sonst mitnehmen'] : []).concat([`Eier, ${2 * brote + 3 * notfall} Stück · Mittag`, 'Honig, Öl, Salz'])]);
-  return { id: 'erst', cost: `${15 + 4 * n} €`, groups,
+  groups[2][1].push('Tomatenmark, 1 Tube · hält Wochen', 'Zimt, Senf, Paprika edelsüß · einmal, hält Monate');
+  groups.push([HAVE, (pot ? ['Kokosmilch, 1 Dose · Curry', 'Reis, 250 g · Curry', 'Rote Zwiebel · Curry', 'Currypulver · sonst mitnehmen'] : []).concat([`Eier, ${2 * brote + 3 * notfall} Stück · Mittag`, 'Honig, Öl, Salz, Pfeffer'])]);
+  return { id: 'erst', cost: `${18 + 4 * n} €`, groups,
     intro: `Reicht bis zum Hauptkauf (${dayDate(A)}).` + (pot ? ' Abends gleich das Curry kochen, das sind 3 Abendessen.' : '') + ' Etwa' };
 }
 function hauptList(c) {
@@ -154,7 +155,7 @@ function hauptList(c) {
     groups: [
       ['Obst und Gemüse', [
         tr ? 'Bananen, 8–9, ein paar noch grün · Oats und vor dem Training' : 'Bananen, 6–7, ein paar noch grün · Oats',
-        'Gurke, 1 · Mittag', `Zwiebel, 1 · ${SHORT[c.a]}`,
+        'Gurke, 1 · Mittag', chili ? 'Zwiebeln, 2 · Chili und Hähnchen-Nudeln' : 'Zwiebeln, 2 · Möhren, 2 · Bolognese und Curry',
       ]],
       ['Kühlregal', [
         'Skyr natur, 3 × 500 g · Oats · im Urlaub 4 × 500 g',
@@ -172,7 +173,9 @@ function hauptList(c) {
         chili ? 'Vollkornnudeln, 500 g (330 g für die Hähnchen-Nudeln)' : 'Vollkornspaghetti, 500 g (375 g für die Bolognese)',
         'Erdnüsse ungesalzen oder Nüsse, 200 g',
         'TK-Blattspinat, portionierbar, 750 g (300 g pro Woche)',
-        'Honig, Öl, Salz, Paprika edelsüß, ' + (chili ? 'Italienische Kräuter' : 'Italienische Kräuter, Currypulver'),
+        'Tomatenmark, 1 Tube',
+        'Honig, Öl, Salz, Pfeffer, Senf',
+        'Gewürze, einmal für Monate: Paprika edelsüß, Italienische Kräuter, Zimt, ' + (chili ? 'Kreuzkümmel, Backkakao' : 'Currypulver'),
       ]],
     ] };
 }
@@ -195,90 +198,100 @@ const RECIPES_INTRO = 'Nach dem Kochen etwa 30 min abdampfen lassen, dann zu und
 const RECIPES = [
   {
     id: 'oats', title: 'Overnight Oats', when: 'abends, 5 min',
-    items: ['100 g Haferflocken', '250 g Skyr (ein halber Becher)', '200 ml Milch', '1 Banane, morgens'],
+    items: ['100 g Haferflocken', '250 g Skyr (ein halber Becher)', '200 ml Milch', '½ TL Zimt, 1 Prise Salz', '1 Banane, morgens'],
     steps: [
-      'Haferflocken, Skyr und Milch in die Dose, gründlich rühren, bis keine trockenen Flocken mehr zu sehen sind.',
+      'Haferflocken, Skyr, Milch, Zimt und Salz in die Dose, gründlich rühren, bis keine trockenen Flocken mehr zu sehen sind. Das Salz schmeckt man nicht, es macht die Oats runder.',
       'Zu, über Nacht in den Kühlschrank.',
-      'Morgens umrühren, zu fest: ein Schluck Milch. Banane dazu.',
+      'Morgens umrühren, zu fest: ein Schluck Milch. Banane in Scheiben drauf.',
     ],
     vary: [
-      ['Apfel-Zimt', '½ Apfel klein geschnitten und ½ TL Zimt mit rein'],
-      ['Schoko-Banane', '1 TL Backkakao unterrühren'],
+      ['Schoko-Banane', '1 TL Backkakao und 1 TL Honig statt Zimt, Banane abends schon zerdrückt mit rein'],
+      ['Apfelkuchen', '½ Apfel klein geschnitten mit rein, Zimt bleibt, 1 TL Honig'],
+      ['Erdnuss', 'eine kleine Handvoll Erdnüsse grob gehackt morgens drauf, 1 TL Honig'],
     ],
   },
   {
-    id: 'brote', title: 'Brote', when: 'am Vorabend, 5 min',
-    items: ['4 Scheiben Vollkornbrot', '2 gekochte Eier', '200 g Hüttenkäse (ein Becher)', '½ Gurke'],
+    id: 'brote', title: 'Brote mit Ei-Aufstrich', when: 'am Vorabend, 5 min',
+    items: ['4 Scheiben Vollkornbrot', '2 gekochte Eier', '200 g Hüttenkäse (ein Becher)', '1 TL Senf, Salz, Pfeffer, 1 Prise Paprika edelsüß', '½ Gurke'],
     steps: [
       '<b>Eier, einmal für mehrere Tage:</b> beim Kochen 8 Eier 10 min mitkochen, kalt abschrecken, ungeschält in den Kühlschrank. Sie halten eine Woche.',
-      'Brote in die Brotdose, Eier geschält und Gurke in Stücken dazu.',
-      'Hüttenkäse im Becher extra mitnehmen, sonst weicht das Brot durch. Löffel nicht vergessen.',
+      '<b>Aufstrich:</b> Eier schälen und mit der Gabel zerdrücken, mit Hüttenkäse, Senf, Salz, Pfeffer und Paprika verrühren. Schmeckt wie Eiersalat, ohne Mayo.',
+      'Aufstrich in eine kleine Dose, Brot und Gurke extra. Erst beim Essen aufs Brot, sonst weicht es durch.',
     ],
     vary: [
-      ['Kräuter-Hüttenkäse', 'Salz, Pfeffer und Italienische Kräuter in den Becher'],
-      ['Senf-Ei', 'dünn Senf aufs Brot, Ei in Scheiben drauf'],
+      ['Kimchi-Ei', '1 EL Kimchi klein geschnitten in den Aufstrich, Senf weglassen'],
+      ['Kräuter', '1 TL Italienische Kräuter und etwas Knoblauchpulver statt Senf'],
       ['Aufschnitt', '100 g Hähnchenaufschnitt statt der Eier. Schneller, aber rund 5 € mehr pro Woche'],
     ],
   },
   {
     id: 'quark', title: 'Quark-Snack', when: '3 min',
-    items: ['250 g Magerquark, 1 Apfel, 1 TL Honig'],
-    text: 'Quark mit einem Schluck Milch glatt rühren, Honig rein, Apfel in Stücken dazu.',
-    vary: [['Apfelstrudel', '½ TL Zimt in den Quark, Apfel klein schneiden und unterrühren']],
-  },
-  {
-    id: 'haehnchen', title: 'Hähnchen-Nudeln mit Spinat', when: '3 Portionen, 30 min', batch: true,
-    text: 'Pro Portion ca. 700 kcal, 60 g Eiweiß.',
-    items: ['1 Packung Hähnchenbrustfilet (500–600 g)', '330 g Vollkornnudeln oder -spaghetti', '300 g TK-Blattspinat', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '½ TL Knoblauchpulver', '1 EL Öl', '1 TL Paprika edelsüß, 2 TL Italienische Kräuter, Salz'],
-    steps: [
-      '<b>Wasser:</b> großen Topf mit 3 l Wasser aufsetzen.',
-      '<b>Hähnchen (8 min):</b> in Streifen schneiden, danach Brett, Messer und Hände waschen. In heißem Öl rundum braun braten, Paprika und Salz drüber.',
-      '<b>Nudeln:</b> sobald das Wasser kocht, 1 EL Salz und die Nudeln rein, nach Packung kochen.',
-      '<b>Sauce (10 min):</b> Spinat gefroren, Tomaten, Knoblauchpulver und Kräuter zum Hähnchen, Deckel drauf, köcheln, bis der Spinat aufgetaut ist. Mit Salz abschmecken.',
-      '<b>Teilen:</b> Nudeln abgießen, untermischen, in 3 Portionen. Eine essen, zwei in den Kühlschrank.',
-    ],
-  },
-  {
-    id: 'chili', title: 'Chili con Carne', when: '3 Portionen, 30 min', batch: true,
-    text: 'Pro Portion ca. 1.000 kcal, 50 g Eiweiß.',
-    items: ['500 g Hackfleisch', '1 Zwiebel', '1 Dose Kidneybohnen, 1 Dose Mais', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '375 g Reis', '2 TL Paprika edelsüß, Chilisalz nach Geschmack'],
-    steps: [
-      '<b>Reis:</b> im zweiten Topf nach Packung kochen.',
-      '<b>Hack (8 min):</b> großen Topf ohne Öl heiß werden lassen, Hack rein und krümelig braten, bis nichts Rosa mehr da ist. Zwiebel gewürfelt nach der Hälfte dazu.',
-      '<b>Köcheln (15 min):</b> Paprika, Tomaten, Bohnen und Mais (abgegossen) dazu, aufkochen, dann auf niedrig. Mit Chilisalz abschmecken.',
-      '<b>Teilen:</b> in 3 Portionen, je ein Drittel Reis dazu. Eine essen, zwei in den Kühlschrank.',
-    ],
-  },
-  {
-    id: 'curry', title: 'Hähnchen-Curry mit Reis', when: '3 Portionen, 30 min', batch: true,
-    text: 'Pro Portion ca. 700 kcal, 50 g Eiweiß.',
-    items: ['1 Packung Hähnchenbrustfilet (500–600 g)', '1 Dose Kokosmilch (400 ml)', '300 g TK-Blattspinat', '250 g Reis', '½ TL Knoblauchpulver', '1 EL Öl (Wok-Öl geht)', '2 EL Currypulver, Salz'],
-    steps: [
-      '<b>Reis:</b> im zweiten Topf nach Packung kochen.',
-      '<b>Hähnchen (8 min):</b> in mundgerechte Stücke schneiden, danach Brett, Messer und Hände waschen. In heißem Öl rundum braun braten.',
-      '<b>Curry (10 min):</b> Currypulver und Knoblauchpulver 30 s mitrühren, dann Kokosmilch und Spinat gefroren dazu. Deckel drauf, köcheln, bis der Spinat aufgetaut ist. Mit Salz abschmecken.',
-      '<b>Teilen:</b> Reis auf 3 Dosen verteilen, Curry drauf. Eine essen, zwei in den Kühlschrank.',
-    ],
-  },
-  {
-    id: 'bolo', title: 'Bolognese', when: '3 Portionen, 30 min', batch: true,
-    text: 'Pro Portion ca. 950 kcal, 50 g Eiweiß.',
-    items: ['500 g Hackfleisch', '1 Zwiebel (die rote geht auch)', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '375 g Vollkornspaghetti', '½ TL Knoblauchpulver, 2 TL Italienische Kräuter, 1 TL Paprika edelsüß, Salz'],
-    steps: [
-      '<b>Wasser:</b> großen Topf mit 3 l Wasser aufsetzen, wenn es kocht 1 EL Salz und die Spaghetti rein.',
-      '<b>Hack (8 min):</b> zweiten Topf ohne Öl heiß werden lassen, Hack krümelig braten, bis nichts Rosa mehr da ist. Zwiebel gewürfelt nach der Hälfte dazu.',
-      '<b>Köcheln (15 min):</b> Tomaten und Gewürze dazu, aufkochen, dann auf niedrig. Mit Salz abschmecken.',
-      '<b>Teilen:</b> Spaghetti abgießen, mit der Sauce auf 3 Dosen verteilen. Eine essen, zwei in den Kühlschrank.',
-    ],
-  },
-  {
-    id: 'notfall', title: 'Notfall-Abend', when: '5 min',
-    text: '3 Scheiben Brot mit Hüttenkäse (200 g), 2–3 gekochte Eier in Scheiben drauf, Gurke dazu.',
+    items: ['250 g Magerquark, 1 Apfel, 1 TL Honig, ½ TL Zimt'],
+    text: 'Quark mit einem Schluck Milch cremig rühren, Honig und Zimt rein, Apfel klein schneiden und unterheben.',
     vary: [
+      ['Schoko', '1 TL Backkakao und 2 TL Honig statt Zimt, Apfel oder Banane dazu'],
+      ['Erdnuss-Honig', 'ein paar Erdnüsse gehackt und Honig oben drauf, Apfel dazu'],
+    ],
+  },
+  {
+    id: 'haehnchen', title: 'Hähnchen-Nudeln mit Spinat', when: '3 Portionen, 35 min', batch: true,
+    text: 'Pro Portion ca. 720 kcal, 60 g Eiweiß.',
+    items: ['1 Packung Hähnchenbrustfilet (500–600 g)', '330 g Vollkornnudeln oder -spaghetti', '300 g TK-Blattspinat', '1 Zwiebel', '1 EL Tomatenmark', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '1 EL Öl', '2 TL Paprika edelsüß, 1 TL Knoblauchpulver, 2 TL Italienische Kräuter, 1 TL Honig, Chilisalz'],
+    steps: [
+      '<b>Wasser:</b> großen Topf mit 3 l Wasser aufsetzen. Zwiebel würfeln.',
+      '<b>Würzen:</b> Hähnchen in Streifen schneiden, mit Paprika, Knoblauchpulver und 1 TL Salz mischen. Danach Brett, Messer und Hände waschen.',
+      '<b>Anbraten (8 min):</b> Öl richtig heiß werden lassen, Hähnchen rein und 2 min nicht anfassen, dann wenden. Die braune Kruste ist der Geschmack.',
+      '<b>Sauce (10 min):</b> Zwiebel dazu, 2 min mitbraten. Tomatenmark 1 min mitrösten, dann Tomaten, Spinat gefroren und Kräuter rein. Deckel drauf, köcheln, bis der Spinat aufgetaut ist.',
+      '<b>Nudeln:</b> im kochenden Wasser mit 1 EL Salz nach Packung kochen. Vor dem Abgießen eine halbe Tasse Nudelwasser aufheben.',
+      '<b>Fertig:</b> Honig in die Sauce, mit Chilisalz abschmecken. Nudeln und ein Schluck Nudelwasser untermischen, so wird es cremig. In 3 Portionen teilen.',
+    ],
+  },
+  {
+    id: 'chili', title: 'Chili con Carne', when: '3 Portionen, 35 min', batch: true,
+    text: 'Pro Portion ca. 1.000 kcal, 50 g Eiweiß. Am zweiten Tag schmeckt es am besten.',
+    items: ['500 g Hackfleisch', '1 Zwiebel', '1 EL Tomatenmark', '1 Dose Kidneybohnen, 1 Dose Mais', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '375 g Reis', '2 TL Paprika edelsüß, 1 TL Kreuzkümmel, 1 TL Knoblauchpulver, 1 TL Backkakao, 1 TL Honig, Chilisalz'],
+    steps: [
+      '<b>Reis:</b> im zweiten Topf nach Packung kochen. Zwiebel würfeln.',
+      '<b>Hack (8 min):</b> großen Topf ohne Öl heiß werden lassen, Hack rein, flach drücken und 3 min nicht rühren, bis es unten braun ist. Dann zerteilen und fertig braten. Zwiebel nach der Hälfte dazu.',
+      '<b>Rösten (1 min):</b> Tomatenmark, Paprika, Kreuzkümmel und Knoblauchpulver aufs Hack, 1 min rühren, bis es duftet.',
+      '<b>Köcheln (15 min):</b> Tomaten, Bohnen und Mais (abgegossen), Kakao und Honig dazu. Aufkochen, dann auf niedrig, Deckel halb drauf. Kakao und Honig schmeckt man nicht raus, sie machen es rund.',
+      '<b>Fertig:</b> mit Chilisalz abschmecken. In 3 Portionen, je ein Drittel Reis dazu.',
+    ],
+  },
+  {
+    id: 'curry', title: 'Hähnchen-Curry mit Reis', when: '3 Portionen, 35 min', batch: true,
+    text: 'Pro Portion ca. 720 kcal, 50 g Eiweiß.',
+    items: ['1 Packung Hähnchenbrustfilet (500–600 g)', '1 Zwiebel (die rote geht)', '1 Dose Kokosmilch (400 ml)', '1 EL Tomatenmark', '300 g TK-Blattspinat', '250 g Reis', '1 EL Öl (Wok-Öl)', '2 EL Currypulver, 1 TL Knoblauchpulver, 1 TL Honig, Salz, zum Schluss ein paar Tropfen Sesamöl'],
+    steps: [
+      '<b>Reis:</b> im zweiten Topf nach Packung kochen. Zwiebel würfeln.',
+      '<b>Hähnchen (8 min):</b> in mundgerechte Stücke schneiden, salzen, danach Brett, Messer und Hände waschen. Öl richtig heiß werden lassen, Hähnchen rein und 2 min nicht anfassen, dann rundum braun braten.',
+      '<b>Rösten (2 min):</b> Zwiebel dazu, 1 min mitbraten. Currypulver, Knoblauchpulver und Tomatenmark 1 min mitrühren, bis es duftet. Das macht den Unterschied zu Curry aus dem Glas.',
+      '<b>Köcheln (10 min):</b> Kokosmilch und Spinat gefroren dazu, Deckel drauf, bis der Spinat aufgetaut ist.',
+      '<b>Fertig:</b> Honig rein, mit Salz abschmecken, ein paar Tropfen Sesamöl drüber. Reis auf 3 Dosen verteilen, Curry drauf.',
+    ],
+  },
+  {
+    id: 'bolo', title: 'Bolognese', when: '3 Portionen, 35 min', batch: true,
+    text: 'Pro Portion ca. 950 kcal, 50 g Eiweiß. Am zweiten Tag schmeckt sie am besten.',
+    items: ['500 g Hackfleisch', '1 Zwiebel, 2 Möhren', '1 EL Tomatenmark', '1 Packung oder Dose passierte oder gehackte Tomaten (400–500 g)', '375 g Vollkornspaghetti', '1 TL Knoblauchpulver, 2 TL Italienische Kräuter, 1 TL Paprika edelsüß, 1 TL Honig, Salz, Pfeffer'],
+    steps: [
+      '<b>Vorbereiten:</b> großen Topf mit 3 l Wasser aufsetzen. Zwiebel würfeln, Möhren grob reiben oder klein würfeln. Die Möhren machen die Sauce süßer und sämiger.',
+      '<b>Hack (8 min):</b> zweiten Topf ohne Öl heiß werden lassen, Hack rein, flach drücken und 3 min nicht rühren, bis es unten braun ist. Dann zerteilen, Zwiebel und Möhren dazu, 3 min mitbraten.',
+      '<b>Rösten (1 min):</b> Tomatenmark, Knoblauchpulver und Paprika 1 min mitrühren.',
+      '<b>Köcheln (15 min):</b> Tomaten, Kräuter und Honig dazu, aufkochen, dann auf niedrig. Mit Salz und Pfeffer abschmecken.',
+      '<b>Spaghetti:</b> mit 1 EL Salz nach Packung kochen, einen Schluck Nudelwasser in die Sauce. Auf 3 Dosen verteilen.',
+    ],
+  },
+  {
+    id: 'notfall', title: 'Notfall-Abend', when: '5–10 min',
+    items: ['3 Scheiben Vollkornbrot', '3 Eier', '200 g Hüttenkäse', 'Wok-Öl, Chilisalz, Pfeffer', '½ Gurke'],
+    text: 'Rührei-Brot: Eier in der Pfanne mit etwas Wok-Öl bei mittlerer Hitze stocken lassen, dabei nur langsam schieben. Hüttenkäse aufs Brot, Rührei drauf, Chilisalz und Pfeffer drüber, Gurke dazu.',
+    vary: [
+      ['Kalt', 'gekochte Eier in Scheiben statt Rührei, Senf aufs Brot'],
+      ['Kimchi-Reis', '125 g Reis kochen, 4 Spiegeleier in Wok-Öl, 2–3 EL Kimchi, ein paar Tropfen Sesamöl'],
       ['Bohneneintopf aus der Dose', 'heiß machen, Pfeffer und Knoblauchpulver rein, 2 Scheiben Brot dazu'],
       ['Spaghetti mit Bolognese aus dem Glas', '125 g Vollkornspaghetti kochen, Sauce heiß machen, ein Becher Hüttenkäse dazu fürs Eiweiß'],
-      ['Kimchi-Reis', '125 g Reis kochen, 4 Spiegeleier in Wok-Öl, 2–3 EL Kimchi, ein paar Tropfen Sesamöl'],
-      ['Ramen', 'nur wenn nichts anderes da ist: 2 Eier in der Brühe stocken lassen. Wenig Eiweiß, eher ein Snack'],
+      ['Ramen', 'nur wenn nichts anderes da ist: 2 Eier in der Brühe stocken lassen, ein paar Tropfen Sesamöl. Wenig Eiweiß, eher ein Snack'],
     ],
   },
 ];
@@ -287,8 +300,8 @@ const RECIPES = [
 
 const MEALS = [
   ['Frühstück', 'Oats: 100 g Haferflocken, 250 g Skyr, 200 ml Milch, 1 Banane', '725', '48 g', 'oats'],
-  ['Mittag', '4 Scheiben Vollkornbrot, 2 Eier, 200 g Hüttenkäse, Gurke', '790', '54 g', 'brote'],
-  ['Snack', '250 g Magerquark, 1 Apfel, 1 TL Honig', '280', '30 g', 'quark'],
+  ['Mittag', '4 Scheiben Vollkornbrot, Aufstrich aus 2 Eiern und 200 g Hüttenkäse, Gurke', '790', '54 g', 'brote'],
+  ['Snack', '250 g Magerquark, 1 Apfel, 1 TL Honig, Zimt', '280', '30 g', 'quark'],
   ['Abend', 'vorgekochte Portion', '850', '50 g'],
   ['Extra', '300 ml Milch, 30 g Nüsse', '320', '16 g'],
 ];
