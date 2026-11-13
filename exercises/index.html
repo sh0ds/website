@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quick exercises · sh0ds</title>
+    <meta name="description" content="Small PICO-8 and Lua exercises from my work PC, playable in the browser.">
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="../favicon.ico" sizes="32x32">
+    <link rel="stylesheet" href="../stylesheets/styles.css">
+</head>
+<body>
+    <header>
+        <a class="name" href="../">sh0ds</a>
+        <nav aria-label="Main"><a href="../blog/index.html">devlog</a> <a href="../projects/index.html">projects</a></nav>
+    </header>
+
+    <main>
+        <h1>Quick exercises</h1>
+        <p class="lead">Small exercises I do on my work PC when I have 10 to 15 free minutes.</p>
+        <p>I can't install anything there, so it all happens in the browser: plain Lua on the <a href="https://www.lua.org/demo.html">lua.org demo</a> and PICO-8 on <a href="https://www.pico-8-edu.com">pico-8-edu.com</a>, the free Education Edition. Every one starts from an empty cart, uses only shapes (no sprites, no map) and fits on one screen of code. All the code is in <a href="https://github.com/sh0ds/pico8/tree/main/quick-exercises">sh0ds/pico8</a>.</p>
+
+        <h2>PICO-8</h2>
+
+        <section class="ex" id="e3">
+            <h3>E3 · A moment of colour</h3>
+            <p>Press ❎: the screen flashes white for 2 frames and the score goes up by 100 and turns orange for 8.</p>
+            <iframe class="cart" src="e3-flash.html" title="E3 · A moment of colour, playable" loading="lazy"></iframe>
+            <p><code>btnp</code> instead of <code>btn</code>, so holding ❎ doesn't flash every frame. <code>_update</code> runs before <code>_draw</code>, so tick the timers first, then set them, or one frame gets lost. <code>poke(0x5f5c, 255)</code> turns off <code>btnp</code>'s auto-repeat, found that one myself.</p>
+            <p class="links"><a href="e3-flash.html">play big</a> · <a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/e3-flash.p8">code</a></p>
+        </section>
+
+        <section class="ex" id="e4">
+            <h3>E4 · Particles</h3>
+            <p>Press ❎: 20 particles burst out of the middle, fall and shrink until they're gone.</p>
+            <iframe class="cart" src="e4-particles.html" title="E4 · Particles, playable" loading="lazy"></iframe>
+            <p>Name the fields (<code>{x = x}</code>) instead of <code>[1]</code>. PICO-8 has no <code>table</code> library, it's <code>add</code> and <code>deli</code>. Angle and speed are separate: <code>cos(angle) * speed</code>. A full turn goes from 0 to 1, and <code>sin</code> is flipped. Gravity goes on <code>dy</code>, not on <code>y</code>: adding to <code>y</code> is wind, adding to <code>dy</code> makes arcs.</p>
+            <p class="links"><a href="e4-particles.html">play big</a> · <a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/e4-particles.p8">code</a></p>
+        </section>
+
+        <section class="ex" id="e5">
+            <h3>E5 · Shake without a shaky HUD</h3>
+            <p>Same particles, but now the screen shakes and the counter in the corner stays still.</p>
+            <iframe class="cart" src="e5-shake.html" title="E5 · Shake without a shaky HUD, playable" loading="lazy"></iframe>
+            <p><code>_draw</code> runs once per frame, so a loop in there plays the whole shake in one frame. Count down in <code>_update</code>, drawing only reads the state. <code>camera</code> stays set until the next call: shake, draw the world, <code>camera()</code>, then draw the HUD. My own pattern: left, still, right, with <code>tick</code> going 0, 1, 2.</p>
+            <p class="links"><a href="e5-shake.html">play big</a> · <a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/e5-shake.p8">code</a></p>
+        </section>
+
+        <section class="ex" id="e5b">
+            <h3>E5b · Random shake</h3>
+            <p>E5 with a random shake.</p>
+            <iframe class="cart" src="e5b-random-shake.html" title="E5b · Random shake, playable" loading="lazy"></iframe>
+            <p><code>shake</code> is the strength and gets multiplied by 0.8 every frame in <code>_update</code>, so it hits hard and calms down smoothly. <code>_draw</code> picks a random offset from it, x and y separately. <code>rnd(0)</code> is 0, so no <code>if</code> needed.</p>
+            <p class="links"><a href="e5b-random-shake.html">play big</a> · <a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/e5b-random-shake.p8">code</a></p>
+        </section>
+
+        <section class="ex" id="e7">
+            <h3>E7 · A map without the map editor</h3>
+            <p>A 16×16 map written as strings of 0s and 1s, drawn as 8×8 squares, and a dot that can't go into walls.</p>
+            <iframe class="cart" src="e7-grid.html" title="E7 · A map without the map editor, playable" loading="lazy"></iframe>
+            <p><code>sub(s, i, i)</code> gives back one character, and it's a string (<code>"1"</code>, not <code>1</code>). Grid to pixel is <code>(j - 1) * 8</code>, pixel to grid is <code>flr(px / 8) + 1</code>. Check before moving, x and y separately, so you slide along walls instead of sticking. And check the edges of the dot, not its centre. Don't name a table <code>map</code>.</p>
+            <p class="links"><a href="e7-grid.html">play big</a> · <a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/e7-grid.p8">code</a></p>
+        </section>
+
+        <section class="ex" id="e9">
+            <h3>E9 · A coin that spins</h3>
+            <p>An oval whose width follows <code>abs(cos(tick / 40))</code>, so it looks like a turning coin.</p>
+            <iframe class="cart" src="e9-coin.html" title="E9 · A coin that spins, playable" loading="lazy"></iframe>
+            <p>Bigger number, slower spin. <code>abs</code> mirrors the negative half, so the coin shows its edge twice per turn, like a real one. <code>max(1, ...)</code> keeps it from disappearing. Centre first, then half the width out each way. <code>sin</code> only goes from -1 to 1, so multiply it to get a bob you can see.</p>
+            <p class="links"><a href="e9-coin.html">play big</a> · <a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/e9-coin.p8">code</a></p>
+        </section>
+
+        <h2>Lua</h2>
+
+        <section class="ex" id="l1">
+            <h3>L1 · Borders</h3>
+            <p>A list of five items, the third one gets removed, and everything after it moves down by one, by hand.</p>
+<pre><code>t = {1, 2, 3, 4, 5}
+del = 3
+for i=del,#t do
+    t[i] = t[i+1]
+end
+print(#t)</code></pre>
+            <p>No <code>if</code> needed: reading one past the end gives <code>nil</code>, so the last step clears the last slot by itself. <code>t[3] = nil</code> is a trap in a list, which is why PICO-8 has <code>del</code>. And <code>del</code> is a PICO-8 function, so don't use it as a variable name in a cart.</p>
+            <p class="links"><a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/lua/l1-borders.lua">code</a></p>
+        </section>
+
+        <section class="ex" id="l3">
+            <h3>L3 · Countdown timers</h3>
+            <p>A table of effect timers (<code>flash</code>, <code>pop</code>) that count down by one every frame, simulated for 12 frames.</p>
+<pre><code>fx = {
+    ["flash"] = 0,
+    ["pop"] = 0
+}
+
+frames = 12
+
+function tick_fx()
+    for key, value in pairs(fx) do
+        if fx[key] &gt; 0 then
+            print(key)
+            fx[key] = fx[key] - 1
+        end
+    end
+end
+for i=0,frames do
+    print("frame "..i)
+    if i == 2 then
+        fx["flash"] = 2
+    end
+    if i == 5 then
+        fx["pop"] = 8
+    end
+    tick_fx()
+end</code></pre>
+            <p>Write through <code>fx[key]</code>, because <code>value</code> is only a copy. Check first, then subtract, and only above 0. One call per frame, the frame loop stays outside.</p>
+            <p class="links"><a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/lua/l3-timers.lua">code</a></p>
+        </section>
+
+        <section class="ex" id="l4">
+            <h3>L4 · Removing while looping</h3>
+            <p>Ten particles losing one life per frame, the dead ones get removed inside the loop.</p>
+<pre><code>particles = {
+    {life = 10},
+    {life = 5},
+    {life = 8},
+    {life = 7},
+    {life = 2},
+    {life = 4},
+    {life = 9},
+    {life = 3},
+    {life = 6},
+    {life = 1}
+}
+
+for i=1,10 do
+    for j=#particles,1,-1 do
+        particles[j].life = particles[j].life - 1
+
+        if particles[j].life &lt;= 0 then
+            table.remove(particles, j)
+        end
+    end
+
+    print("frame "..i)
+
+    for g=1,#particles do
+        print(particles[g].life)
+    end
+end</code></pre>
+            <p>Going up skips items, because <code>table.remove</code> shifts everything after it down. Going backwards fixes it: those items were already visited. A <code>for</code> only counts down if you give it a third number (<code>-1</code>), and changing the loop variable inside a <code>for</code> does nothing. Test with dead items right next to each other, like <code>{1, 1, 1, 2, 2, 3}</code>.</p>
+            <p class="links"><a href="https://github.com/sh0ds/pico8/blob/main/quick-exercises/lua/l4-removing.lua">code</a></p>
+        </section>
+
+        <p class="back"><a href="../">home</a></p>
+    </main>
+
+    <footer>
+        <p><a href="https://sh0ds.itch.io/">itch.io</a> · <a href="https://github.com/sh0ds">github</a> · <a href="mailto:mail@sh0ds.dev">mail</a></p>
+        <p>Built with <a href="https://github.com/sh0ds/3sgc">3sgc</a>, served from a Raspberry Pi 5 on my desk. Source: <a href="https://github.com/sh0ds/website">sh0ds/website</a>.</p>
+    </footer>
+</body>
+</html>

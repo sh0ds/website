@@ -48,3 +48,9 @@ footer p { margin: 4px 0; }
 /* a list with no entries yet (the devlog before the first game) */
 .posts:not(:has(li)) { border: 0; }
 .posts:not(:has(li))::before { content: "Nothing yet. The first post comes with the first game."; color: var(--muted); }
+
+/* exercises/: one section per exercise, PICO-8 carts as web exports in an iframe */
+h3 { font-size: 1.1rem; margin: 32px 0 6px; }
+.ex { border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.cart { display: block; width: 100%; aspect-ratio: 580 / 540; border: 1px solid var(--line); background: #000; }
+.links { font: .9rem var(--mono); }
